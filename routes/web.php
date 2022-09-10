@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/', [PublicPageController::class, 'index'])->name('home');
+    Route::get('/about', [PublicPageController::class, 'about'])->name('about');
+    Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
 });
 
 Route::middleware([

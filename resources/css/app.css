@@ -1,3 +1,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Graphik';
+  font-style: normal;
+  src: url('../../public/resources/fonts/GraphikRegular.otf');
+}
+@font-face {
+  font-family: 'GraphikLight';
+  font-style: normal;
+  src: url('../../public/resources/fonts/GraphikLight.otf');
+}
+@font-face {
+  font-family: 'GraphikMedium';
+  font-style: normal;
+  src: url('../../public/resources/fonts/GraphikMedium.otf');
+}
+@font-face {
+  font-family: 'GraphikSemibold';
+  font-style: normal;
+  src: url('../../public/resources/fonts/GraphikSemibold.otf');
+}
+@font-face {
+  font-family: 'GraphikBold';
+  font-style: normal;
+  src: url('../../public/resources/fonts/GraphikBold.otf');
+}
+@font-face {
+  font-family: 'Adelia';
+  font-style: normal;
+  src: url('../../public/resources/fonts/ADELIA.otf');
+}
+
+@layer base {
+  html {
+    font-family: Graphik, system-ui, sans-serif;
+  }
+}
+
+@layer components {
+    .Site-Max-Width {
+        max-width: 90rem;
+      }
+    .Min-Height-8 {
+        min-height: 8rem;
+      }  
+    .Gradient-Top-Banner {
+        /* height: 151px; */
+        /* opacity: 0.65; */
+        background: linear-gradient(0deg, rgba(219, 219, 219, 0) 0%, #cacbcc 150%);
+      }
+}
