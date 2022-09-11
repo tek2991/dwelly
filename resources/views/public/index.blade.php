@@ -323,44 +323,35 @@
     
     <!-- Hide on desktop -->
     <div class="sm:hidden">
-        <div class="p-4">
-            <h2 class="font-GraphikLight text-sm text-darker-2">Have a place to rent out?</h2>
-            <button
-                class="bg-darker-3 text-piss-yellow w-full font-GraphikSemibold text-sm uppercase p-2 rounded-sm">Learn
-                More About Renting Out</button>
-        </div>
-        <h2 class="text-center font-GraphikMedium text-2xl text-darker-3 py-6">Dwelly for Tenants</h2>
-        <div class="bg-darker-3 h-56">
+        <h2 class="text-center font-GraphikMedium text-2xl text-darker-3 py-6">Dwelly for Owners</h2>
+        <div class="h-56">
             <section id="dwelly-for-owners-slide" class="splide h-full" aria-label="Beautiful Images">
                 <div class="splide__track">
                     <ul class="splide__list">
                         <li class="splide__slide">
-                            <div class="flex justify-around gap-3 p-8 items-center self-center mt-4">
-                                <img src="{{ url('resources/images/house.svg') }}" alt="House">
+                            <div class="flex justify-evenly gap-6 p-8 items-center self-center mt-4">
+                                <img src="{{ url('resources/icons/rent_on_time.svg') }}" alt="Rent on Time">
                                 <div>
-                                    <h3 class="text-secondary font-GraphikMedium">100% Verified properties</h3>
-                                    <p class="text-secondary font-GraphikLight">Get fully verified properties for rent
-                                        in Guwahati. What you see here is what you get.</p>
+                                    <h3 class="text-darker-3 text-lg pb-2 font-GraphikMedium">Rent on time</h3>
+                                    <p class="text-darker-3 font-GraphikLight">We ensure that you get your rent payment on time.</p>
                                 </div>
                             </div>
                         </li>
                         <li class="splide__slide">
-                            <div class="flex justify-around gap-3 p-8 items-center self-center mt-4">
-                                <img src="{{ url('resources/images/agent.svg') }}" alt="Agent">
+                            <div class="flex justify-around gap-6 p-8 items-center self-center mt-4">
+                                <img src="{{ url('resources/icons/property_maintenance.svg') }}" alt="Property maintenanc">
                                 <div>
-                                    <h3 class="text-secondary font-GraphikMedium">Fixed service fee</h3>
-                                    <p class="text-secondary font-GraphikLight">Find your next home without paying
-                                        exorbitant brokerage.</p>
+                                    <h3 class="text-darker-3 text-lg pb-2 font-GraphikMedium">Property maintenance</h3>
+                                    <p class="text-darker-3 font-GraphikLight">We help with figuring out and solving your day to day operational issues.</p>
                                 </div>
                             </div>
                         </li>
                         <li class="splide__slide">
-                            <div class="flex justify-around gap-3 p-8 items-center self-center mt-4">
-                                <img src="{{ url('resources/images/tools.svg') }}" alt="Tools">
+                            <div class="flex justify-around gap-6 p-8 items-center self-center mt-4">
+                                <img src="{{ url('resources/icons/no_paperworks.svg') }}" alt="No paperwork">
                                 <div>
-                                    <h3 class="text-secondary font-GraphikMedium">Maintenance on demand</h3>
-                                    <p class="text-secondary font-GraphikLight">For any property related issue get 24x7
-                                        support during your entire stay.</p>
+                                    <h3 class="text-darker-3 text-lg pb-2 font-GraphikMedium">No paperwork</h3>
+                                    <p class="text-darker-3 font-GraphikLight">We do all the paperworks for you like rental agreements and verification documents.</p>
                                 </div>
                             </div>
                         </li>
