@@ -1,6 +1,10 @@
+/* Import Splide css from node folder */
+@import "../../node_modules/@splidejs/splide/dist/css/splide.min.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @font-face {
     font-family: "Graphik";
@@ -98,6 +102,11 @@
         margin-left: calc((100vw - 90rem) / 2);
         margin-left: -moz-calc((100vw - 90rem) / 2);
         margin-left: -webkit-calc((100vw - 90rem) / 2);
+    }
+
+    .Zoom-5 img{
+        width: 101%;
+        height: 101%;
     }
     /* Set Left-Space zero if vw is less than 90rem */
     @media (max-width: 90rem) {

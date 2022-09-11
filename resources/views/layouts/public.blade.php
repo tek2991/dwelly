@@ -15,7 +15,7 @@
 <body class="antialiased">
     <div class="min-h-screen">
         <div class="flex justify-between Gradient-Top-Banner">
-            <div class="flex justify-between mx-auto w-full Site-Max-Width">
+            <div class="flex justify-between mx-auto w-full Site-Max-Width pb-4" style="background-image: url({{ url('/resources/images/clouds.png') }}); background-repeat: no-repeat; background-position: bottom; background-size: 32vw">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center py-4 px-4 sm:px-6 lg:px-8">
                     <a href="{{ route('home') }}">
@@ -86,6 +86,8 @@
             {{ $slot }}
         </div>
     </div>
+    <!-- Before-body-end -->
+    @yield('before-body-end')
 </body>
 
 </html>
