@@ -179,7 +179,7 @@
                             <div class="p-0 sm:p-2">
                                 <img src="{{ url('resources/images/sample_prop.jpeg') }}" alt="Tools"
                                     class="w-full h-56 object-cover">
-                                <div class="grid grid-cols-7 pt-2">
+                                <div class="grid grid-cols-7 pt-2 px-2">
                                     <p class="col-span-2 flex items-center gap-1">
                                         <svg height="10" width="10">
                                             <circle cx="5" cy="5" r="5" fill="#686868" />
