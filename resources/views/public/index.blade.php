@@ -211,24 +211,24 @@
     <div class="hidden sm:block bg-darker-3 sm:mt-20 p-4">
         <div class="Site-Max-Width mx-auto H-30pvw MaxH-18 flex justify-around items-center"
             style="background-image:url({{ url('resources/images/real-estate-bg.svg') }}); background-size:65vw; background-repeat: no-repeat;">
-            <div class="grid grid-cols-3 justify-between items-center">
+            <div class="grid grid-cols-3 gap-16 justify-between items-center">
                 <a href="#">
                     <div
-                        class="flex-col p-6 md:p-10 lg:p-14 border-none border-darker-2 hover:border-solid hover:border-2 hover:border-piss-yellow hover:Rounded-BOX-1 ease-in-out duration-300">
+                        class="flex-col p-6 md:p-10 lg:p-12 border-none border-darker-2 hover:border-solid hover:border-2 hover:border-piss-yellow hover:Rounded-BOX-1 ease-in-out duration-300">
                         <img class="mx-auto mb-4" src="{{ url('resources/icons/students.svg') }}" alt="studens">
                         <h3 class="text-secondary font-GraphikLight text-xl">Students</h3>
                     </div>
                 </a>
                 <a href="#">
                     <div
-                        class="flex-col p-6 md:p-10 lg:p-14 border-none border-darker-2 hover:border-solid hover:border-2 hover:border-piss-yellow hover:Rounded-BOX-1 ease-in-out duration-300">
+                        class="flex-col p-6 md:p-10 lg:p-12 border-none border-darker-2 hover:border-solid hover:border-2 hover:border-piss-yellow hover:Rounded-BOX-1 ease-in-out duration-300">
                         <img class="mx-auto mb-4" src="{{ url('resources/icons/families.svg') }}" alt="families">
                         <h3 class="text-secondary font-GraphikLight text-xl">Families</h3>
                     </div>
                 </a>
                 <a href="#">
                     <div
-                        class="flex-col p-6 md:p-10 lg:p-14 border-none border-darker-2 hover:border-solid hover:border-2 hover:border-piss-yellow hover:Rounded-BOX-2 ease-in-out duration-300">
+                        class="flex-col p-6 md:p-10 lg:p-12 border-none border-darker-2 hover:border-solid hover:border-2 hover:border-piss-yellow hover:Rounded-BOX-2 ease-in-out duration-300">
                         <img class="mx-auto mb-4" src="{{ url('resources/icons/bachelors.svg') }}" alt="bachelors">
                         <h3 class="text-secondary font-GraphikLight text-xl text-center">Working <br> Bachelors</h3>
                     </div>
@@ -297,7 +297,7 @@
                         alt="No Paperworks">
                     <h3 class="text-dark-2 font-GraphikLight text-center">No paperwork</h3>
                 </div>
-                <a href="#" class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 text-lg hover:bg-piss-yellow hover:text-darker-3">
+                <a href="#" class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 text-lg hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300">
                     LEARN MORE ABOUT RENTING OUT</a>
             </div>
             <div

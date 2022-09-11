@@ -5,7 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
     font-family: "Graphik";
     font-style: normal;
@@ -44,6 +43,26 @@
 }
 
 @layer components {
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        background: #e8c811;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #686868;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #4c4d47;
+    }
+
     .Site-Max-Width {
         max-width: 90rem; /* 1440px */
     }
@@ -53,7 +72,11 @@
     .Gradient-Top-Banner {
         /* height: 151px; */
         /* opacity: 0.65; */
-        background: linear-gradient(180deg, rgba(230,230,230,1) 0%, rgba(255,255,255,1) 100%);
+        background: linear-gradient(
+            180deg,
+            rgba(230, 230, 230, 1) 0%,
+            rgba(255, 255, 255, 1) 100%
+        );
     }
     .H-30pvw {
         height: calc(100vw - 70vw);
@@ -100,7 +123,7 @@
         margin-left: -webkit-calc((100vw - 90rem) / 2);
     }
 
-    .Zoom-5 img{
+    .Zoom-5 img {
         width: 101%;
         height: 101%;
     }
