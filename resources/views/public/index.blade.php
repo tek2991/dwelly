@@ -279,25 +279,26 @@
     </div>
 
 
-    <div class="hidden sm:block sm:mt-20 p-4">
+    <div class="hidden sm:block sm:my-20 p-4">
         <div class="Site-Max-Width mx-auto H-30pvw MaxH-18 flex justify-around items-center">
             <div class="grid grid-cols-3 justify-between items-center">
                 <div class="flex-col p-6 md:p-10 lg:p-14">
                     <img class="mx-auto mb-4" src="{{ url('resources/icons/rent_on_time.svg') }}"
                         alt="Rent On Time">
-                    <h3 class="text-dark-2 font-GraphikLight">Rent on time</h3>
+                    <h3 class="text-dark-2 font-GraphikLight text-center">Rent on time</h3>
                 </div>
                 <div class="flex-col p-6 md:p-10 lg:p-14">
                     <img class="mx-auto mb-4" src="{{ url('resources/icons/no_paperworks.svg') }}"
                         alt="No Paperworks">
-                    <h3 class="text-dark-2 font-GraphikLight">Property maintenance</h3>
+                    <h3 class="text-dark-2 font-GraphikLight text-center">Property maintenance</h3>
                 </div>
                 <div class="flex-col p-6 md:p-10 lg:p-14">
                     <img class="mx-auto mb-4" src="{{ url('resources/icons/no_paperworks.svg') }}"
                         alt="No Paperworks">
-                    <h3 class="text-dark-2 font-GraphikLight">No paperwork</h3>
+                    <h3 class="text-dark-2 font-GraphikLight text-center">No paperwork</h3>
                 </div>
-                <a href="#" class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-3 capitalize font-GraphikLight">Learn More about renting out</a>
+                <a href="#" class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 text-lg hover:bg-piss-yellow hover:text-darker-3">
+                    LEARN MORE ABOUT RENTING OUT</a>
             </div>
             <div
                 class="H-40pvw MaxH-23 W-30pvw MaxW-23 bg-white border-piss-yellow border-4 Rounded-BOX-1 flex items-center">
