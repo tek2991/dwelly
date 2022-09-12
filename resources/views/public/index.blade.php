@@ -297,7 +297,8 @@
                         alt="No Paperworks">
                     <h3 class="text-dark-2 font-GraphikLight text-center">No paperwork</h3>
                 </div>
-                <a href="#" class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 text-lg hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300">
+                <a href="#"
+                    class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 text-lg hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300">
                     LEARN MORE ABOUT RENTING OUT</a>
             </div>
             <div
@@ -320,11 +321,11 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Hide on desktop -->
     <div class="sm:hidden">
         <h2 class="text-center font-GraphikMedium text-2xl text-darker-3 py-6">Dwelly for Owners</h2>
-        <div class="h-56">
+        <div class="">
             <section id="dwelly-for-owners-slide" class="splide h-full" aria-label="Beautiful Images">
                 <div class="splide__track">
                     <ul class="splide__list">
@@ -333,16 +334,19 @@
                                 <img src="{{ url('resources/icons/rent_on_time.svg') }}" alt="Rent on Time">
                                 <div>
                                     <h3 class="text-darker-3 text-lg pb-2 font-GraphikMedium">Rent on time</h3>
-                                    <p class="text-darker-3 font-GraphikLight">We ensure that you get your rent payment on time.</p>
+                                    <p class="text-darker-3 font-GraphikLight">We ensure that you get your rent payment
+                                        on time.</p>
                                 </div>
                             </div>
                         </li>
                         <li class="splide__slide">
                             <div class="flex justify-around gap-6 p-8 items-center self-center mt-4">
-                                <img src="{{ url('resources/icons/property_maintenance.svg') }}" alt="Property maintenanc">
+                                <img src="{{ url('resources/icons/property_maintenance.svg') }}"
+                                    alt="Property maintenanc">
                                 <div>
                                     <h3 class="text-darker-3 text-lg pb-2 font-GraphikMedium">Property maintenance</h3>
-                                    <p class="text-darker-3 font-GraphikLight">We help with figuring out and solving your day to day operational issues.</p>
+                                    <p class="text-darker-3 font-GraphikLight">We help with figuring out and solving
+                                        your day to day operational issues.</p>
                                 </div>
                             </div>
                         </li>
@@ -351,13 +355,19 @@
                                 <img src="{{ url('resources/icons/no_paperworks.svg') }}" alt="No paperwork">
                                 <div>
                                     <h3 class="text-darker-3 text-lg pb-2 font-GraphikMedium">No paperwork</h3>
-                                    <p class="text-darker-3 font-GraphikLight">We do all the paperworks for you like rental agreements and verification documents.</p>
+                                    <p class="text-darker-3 font-GraphikLight">We do all the paperworks for you like
+                                        rental agreements and verification documents.</p>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </section>
+        </div>
+        <div class="p-4 my-2">
+            <button class="bg-darker-3 text-piss-yellow w-full font-GraphikSemibold text-sm uppercase p-2 rounded-sm">
+                Learn More About Renting Out
+            </button>
         </div>
     </div>
 

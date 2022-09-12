@@ -123,6 +123,13 @@
         margin-left: -webkit-calc((100vw - 90rem) / 2);
     }
 
+    /* Calculate space on right of page */
+    .Right-Space {
+        margin-right: calc((100vw - 90rem) / 2);
+        margin-right: -moz-calc((100vw - 90rem) / 2);
+        margin-right: -webkit-calc((100vw - 90rem) / 2);
+    }
+
     .Zoom-5 img {
         width: 101%;
         height: 101%;
@@ -131,6 +138,9 @@
     @media (max-width: 90rem) {
         .Left-Space {
             margin-left: 0;
+        }
+        .Right-Space {
+            margin-right: 0;
         }
     }
     /* Set NegM-T to 17% if vw less than 1700px */

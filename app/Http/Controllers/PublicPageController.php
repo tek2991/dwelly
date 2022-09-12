@@ -18,6 +18,6 @@ class PublicPageController extends Controller
 
     public function contact()
     {
-        // return view('public.contact');
+        return view('public.contact');
     }
 }
