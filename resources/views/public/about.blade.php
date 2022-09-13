@@ -98,7 +98,7 @@
                 // Remove class border-b-piss-yellow from other profiles and add grayscale to other profile img
                 otherProfiles.forEach((profile) => {
                     document.getElementById(profile).classList.remove('border-b-piss-yellow', 'bg-darker');
-                    document.getElementById(profile).children[0].classList.add('grayscale');
+                    document.getElementById(profile).children[0].classList.add('grayscale', 'hover:sepia');
                 });
             }
             // default profile
