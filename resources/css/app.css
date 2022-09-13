@@ -134,6 +134,12 @@
         width: 101%;
         height: 101%;
     }
+    .Borer-L-18{
+        border-left: 18px solid;
+    }
+    .Borer-R-18{
+        border-right: 18px solid;
+    }
     /* Set Left-Space zero if vw is less than 90rem */
     @media (max-width: 90rem) {
         .Left-Space {
