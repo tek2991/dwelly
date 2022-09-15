@@ -42,7 +42,7 @@
                 </address>
             </div>
         </div>
-        <div class="bg-white border-2 border-secondary rounded-sm shadow-md p-4 md:p-8 mt-8 md:-mt-32 md:p-4 Right-Space">
+        <div class="bg-white border-2 border-secondary rounded-sm shadow-md p-4 md:p-8 mt-8 md:-mt-32 Right-Space">
             <form action="#">
                 <h2 class="font-GraphikSemibold text-darker-3 text-3xl">Have queries?</h2>
                 <p class="text-darker-2 text-lg">
