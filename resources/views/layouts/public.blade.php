@@ -14,17 +14,17 @@
 
 <body class="antialiased">
     <div>
-        <div class="flex justify-between Gradient-Top-Banner fixed w-full z-40">
-            <div class="flex justify-between mx-auto w-full Site-Max-Width pb-4"
+        <div class="flex justify-between Gradient-Top-Banner fixed w-full z-20">
+            <div class="flex justify-between mx-auto w-full Site-Max-Width p-4 md:mb-8"
                 style="background-image: url({{ url('/resources/images/clouds.png') }}); background-repeat: no-repeat; background-position: bottom; background-size: 32vw">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center py-4 px-4 sm:px-6 lg:px-8">
+                <div class="shrink-0 flex items-center">
                     <a href="{{ route('home') }}">
                         <x-site-logo class="w-32" />
                     </a>
                 </div>
                 <!-- Navigation Links -->
-                <div class="hidden space-x-0 sm:-my-px sm:ml-10 md:flex pb-8">
+                <div class="hidden space-x-0 sm:-my-px sm:ml-10 md:flex">
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
@@ -40,7 +40,7 @@
             <div class="items-center my-auto md:hidden">
                 <button type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
                     data-drawer-placement="right"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-darker-3 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                    class="inline-flex items-center justify-center p-2 md:mb-8 rounded-md text-darker-3 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
@@ -49,7 +49,7 @@
             </div>
         </div>
         <!-- Drawer -->
-        <div id="drawer-navigation" class="fixed z-40 h-screen py-4 overflow-y-auto bg-darker-2 w-80" tabindex="-1"
+        <div id="drawer-navigation" class="fixed hidden z-40 h-screen py-4 overflow-y-auto bg-darker-2 w-80" tabindex="-1"
             aria-labelledby="drawer-navigation-label">
             <h5 id="drawer-navigation-label" class="text-base font-semibold text-secondary uppercase p-6">Menu</h5>
             <button type="button" data-drawer-dismiss="drawer-navigation" aria-controls="drawer-navigation"
@@ -123,6 +123,13 @@
     </div>
     <!-- Before-body-end -->
     @yield('before-body-end')
+    <script>
+        // remove hidden from drawer-navigation after page load
+        // to prevent flash of unstyled content
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('drawer-navigation').classList.remove('hidden');
+        });
+    </script>
 </body>
 
 </html>

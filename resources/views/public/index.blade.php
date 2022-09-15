@@ -71,9 +71,9 @@
         <img src="{{ url('resources/images/city_bg.svg') }}" alt="City Background" class="w-full mt-12 mb-6 sm:mb-12">
     </div>
 
-    <!-- Hide on mobile -->
+    <!-- Show on Desktop -->
     <div class="hidden sm:flex bg-piss-yellow H-30pvw MaxH-18 sm:justify-between sm:mt-20">
-        <div class="w-1/4 z-20 p-4">
+        <div class="w-1/4 3xl:w-2/6 z-10 p-2">
             <div
                 class="Left-Space H-40pvw MaxH-23 W-30pvw MaxW-23 bg-white border-piss-yellow border-4 Rounded-BOX-2 NegM-T flex items-center">
                 <div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-3/4 bg-darker-3 border-piss-yellow border-t-8 border-b-8 z-0 flex justify-evenly pl-4 md:pl-0 items-center text-secondary text-center font-GraphikLight"
+        <div class="w-3/4 3xl:w-4/6 bg-darker-3 border-piss-yellow border-t-8 border-b-8 z-0 flex justify-evenly pl-4 md:pl-0 items-center text-secondary text-center font-GraphikLight"
             style="background-image:url({{ url('resources/images/real-estate-bg.svg') }}); background-size:50vw; background-repeat: no-repeat; background-position: right;">
             <div class="flex-col justify-center items-center">
                 <img src="{{ url('resources/images/house.svg') }}" alt="House" class="w-full">
@@ -108,7 +108,7 @@
             </div>
         </div>
     </div>
-    <!-- Hide on desktop -->
+    <!-- Show on mobile -->
     <div class="sm:hidden">
         <div class="p-4">
             <h2 class="font-GraphikLight text-sm text-darker-2">Have a place to rent out?</h2>
@@ -157,8 +157,8 @@
         </div>
     </div>
 
-
-    <div class="lg:flex gap-0 sm:gap-6 p-0 sm:p-4 my-12 sm:my-36 items-center lg:Left-Space">
+    <!-- Show on mobile only -->
+    <div class="lg:flex gap-0 sm:gap-6 p-0 sm:p-2 my-12 sm:my-36 items-center lg:Left-Space">
         <div>
             <h2 class="hidden lg:block font-GraphikSemibold text-5xl leading-snug text-darker-3">
                 Ready to <br>

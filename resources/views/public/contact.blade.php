@@ -4,7 +4,7 @@
     </div>
     <div class="md:flex justify-between">
         <div>
-            <h1 class="Left-Space p-4 font-GraphikSemibold text-4xl text-darker-3 ">Contact Us</h1>
+            <h1 class="Left-Space p-4 md:p-2 font-GraphikSemibold text-4xl text-darker-3 ">Contact Us</h1>
             <div class="border-r-8 border-r-piss-yellow bg-secondary pr-6 lg:pr-12 mr-6 lg:mr-0">
                 <address class="Left-Space p-4 font-GraphikSemibold text-darker-3 font-2xl">
                     <div class="my-4">
@@ -42,7 +42,7 @@
                 </address>
             </div>
         </div>
-        <div class="bg-white border-2 border-secondary rounded-sm shadow-md p-8 mt-8 md:-mt-32 md:p-4 Right-Space">
+        <div class="bg-white border-2 border-secondary rounded-sm shadow-md p-4 md:p-8 mt-8 md:-mt-32 md:p-4 Right-Space">
             <form action="#">
                 <h2 class="font-GraphikSemibold text-darker-3 text-3xl">Have queries?</h2>
                 <p class="text-darker-2 text-lg">

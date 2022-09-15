@@ -42,4 +42,8 @@ module.exports = {
         require("@tailwindcss/typography"),
         require('flowbite/plugin'),
     ],
+
+    screens: {
+        '3xl': '1920px',
+    }
 };

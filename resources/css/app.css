@@ -64,7 +64,7 @@
     }
 
     .Site-Max-Width {
-        max-width: 90rem; /* 1440px */
+        max-width: 80rem; /* 1440px */
     }
     .Min-Height-8 {
         min-height: 8rem;
@@ -118,16 +118,16 @@
 
     /* Calculate space on left of page */
     .Left-Space {
-        margin-left: calc((100vw - 90rem) / 2);
-        margin-left: -moz-calc((100vw - 90rem) / 2);
-        margin-left: -webkit-calc((100vw - 90rem) / 2);
+        margin-left: calc((100vw - 80rem) / 2);
+        margin-left: -moz-calc((100vw - 80rem) / 2);
+        margin-left: -webkit-calc((100vw - 80rem) / 2);
     }
 
     /* Calculate space on right of page */
     .Right-Space {
-        margin-right: calc((100vw - 90rem) / 2);
-        margin-right: -moz-calc((100vw - 90rem) / 2);
-        margin-right: -webkit-calc((100vw - 90rem) / 2);
+        margin-right: calc((100vw - 80rem) / 2);
+        margin-right: -moz-calc((100vw - 80rem) / 2);
+        margin-right: -webkit-calc((100vw - 80rem) / 2);
     }
 
     .Zoom-5 img {
@@ -140,8 +140,8 @@
     .Borer-R-18{
         border-right: 18px solid;
     }
-    /* Set Left-Space zero if vw is less than 90rem */
-    @media (max-width: 90rem) {
+    /* Set Left-Space zero if vw is less than 80rem */
+    @media (max-width: 80rem) {
         .Left-Space {
             margin-left: 0;
         }
@@ -152,7 +152,7 @@
     /* Set NegM-T to 17% if vw less than 1700px */
     @media (max-width: 106.25rem) {
         .NegM-T {
-            margin-top: -17%;
+            margin-top: -13%;
         }
     }
     /* Set NegM-T to 22% if vw less than 980px */
