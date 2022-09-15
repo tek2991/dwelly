@@ -20,4 +20,9 @@ class PublicPageController extends Controller
     {
         return view('public.contact');
     }
+
+    public function owners()
+    {
+        return view('public.owners');
+    }
 }

@@ -18,6 +18,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/', [PublicPageController::class, 'index'])->name('home');
     Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
     Route::get('/about', [PublicPageController::class, 'about'])->name('about');
+    Route::get('/owners', [PublicPageController::class, 'owners'])->name('owners');
 });
 
 Route::middleware([
