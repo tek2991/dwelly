@@ -1,5 +1,5 @@
 <x-public-layout>
-    <div id="hero" style="background: linear-gradient(to right, #e6e6e6 59%, #4c4d47 41%);" class="pt-6">
+    <div id="hero" style="background: linear-gradient(to right, #e6e6e6 60%, #4c4d47 40%);" class="pt-6">
         <div class="w-full"
             style="background-image: url({{ url('resources/images/city_bg_30.png') }});
                 background-size: cover;
@@ -182,6 +182,33 @@
                     </ul>
                 </div>
             </section>
+        </div>
+    </div>
+
+     <div id="hero" class="my-6 sm:flex">
+        <div class="sm:w-3/5 bg-secondary">
+            <div class="Left-Space h-full flex-row xl:flex items-center">
+                <p class="p-4 pl-12 pb-8 pr-12 sm:pr-4 sm:max-w-sm text-darker-3 text-lg text-justify">
+                    <span class="-ml-10 font-SecularOne text-5xl inline">“</span>
+                    Dwelly aims to become a virtual property manager for every real estate asset owner. It was founded keeping in mind every woe and trouble of a property owner.
+                </p>
+                <div class="flex justify-evenly items-center px-3 pb-4 sm:px-0 sm:max-w-sm">
+                    <div>
+                        <img src="{{ url('resources/images/kaushal.png') }}" alt="quote" class="p-3 bg-cover">
+                    </div>
+                    <div>
+                        <img src="{{ url('resources/images/antarikh.png') }}" alt="quote" class="p-3 bg-cover">
+                    </div>
+                    <div>
+                        <img src="{{ url('resources/images/atif.png') }}" alt="quote" class="p-3 bg-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sm:w-2/5 flex items-center justify-center sm:justify-start border-t-8 border-b-8 bg-darker-3 border-t-piss-yellow border-b-piss-yellow p-4">
+            <p class="text-white font-GraphikLight text-4xl leading-snug sm:max-w-xs text-center sm:text-left">
+                We have <span class="text-piss-yellow font-GraphikSemibold block text-5xl">Expertise</span> for your every <br class="sm:hidden"> Property hassle.
+            </p>
         </div>
     </div>
     <style>

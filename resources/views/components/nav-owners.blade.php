@@ -1,4 +1,4 @@
-<div class="flex justify-between fixed w-full z-20" style="background: linear-gradient(to right, #e6e6e6 59%, #4c4d47 41%);">
+<div class="flex justify-between fixed w-full z-20" style="background: linear-gradient(to right, #e6e6e6 60%, #4c4d47 40%);">
     <div class="flex justify-between mx-auto w-full Site-Max-Width p-4 pt-2">
         <!-- Logo -->
         <div class="shrink-0 flex items-center">

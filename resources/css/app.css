@@ -36,6 +36,17 @@
     src: url("../../public/resources/fonts/ADELIA.otf");
 }
 
+@font-face {
+    font-family: "SecuralOneRegular";
+    /* font-style: regular; */
+    src: url("../../public/resources/fonts/SecularOneRegular.ttf");
+}
+
+@font-face {
+    font-family: "GloriaHallelujahRegular";
+    src: url("../../public/resources/fonts/GloriaHallelujahRegular.ttf");
+}
+
 @layer base {
     html {
         font-family: Graphik, system-ui, sans-serif;

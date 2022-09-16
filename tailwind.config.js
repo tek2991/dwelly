@@ -20,6 +20,8 @@ module.exports = {
                 GraphikSemibold: ["GraphikSemibold"],
                 GraphikBold: ["GraphikBold"],
                 Adelia: ["Adelia", "sans-serif"],
+                SecularOne: ["SecuralOneRegular"],
+                GloriaHallelujah: ["GloriaHallelujahRegular"],
             },
         },
 
