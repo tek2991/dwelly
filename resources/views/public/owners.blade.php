@@ -219,39 +219,63 @@
         <section id="testimonials-slide" class="splide h-full" aria-label="Beautiful Images">
             <div class="splide__track">
                 <ul class="splide__list">
-                    @for ($i = 0; $i < 3; $i++)
-                        <li class="splide__slide">
-                            <div
-                                class="flex justify-evenly h-full p-2 items-center self-center  Rounded-BOX-1-35 border-2 border-piss-yellow">
-                                <img src="{{ url('resources/images/testimonial-profile-1.jpg') }}"
-                                    alt="Rent on Time" class="w-16">
-                                <div class="text-darker-3 p-4">
-                                    <h5 class="font-GraphikSemibold text-sm">Nishalina | Property Owner : 3BHK Flat Downtown</h5>
-                                    <p class="text-xs leading-4"> - Dwelly’s efforts is truly commendable. I stay in another state and my property
-                                        is in Guwahati, Assam. I truly am grateful and satisfied with the service
-                                        extended by Dwelly. Without any physical intervention from my side Dwelly took
-                                        great care not only in terms of finding a good tenant. They paid attention to
-                                        every detail inside the home and arranged for additional furniture and fixture
-                                        wherever necessary. Dwelly maintained transparency in all its dealings and
-                                        attended to all my requirements very effectively and quickly.</p>
-                                </div>
+                    <li class="splide__slide">
+                        <div
+                            class="flex justify-evenly h-full p-2 items-center self-center  Rounded-BOX-1-35 border-2 border-piss-yellow">
+                            <img src="{{ url('resources/images/testimonial-profile-1.jpg') }}" alt="Testimonial profile"
+                                class="w-16">
+                            <div class="text-darker-3 p-4">
+                                <h5 class="font-GraphikSemibold text-sm">Nishalina | Property Owner : 3BHK Flat
+                                    Downtown</h5>
+                                <p class="text-xs leading-4"> - Dwelly’s efforts is truly commendable. I stay in
+                                    another state and my property
+                                    is in Guwahati, Assam. I truly am grateful and satisfied with the service
+                                    extended by Dwelly. Without any physical intervention from my side Dwelly took
+                                    great care not only in terms of finding a good tenant. They paid attention to
+                                    every detail inside the home and arranged for additional furniture and fixture
+                                    wherever necessary. Dwelly maintained transparency in all its dealings and
+                                    attended to all my requirements very effectively and quickly.</p>
                             </div>
-                        </li>
-                        <li class="splide__slide">
-                            <div
-                                class="flex justify-around h-full p-2 items-center self-center  Rounded-BOX-2-35 border-2 border-piss-yellow">
-                                <img src="{{ url('resources/images/testimonial-profile-4.jpg') }}"
-                                    alt="Property maintenanc" class="w-16">
-                                <div class="text-darker-3 p-4">
-                                    <h5 class="font-GraphikSemibold text-sm">Amarjyoti | Property Owner : 3 properties in Hatigaon</h5>
-                                    <p class="text-xs leading-4">- Dwelly has always been there to resolve any issue of both the tenant and
-                                        property. I never had to worry about rent payments from the tenants since they
-                                        pay me timely every month without fail. I would recommend Dwelly to everyone and
-                                        anyone. </p>
-                                </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div
+                            class="flex justify-around h-full p-2 items-center self-center  Rounded-BOX-2-35 border-2 border-piss-yellow">
+                            <img src="{{ url('resources/images/testimonial-profile-2.jpg') }}"
+                                alt="Testimonial profile" class="w-16 order-last">
+                            <div class="text-darker-3 p-4">
+                                <h5 class="font-GraphikSemibold text-sm">Amarjyoti | Property Owner : 3 properties in
+                                    Hatigaon</h5>
+                                <p class="text-xs leading-4"> - Dwelly has always been there to resolve any issue of
+                                    both the tenant and
+                                    property. I never had to worry about rent payments from the tenants since they
+                                    pay me timely every month without fail. I would recommend Dwelly to everyone and
+                                    anyone.</p>
                             </div>
-                        </li>
-                    @endfor
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div
+                            class="flex justify-around h-full p-2 items-center self-center  Rounded-BOX-2-35 border-2 border-piss-yellow">
+                            <img src="{{ url('resources/images/testimonial-profile-3.jpg') }}"
+                                alt="Testimonial profile" class="w-16">
+                            <div class="text-darker-3 p-4">
+                                <h5 class="font-GraphikSemibold text-sm">Jennifer | Tenant : 1BHK Flat Mathuranagar</h5>
+                                <p class="text-xs leading-4"> - Our experience with Dwelly was wonderful. Their dealings are marked with sheer transparency and professionalism. They are very dedicated and I feel that my investment has been very secure. I would give Dwelly a rating of 9.5 out of 10 for their reliability. We are very much satisfied with the property as well.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="splide__slide">
+                        <div
+                            class="flex justify-around h-full p-2 items-center self-center  Rounded-BOX-2-35 border-2 border-piss-yellow">
+                            <img src="{{ url('resources/images/testimonial-profile-4.jpg') }}"
+                                alt="Testimonial profile" class="w-16 order-last">
+                            <div class="text-darker-3 p-4">
+                                <h5 class="font-GraphikSemibold text-sm">Sakshit | Tenant : 2BHK Flat Hatigaon</h5>
+                                <p class="text-xs leading-4"> - It’s been a wonderful  experience with Dwelly. They helped me with all possible ways from pre boarding till now. They are always available for any kind of help. I will recommend Dwelly to everyone as it is quite different from others. HAPPY Dwelly.</p>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </section>
@@ -313,17 +337,46 @@
                 autoplay: true,
                 interval: 3000,
                 pagination: false,
-                perPage: 3.5,
-                gap: '2rem',
+                perPage: 3,
+                gap: '6rem',
+                padding: {
+                    left: '6rem',
+                    right: '14rem',
+                },
                 breakpoints: {
                     640: {
                         perPage: 1,
+                        padding: {
+                            left: '1rem',
+                            right: '1rem',
+                        },
                     },
                     768: {
-                        perPage: 1.3,
+                        perPage: 1,
+                        gap: '3rem',
+                        padding: {
+                            left: '3rem',
+                            right: '7rem',
+                        },
                     },
-                    1280: {
-                        perPage: 2.2,
+                    1024: {
+                        perPage: 2,
+                        gap: '1.5rem',
+                        padding: {
+                            left: '1.5rem',
+                            right: '2.5rem',
+                        },
+                    },
+                    1200: {
+                        perPage: 2,
+                        gap: '3rem',
+                        padding: {
+                            left: '3rem',
+                            right: '7rem',
+                        },
+                    },
+                    1600: {
+                        perPage: 2,
                     },
                 }
             });
