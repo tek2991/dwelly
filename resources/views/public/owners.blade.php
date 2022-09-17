@@ -185,12 +185,13 @@
         </div>
     </div>
 
-     <div id="hero" class="my-6 sm:flex">
+    <div class="my-6 sm:flex">
         <div class="sm:w-3/5 bg-secondary">
             <div class="Left-Space h-full flex-row xl:flex items-center">
                 <p class="p-4 pl-12 pb-8 pr-12 sm:pr-4 sm:max-w-sm text-darker-3 text-lg text-justify">
                     <span class="-ml-10 font-SecularOne text-5xl inline">“</span>
-                    Dwelly aims to become a virtual property manager for every real estate asset owner. It was founded keeping in mind every woe and trouble of a property owner.
+                    Dwelly aims to become a virtual property manager for every real estate asset owner. It was founded
+                    keeping in mind every woe and trouble of a property owner.
                 </p>
                 <div class="flex justify-evenly items-center px-3 pb-4 sm:px-0 sm:max-w-sm">
                     <div>
@@ -205,12 +206,57 @@
                 </div>
             </div>
         </div>
-        <div class="sm:w-2/5 flex items-center justify-center sm:justify-start border-t-8 border-b-8 bg-darker-3 border-t-piss-yellow border-b-piss-yellow p-4">
+        <div
+            class="sm:w-2/5 flex items-center justify-center sm:justify-start border-t-8 border-b-8 bg-darker-3 border-t-piss-yellow border-b-piss-yellow p-4">
             <p class="text-white font-GraphikLight text-4xl leading-snug sm:max-w-xs text-center sm:text-left">
-                We have <span class="text-piss-yellow font-GraphikSemibold block text-5xl">Expertise</span> for your every <br class="sm:hidden"> Property hassle.
+                We have <span class="text-piss-yellow font-GraphikSemibold block text-5xl">Expertise</span> for your
+                every <br class="sm:hidden"> Property hassle.
             </p>
         </div>
     </div>
+
+    <div class="p-4 my-12">
+        <section id="testimonials-slide" class="splide h-full" aria-label="Beautiful Images">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    @for ($i = 0; $i < 3; $i++)
+                        <li class="splide__slide">
+                            <div
+                                class="flex justify-evenly h-full p-2 items-center self-center  Rounded-BOX-1-35 border-2 border-piss-yellow">
+                                <img src="{{ url('resources/images/testimonial-profile-1.jpg') }}"
+                                    alt="Rent on Time" class="w-16">
+                                <div class="text-darker-3 p-4">
+                                    <h5 class="font-GraphikSemibold text-sm">Nishalina | Property Owner : 3BHK Flat Downtown</h5>
+                                    <p class="text-xs leading-4"> - Dwelly’s efforts is truly commendable. I stay in another state and my property
+                                        is in Guwahati, Assam. I truly am grateful and satisfied with the service
+                                        extended by Dwelly. Without any physical intervention from my side Dwelly took
+                                        great care not only in terms of finding a good tenant. They paid attention to
+                                        every detail inside the home and arranged for additional furniture and fixture
+                                        wherever necessary. Dwelly maintained transparency in all its dealings and
+                                        attended to all my requirements very effectively and quickly.</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div
+                                class="flex justify-around h-full p-2 items-center self-center  Rounded-BOX-2-35 border-2 border-piss-yellow">
+                                <img src="{{ url('resources/images/testimonial-profile-4.jpg') }}"
+                                    alt="Property maintenanc" class="w-16">
+                                <div class="text-darker-3 p-4">
+                                    <h5 class="font-GraphikSemibold text-sm">Amarjyoti | Property Owner : 3 properties in Hatigaon</h5>
+                                    <p class="text-xs leading-4">- Dwelly has always been there to resolve any issue of both the tenant and
+                                        property. I never had to worry about rent payments from the tenants since they
+                                        pay me timely every month without fail. I would recommend Dwelly to everyone and
+                                        anyone. </p>
+                                </div>
+                            </div>
+                        </li>
+                    @endfor
+                </ul>
+            </div>
+        </section>
+    </div>
+
     <style>
         .flip-card {
             background-color: transparent;
@@ -243,12 +289,12 @@
         }
 
         .splide__pagination__page {
-                background-color: #e6e6e6;
-            }
+            background-color: #e6e6e6;
+        }
 
         .splide__pagination__page.is-active {
-                background-color: #e8c811;
-            }
+            background-color: #e8c811;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -257,6 +303,29 @@
                 arrows: false,
                 autoplay: true,
                 interval: 3000,
+            });
+            splide.mount();
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var splide = new Splide('#testimonials-slide', {
+                type: 'loop',
+                arrows: false,
+                autoplay: true,
+                interval: 3000,
+                pagination: false,
+                perPage: 3.5,
+                gap: '2rem',
+                breakpoints: {
+                    640: {
+                        perPage: 1,
+                    },
+                    768: {
+                        perPage: 1.3,
+                    },
+                    1280: {
+                        perPage: 2.2,
+                    },
+                }
             });
             splide.mount();
         });
