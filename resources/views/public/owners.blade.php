@@ -128,7 +128,7 @@
                     </div>
                     <div
                         class="flip-card-back w-full h-full absolute flex items-center px-4 lg:px-8 bg-darker-3 Rounded-BOX-2 border-2 border-darker-3">
-                        <p class="text-white text-left font-GraphikLight text-md leading-4 2xl:text-lg xl:leading-6">
+                        <p class="text-white text-left font-GraphikLight leading-5 xl:text-lg xl:leading-6">
                             We do all the
                             paperworks
                             for you like <br>
@@ -222,8 +222,8 @@
                     <li class="splide__slide">
                         <div
                             class="flex justify-evenly h-full p-2 items-center self-center  Rounded-BOX-1-35 border-2 border-piss-yellow">
-                            <img src="{{ url('resources/images/testimonial-profile-1.jpg') }}" alt="Testimonial profile"
-                                class="w-16">
+                            <img src="{{ url('resources/images/testimonial-profile-1.jpg') }}"
+                                alt="Testimonial profile" class="w-16">
                             <div class="text-darker-3 p-4">
                                 <h5 class="font-GraphikSemibold text-sm">Nishalina | Property Owner : 3BHK Flat
                                     Downtown</h5>
@@ -260,8 +260,13 @@
                             <img src="{{ url('resources/images/testimonial-profile-3.jpg') }}"
                                 alt="Testimonial profile" class="w-16">
                             <div class="text-darker-3 p-4">
-                                <h5 class="font-GraphikSemibold text-sm">Jennifer | Tenant : 1BHK Flat Mathuranagar</h5>
-                                <p class="text-xs leading-4"> - Our experience with Dwelly was wonderful. Their dealings are marked with sheer transparency and professionalism. They are very dedicated and I feel that my investment has been very secure. I would give Dwelly a rating of 9.5 out of 10 for their reliability. We are very much satisfied with the property as well.</p>
+                                <h5 class="font-GraphikSemibold text-sm">Jennifer | Tenant : 1BHK Flat Mathuranagar
+                                </h5>
+                                <p class="text-xs leading-4"> - Our experience with Dwelly was wonderful. Their
+                                    dealings are marked with sheer transparency and professionalism. They are very
+                                    dedicated and I feel that my investment has been very secure. I would give Dwelly a
+                                    rating of 9.5 out of 10 for their reliability. We are very much satisfied with the
+                                    property as well.</p>
                             </div>
                         </div>
                     </li>
@@ -272,7 +277,10 @@
                                 alt="Testimonial profile" class="w-16 order-last">
                             <div class="text-darker-3 p-4">
                                 <h5 class="font-GraphikSemibold text-sm">Sakshit | Tenant : 2BHK Flat Hatigaon</h5>
-                                <p class="text-xs leading-4"> - It’s been a wonderful  experience with Dwelly. They helped me with all possible ways from pre boarding till now. They are always available for any kind of help. I will recommend Dwelly to everyone as it is quite different from others. HAPPY Dwelly.</p>
+                                <p class="text-xs leading-4"> - It’s been a wonderful experience with Dwelly. They
+                                    helped me with all possible ways from pre boarding till now. They are always
+                                    available for any kind of help. I will recommend Dwelly to everyone as it is quite
+                                    different from others. HAPPY Dwelly.</p>
                             </div>
                         </div>
                     </li>
