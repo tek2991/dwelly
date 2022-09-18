@@ -14,7 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::create('amenity_property', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('amenity_id')->constrained();
             $table->foreignId('property_id')->constrained();
             $table->timestamps();

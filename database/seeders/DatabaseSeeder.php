@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            AmenitiesSeeder::class,
+            AmenitySeeder::class,
             FlooringSeeder::class,
             FurnishingSeeder::class,
             FurnitureSeeder::class,
