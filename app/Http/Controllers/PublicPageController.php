@@ -11,6 +11,11 @@ class PublicPageController extends Controller
         return view('public.index');
     }
 
+    public function propertyIndex()
+    {
+        return view('public.propertyIndex');
+    }
+
     public function about()
     {
         return view('public.about');

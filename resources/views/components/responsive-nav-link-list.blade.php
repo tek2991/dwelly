@@ -1,6 +1,9 @@
 <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
     {{ __('Home') }}
 </x-responsive-nav-link>
+<x-responsive-nav-link :href="route('property.index')" :active="request()->routeIs('property.index')">
+    {{ __('All Properties') }}
+</x-responsive-nav-link>
 <x-responsive-nav-link :href="route('owners')" :active="request()->routeIs('owners')">
     {{ __('Owners') }}
 </x-responsive-nav-link>

@@ -20,5 +20,15 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test Admin',
             'email' => 'tek2991@gmail.com',
         ]);
+
+        $this->call([
+            AmenitiesSeeder::class,
+            FlooringSeeder::class,
+            FurnishingSeeder::class,
+            FurnitureSeeder::class,
+            LocalitySeeder::class,
+            PropertyTypeSeeder::class,
+            RoomSeeder::class,
+        ]);
     }
 }
