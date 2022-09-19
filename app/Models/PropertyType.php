@@ -10,4 +10,9 @@ class PropertyType extends Model
         'name',
         'description',
     ];
+
+    public function properties()
+    {
+        return $this->hasMany(Property::class);
+    }
 }

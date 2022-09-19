@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Furnishing extends Model
+class Establishment extends Model
 {
     protected $fillable = [
         'name',
@@ -12,6 +12,6 @@ class Furnishing extends Model
 
     public function properties()
     {
-        return $this->hasMany(Property::class);
+        return $this->belongsToMany(Property::class)->withPivot('description', 'distance_in_kms');
     }
 }

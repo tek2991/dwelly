@@ -10,4 +10,13 @@ class Room extends Model
         'name',
         'show',
     ];
+
+    protected $casts = [
+        'show' => 'boolean',
+    ];
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class)->withPivot('quantity');
+    }
 }

@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('furniture_property', function (Blueprint $table) {
-            $table->foreignId('furniture_id')->constrained();
+        Schema::create('establishment_property', function (Blueprint $table) {
+            $table->foreignId('establishment_id')->constrained();
             $table->foreignId('property_id')->constrained();
-            $table->integer('quantity');
             $table->string('description')->nullable();
+            $table->integer('distance_in_kms')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('furniture_property');
+        Schema::dropIfExists('establishment_property');
     }
 };

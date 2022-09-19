@@ -11,4 +11,13 @@ class Amenity extends Model
         'icon_path',
         'show',
     ];
+
+    protected $casts = [
+        'show' => 'boolean',
+    ];
+
+    public function properties()
+    {
+        return $this->belongsToMany(Property::class);
+    }
 }
