@@ -14,9 +14,9 @@ class PublicPageController extends Controller
         return view('public.index');
     }
 
-    public function propertyIndex()
+    public function allProperties()
     {
-        return view('public.propertyIndex');
+        return view('public.allProperties');
     }
 
     public function about()
@@ -36,14 +36,15 @@ class PublicPageController extends Controller
 
     public function update()
     {
-        // increase time limit of function to 5 mins
-        set_time_limit(300);
+        return ('No updates');
+        // increase time limit of function to 10 mins
+        set_time_limit(600);
 
-        // increase memory limit of function to 1 GB
-        ini_set('memory_limit', '1024M');
+        // increase memory limit of function to 2 GB
+        ini_set('memory_limit', '2048M');
 
-        // increase max execution time of function to 5 mins
-        ini_set('max_execution_time', 300);
+        // increase max execution time of function to 10 mins
+        ini_set('max_execution_time', 600);
         
 
         function csvToArray($filename = '', $delimiter = ',')

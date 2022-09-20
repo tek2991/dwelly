@@ -1,7 +1,7 @@
 <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
     {{ __('Home') }}
 </x-nav-link>
-<x-nav-link :href="route('property.index')" :active="request()->routeIs('property.index')">
+<x-nav-link :href="route('allProperties')" :active="request()->routeIs('allProperties')">
     {{ __('All Properties') }}
 </x-nav-link>
 <x-nav-link :href="route('owners')" :active="request()->routeIs('owners')">

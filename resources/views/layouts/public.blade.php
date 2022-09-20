@@ -16,7 +16,7 @@
     <div>
         @if (Route::is('owners'))
             <x-nav-owners />
-        @elseif (Route::is('property.index'))
+        @elseif (Route::is('allProperties'))
             <x-nav-search />
         @else
             <x-nav-main />
