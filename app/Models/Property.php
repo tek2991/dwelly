@@ -23,9 +23,9 @@ class Property extends Model
         'latitude',
         'longitude',
         'rent',
-        'security_deposit',
-        'society_fee',
-        'booking_amount',
+        'securityDeposit',
+        'societyFee',
+        'bookingAmount',
         'is_promoted',
         'available_from',
         'created_by',
@@ -34,13 +34,17 @@ class Property extends Model
     protected $casts = [
         'is_promoted' => 'boolean',
         'available_from' => 'date',
+        'rent' => 'integer',
+        'securityDeposit' => 'integer',
+        'societyFee' => 'integer',
+        'bookingAmount' => 'integer',
     ];
 
     protected $appends = [
         'rent',
-        'security_deposit',
-        'society_fee',
-        'booking_amount',
+        'securityDeposit',
+        'societyFee',
+        'bookingAmount',
     ];
 
     protected $hidden = [
@@ -94,9 +98,14 @@ class Property extends Model
         return $this->belongsToMany(Furniture::class)->withPivot('quantity', 'description');
     }
 
-    public function establishments()
+    public function nearbyEstablishments()
     {
-        return $this->belongsToMany(Establishment::class)->withPivot('description', 'distance_in_kms');
+        return $this->hasMany(NearbyEstablishment::class);
+    }
+
+    public function propertyImages()
+    {
+        return $this->hasMany(PropertyImage::class);
     }
 
     /**
@@ -104,7 +113,7 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function getRentInCentsAttribute()
+    public function rent(): Attribute
     {
         return new Attribute(
             get: fn ($value, $attributes) => $attributes['rent_in_cents'] / 100,
@@ -120,7 +129,7 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function getSecurityDepositInCentsAttribute()
+    public function securityDeposit(): Attribute
     {
         return new Attribute(
             get: fn ($value, $attributes) => $attributes['security_deposit_in_cents'] / 100,
@@ -136,7 +145,7 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function getSocietyFeeInCentsAttribute()
+    public function societyFee(): Attribute
     {
         return new Attribute(
             get: fn ($value, $attributes) => $attributes['society_fee_in_cents'] / 100,
@@ -152,7 +161,7 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function getBookingAmountInCentsAttribute()
+    public function bookingAmount(): Attribute
     {
         return new Attribute(
             get: fn ($value, $attributes) => $attributes['booking_amount_in_cents'] / 100,

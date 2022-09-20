@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('establishment_property', function (Blueprint $table) {
-            $table->foreignId('establishment_id')->constrained();
+        Schema::create('nearby_establishments', function (Blueprint $table) {
+            $table->foreignId('establishment_type_id')->constrained();
             $table->foreignId('property_id')->constrained();
             $table->string('description')->nullable();
             $table->integer('distance_in_kms')->nullable();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('establishment_property');
+        Schema::dropIfExists('nearby_establishments');
     }
 };

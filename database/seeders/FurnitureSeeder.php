@@ -15,7 +15,7 @@ class FurnitureSeeder extends Seeder
     public function run()
     {
         // Default furniture array with the furniture name and the icon name in the storage/app/uploads/icons folder and if it should be shown in the frontend
-        $furniture = [
+        $furnitures = [
             ['name' => 'Fan', 'icon_path' => 'uploads/icons/fan.svg', 'show' => true],
             ['name' => 'Light', 'icon_path' => 'uploads/icons/light.svg', 'show' => true],
             ['name' => 'Kitchen Cabinet', 'icon_path' => null, 'show' => false],
@@ -41,8 +41,8 @@ class FurnitureSeeder extends Seeder
             ['name' => 'Chair', 'icon_path' => null, 'show' => false],
         ];
 
-        // Insert the furniture into the database
-        foreach ($furniture as $f) {
+        // Insert the furnitures into the database
+        foreach ($furnitures as $f) {
             \App\Models\Furniture::create([
                 'name' => $f['name'],
                 'icon_path' => $f['icon_path'],

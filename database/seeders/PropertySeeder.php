@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PropertySeeder extends Seeder
 {
@@ -243,9 +245,136 @@ class PropertySeeder extends Seeder
          *]
          */
 
+        $localities = csvToArray('database/old_data/localities.csv');
+        // Sample locality item in the array
+        /**
+         * rray:4 [
+         *"locality_id" => "1"
+         *"pincode" => "781001"
+         *"locality_name" => "Pan Bazar"
+         *"locality_city" => "Guwahati"
+         *]
+         */
+
+
+        // define array with old furniture name as key and new furniture name as value
+        $furniture_names = [
+            'k_cabinet' => 'Kitchen Cabinet',
+            'dining_set' => 'Dining Set',
+            'g_stove' => 'Gas Stove',
+            'i_stove' => 'Induction Stove',
+            'g_cylinder' => 'Gas Cylinder',
+            'e_fan' => 'Exhaust Fan',
+            'k_chimney' => 'Kitchen Chimney',
+            'w_purifier' => 'Water Purifier',
+            'AC' => 'Air Conditioner',
+            'TV' => 'Television',
+            'wc' => 'Washing Machine',
+            's_table' => 'Study Table',
+            'sd_table' => 'Side Table',
+        ];
+
         //  Start the property data migration
         foreach ($properties as $property) {
+            // get the resoective property_room
+            $property_room = array_values(array_filter($property_rooms, function ($item) use ($property) {
+                return $item['property_id'] == $property['property_id'];
+            }));
+            // Get the locality
+            $locality = array_values(array_filter($localities, function ($item) use ($property) {
+                return $item['locality_id'] == $property['locality'];
+            }));
+            // Find the locality in the DB by the pincode and get the id
+            $locality_id = DB::table('localities')->where('pincode', $locality[0]['pincode'])->first()->id;
+            // Check if the property code is already in the DB
+            $property_code_exists = DB::table('properties')->where('code', $property['property_code'])->exists();
+
+            // If the property code is in the DB suffix the property code with the property id
+            if ($property_code_exists) {
+                $property['property_code'] = $property['property_code'] . '_' . $property['property_id'];
+            }
+
             //  Create the property
+            $property = \App\Models\Property::create([
+                'code' => $property['property_code'],
+                'bhk' => $property['bhk'],
+                'floor_space' => $property['floor_space'],
+                'property_type_id' => $property['type'],
+                'flooring_id' => $property['flooring'],
+                'furnishing_id' => $property_room[0]['furnish'],
+
+                'floors' => $property_room[0]['floor'],
+                'total_floors' => $property_room[0]['floor_max'],
+
+                'address' => $property['address'],
+                'building_name' => $property['building'],
+                'landmark' => $property['landmark'],
+                'locality_id' => $locality_id,
+
+                'latitude' => $property['latitude'],
+                'longitude' => $property['longitude'],
+
+                'rent_in_cents' => $property['rent'] * 100,
+                'security_deposit_in_cents' => $property['security_deposit'] * 100,
+                'society_fee_in_cents' => $property['society_fee'] * 100,
+                'booking_amount_in_cents' => $property['booking_amt'] * 100,
+
+                'is_promoted' => $property['vip'],
+
+                'available_from' => $property['available_from'],
+
+                'created_by' => User::first()->id,
+            ]);
+
+            //  Loop through $property_room and sync with the property with quantity in the pivot table
+            foreach ($property_room[0] as $room => $quantity) {
+                // if room is washroom change it to bathroom
+                if ($room == 'washroom') {
+                    $room = 'bathroom';
+                }
+                // check if there are room names like in the rooms table
+                $room_exists = DB::table('rooms')->where('name', 'like', '%' . ucfirst($room) . '%')->exists();
+                // If the room exists get the id
+                if ($room_exists) {
+                    $room_id = DB::table('rooms')->where('name', 'like', '%' . ucfirst($room) . '%')->first()->id;
+                    // Sync the room with the property with the quantity
+                    $property->rooms()->syncWithoutDetaching([$room_id => ['quantity' => $quantity]]);
+                }
+            }
+
+            // Get the respective property furniture
+            $property_furniture = array_values(array_filter($property_furnitures, function ($item) use ($property) {
+                return $item['property_id'] == $property['property_id'];
+            }));
+
+            // Get the respective property furniture description
+            $property_furniture_description = array_values(array_filter($property_furniture_descriptions, function ($item) use ($property) {
+                return $item['property_id'] == $property['property_id'];
+            }));
+
+            $this->command->info(count($property_furniture_description));
+
+            // Loop through the property furniture and sync with the property with quantity in the pivot table
+            foreach ($property_furniture[0] as $furniture => $quantity) {
+                // Get the furniture description by the furniture name suffix with _rk
+                $furniture_description = $property_furniture_description[0][$furniture . '_rk'];
+                // Check if the furniture name is in the $furniture_names array
+                if (array_key_exists($furniture, $furniture_names)) {
+                    // get the new furniture name
+                    $furniture = $furniture_names[$furniture];
+                }
+
+                // check if there are furniture names like in the furnitures table
+                $furniture_exists = DB::table('furnitures')->where('name', 'like', '%' . ucfirst($furniture) . '%')->exists();
+                // If the furniture exists get the id
+                if ($furniture_exists) {
+                    $furniture_id = DB::table('furnitures')->where('name', 'like', '%' . ucfirst($furniture) . '%')->first()->id;
+                    // Sync the furniture with the property with the quantity and description
+                    $property->furnitures()->syncWithoutDetaching([$furniture_id => ['quantity' => $quantity, 'description' => $furniture_description]]);
+                }
+            }
+
+            break;
         }
     }
 }

@@ -16,19 +16,19 @@ class AmenitySeeder extends Seeder
     {
         // Default amenities array with the amenities name and the icon name in the storage/app/uploads/icons folder and if it should be shown in the frontend
         $amenities = [
-            ['name' => 'Pets Friendly', 'icon_path' => 'uploads/icons/pets_friendly.png', 'show' => true],
-            ['name' => 'Bachlor Friendly', 'icon_path' => 'uploads/icons/bachlor_friendly.png', 'show' => true],
-            ['name' => 'Student Friendly', 'icon_path' => 'uploads/icons/student_friendly.png', 'show' => true],
-            ['name' => 'Couples Friendly', 'icon_path' => 'uploads/icons/couples_friendly.png', 'show' => true],
-            ['name' => 'Family Friendly', 'icon_path' => 'uploads/icons/family_friendly.png', 'show' => true],
-            ['name' => 'Parking', 'icon_path' => 'uploads/icons/parking.png', 'show' => true],
-            ['name' => 'Lift', 'icon_path' => 'uploads/icons/lift.png', 'show' => true],
-            ['name' => 'Power Backup', 'icon_path' => 'uploads/icons/power_backup.png', 'show' => true],
-            ['name' => 'Security', 'icon_path' => 'uploads/icons/security.png', 'show' => true],
-            ['name' => 'Swimming Pool', 'icon_path' => 'uploads/icons/swimming_pool.png', 'show' => true],
-            ['name' => 'Gym', 'icon_path' => 'uploads/icons/gym.png', 'show' => true],
-            ['name' => 'Recreation', 'icon_path' => 'uploads/icons/recreation.png', 'show' => true],
-            ['name' => 'Community', 'icon_path' => 'uploads/icons/community.png', 'show' => true],
+            ['name' => 'Pets Friendly', 'icon_path' => 'uploads/icons/pet.svg', 'show' => true],
+            ['name' => 'Bachelor Friendly', 'icon_path' => 'uploads/icons/bachelor.svg', 'show' => true],
+            ['name' => 'Student Friendly', 'icon_path' => 'uploads/icons/student.svg', 'show' => true],
+            ['name' => 'Couples Friendly', 'icon_path' => 'uploads/icons/couple.svg', 'show' => true],
+            ['name' => 'Family Friendly', 'icon_path' => 'uploads/icons/family.svg', 'show' => true],
+            ['name' => 'Parking', 'icon_path' => 'uploads/icons/parking.svg', 'show' => true],
+            ['name' => 'Lift', 'icon_path' => 'uploads/icons/lift.svg', 'show' => true],
+            ['name' => 'Power Backup', 'icon_path' => 'uploads/icons/power-backup.svg', 'show' => true],
+            ['name' => 'Security', 'icon_path' => 'uploads/icons/security.svg', 'show' => true],
+            ['name' => 'Swimming Pool', 'icon_path' => 'uploads/icons/swimming-pool.svg', 'show' => false],
+            ['name' => 'Gym', 'icon_path' => 'uploads/icons/gym.svg', 'show' => true],
+            ['name' => 'Recreation', 'icon_path' => null, 'show' => true],
+            ['name' => 'Community', 'icon_path' => 'uploads/icons/community.svg', 'show' => true],
         ];
 
         // Insert the amenities into the database

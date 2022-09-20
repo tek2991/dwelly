@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EstablishmentSeeder extends Seeder
+class EstablishmentTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,22 +16,22 @@ class EstablishmentSeeder extends Seeder
     {
         // Define the data to be seeded
         $establishments = [
-            'Nearby Market',
-            'Nearby Hospital',
-            'Nearby School',
-            'Nearby ATM',
-            'Nearby Bank',
-            'Nearby Restaurant',
-            'Nearby Theatre',
-            'Nearby Shopping Mall',
-            'Nearby Airport',
-            'Nearby Train Station',
-            'Nearby Bus Stop',
+            'Market',
+            'Hospital',
+            'School',
+            'ATM',
+            'Bank',
+            'Restaurant',
+            'Theatre',
+            'Shopping Mall',
+            'Airport',
+            'Train Station',
+            'Bus Stop',
         ];
 
         // Seed the data
         foreach ($establishments as $establishment) {
-            \App\Models\Establishment::create([
+            \App\Models\EstablishmentType::create([
                 'name' => $establishment,
             ]);
         }

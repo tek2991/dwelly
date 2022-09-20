@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             LocalitySeeder::class,
             PropertyTypeSeeder::class,
             RoomSeeder::class,
-            EstablishmentSeeder::class,
+            EstablishmentTypeSeeder::class,
         ]);
     }
 }
