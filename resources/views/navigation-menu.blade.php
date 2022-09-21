@@ -15,6 +15,18 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    {{-- User Management --}}
+                    <x-nav-dropdown-button data-dropdown-toggle="user_management_dropdownNavbar">
+                        {{ __('User Management') }}
+                    </x-nav-dropdown-button>
+                    <x-nav-dropdown-wrapper id="user_management_dropdownNavbar">
+                        <x-nav-dropdown-item :href="route('user.index')" :active="request()->routeIs('user.*')">
+                            {{ __('Users') }}
+                        </x-nav-dropdown-item>
+                        <x-nav-dropdown-item :href="route('role.index')" :active="request()->routeIs('role.*')">
+                            {{ __('Roles') }}
+                        </x-nav-dropdown-item>
+                    </x-nav-dropdown-wrapper>
                 </div>
             </div>
 

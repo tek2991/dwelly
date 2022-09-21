@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PublicPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,14 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('app.dashboard');
     })->name('dashboard');
+
+    Route::resource('user', UserController::class)->only([
+        'index', 'show', 'edit', 'update'
+    ]);
+
+    Route::resource('role', RoleController::class)->only([
+        'index', 'show', 'edit', 'update'
+    ]);
 });
