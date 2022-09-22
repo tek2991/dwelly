@@ -2,16 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class UserTable extends PowerGridComponent
+final class UsersRolesTable extends PowerGridComponent
 {
     use ActionButton;
+
+    // Set the user variable
+    public $user;
+
+    public function __construct($user)
+    {
+        $this->user = $user;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -44,13 +52,15 @@ final class UserTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid datasource.
-     *
-     * @return Builder<\App\Models\User>
-     */
+    * PowerGrid datasource.
+    *
+    * @return Builder<\App\Models\Role>
+    */
     public function datasource(): Builder
     {
-        return User::query();
+        // Get the user's role ids
+        $role_ids = $this->user->roles()->get()->pluck('id')->toArray();
+        return Role::query()->whereIn('id', $role_ids);
     }
 
     /*
@@ -87,19 +97,11 @@ final class UserTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('name')
-
-            /** Example of custom column using a closure **/
-            ->addColumn('name_lower', function (User $model) {
-                return strtolower(e($model->name));
+            ->addColumn('permissions', function (Role $role) {
+                return $role->permissions()->get()->pluck('name')->implode(', ');
             })
-
-            ->addColumn('roles', function (User $model) {
-                return $model->roles->implode('name', ', ');
-            })
-
-            ->addColumn('email')
-            ->addColumn('created_at_formatted', fn (User $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (User $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('created_at_formatted', fn (Role $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+            ->addColumn('updated_at_formatted', fn (Role $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -111,7 +113,7 @@ final class UserTable extends PowerGridComponent
     |
     */
 
-    /**
+     /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -119,16 +121,13 @@ final class UserTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('NAME', 'name')
+            Column::make('Role', 'name')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('EMAIL', 'email')
+            Column::make('Permissions', 'permissions')
                 ->searchable(),
-
-            Column::make('ROLES', 'roles')
-                ->searchable(),
-        ];
+        ]
+;
     }
 
     /*
@@ -139,27 +138,26 @@ final class UserTable extends PowerGridComponent
     |
     */
 
-    /**
-     * PowerGrid User Action Buttons.
+     /**
+     * PowerGrid Role Action Buttons.
      *
      * @return array<int, Button>
      */
 
-
     public function actions(): array
     {
        return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-2.5 py-1 m-1 rounded text-sm')
-               ->route('user.edit', ['user' => 'id']),
+        //    Button::make('edit', 'Edit')
+        //        ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+        //        ->route('role.edit', ['role' => 'id']),
 
-        //    Button::make('destroy', 'Delete')
-        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-        //        ->route('user.destroy', ['user' => 'id'])
-        //        ->method('delete')
+           Button::make('destroy', 'Remove')
+               ->class('bg-red-500 cursor-pointer text-white px-2.5 py-1.5 m-1 rounded text-sm')
+               ->route('user.detatchRole', ['user' => $this->user->id, 'role' => 'id'])
+               ->method('delete')
+               ->target('')
         ];
     }
-
 
     /*
     |--------------------------------------------------------------------------
@@ -169,8 +167,8 @@ final class UserTable extends PowerGridComponent
     |
     */
 
-    /**
-     * PowerGrid User Action Rules.
+     /**
+     * PowerGrid Role Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -182,7 +180,7 @@ final class UserTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($user) => $user->id === 1)
+                ->when(fn($role) => $role->id === 1)
                 ->hide(),
         ];
     }

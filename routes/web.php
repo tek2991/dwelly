@@ -39,7 +39,9 @@ Route::middleware([
         'index', 'show', 'edit', 'update'
     ]);
 
+    Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
+
     Route::resource('role', RoleController::class)->only([
-        'index', 'show', 'edit', 'update'
+        'index', 'show', 'create', 'store', 'edit', 'update'
     ]);
 });
