@@ -153,9 +153,10 @@ final class UsersRolesTable extends PowerGridComponent
 
            Button::make('destroy', 'Remove')
                ->class('bg-red-500 cursor-pointer text-white px-2.5 py-1.5 m-1 rounded text-sm')
-               ->route('user.detatchRole', ['user' => $this->user->id, 'role' => 'id'])
-               ->method('delete')
-               ->target('')
+            //    ->route('user.detatchRole', ['user' => $this->user->id, 'role' => 'id'])
+            //    ->method('delete')
+            //    ->target('')
+            ->openModal('confirm-detatch-modal', ['route' => 'user.detatchRole', 'model_id' => $this->user->id, 'model_name' => 'User', 'detatching_model_id' => 'id', 'detatching_model_name' => 'Role', 'action' => 'detatch'])
         ];
     }
 
