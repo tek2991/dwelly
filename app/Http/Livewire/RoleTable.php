@@ -89,6 +89,7 @@ final class RoleTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('name_lower', fn (Role $model) => strtolower(e($model->name)))
+            ->addColumn('permissions', fn (Role $model) => $model->permissions->pluck('name')->implode(', '))
             ->addColumn('created_at')
             ->addColumn('created_at_formatted', fn (Role $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
     }
@@ -110,21 +111,10 @@ final class RoleTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->searchable()
-                ->sortable(),
-
             Column::make('Name', 'name')
                 ->searchable()
-                ->makeInputText('name')
                 ->sortable(),
-
-            Column::make('Created at', 'created_at')
-                ->hidden(),
-
-            Column::make('Created at', 'created_at_formatted', 'created_at')
-                ->makeInputDatePicker()
-                ->searchable()
+            Column::make('Permissions', 'permissions')
         ];
     }
 

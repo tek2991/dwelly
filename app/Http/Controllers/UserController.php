@@ -86,7 +86,35 @@ class UserController extends Controller
 
     public function detatchRole(User $user, Role $role)
     {
-        // $user->roles()->detach($role);
+        // Do not allow users who are not admins to detatch roles
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->dangerBanner('You do not have permission to do that.');
+        }
+
+        // Do not allow detatching the admin role
+        if ($role->name == 'admin') {
+            return redirect()->back()->dangerBanner('You cannot detatch the admin role from a user.');
+        }
+        $user->roles()->detach($role);
         return redirect()->route('user.edit', $user)->banner('Role detached');
+    }
+
+    public function attachRole(Request $request, User $user)
+    {
+        // Do not allow users who are not admins to attach roles
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->dangerBanner('You do not have permission to do that.');
+        }
+        $role = Role::find($request->role_id);
+        // Do not allow attaching the admin role
+        if ($role->name == 'admin') {
+            return redirect()->back()->dangerBanner('You cannot attach the admin role');
+        }
+        // Do not allow attaching the same role twice
+        if ($user->roles->contains($role)) {
+            return redirect()->back()->dangerBanner('User already has this role');
+        }
+        $user->roles()->attach($role);
+        return redirect()->route('user.edit', $user)->banner('Role attached');
     }
 }
