@@ -27,7 +27,7 @@
     </div>
     <div class="bg-darker-3">
         <footer>
-            <div class="Site-Max-Width mx-auto py-8 grid grid-cols-3 text-secondary">
+            <div class="Site-Max-Width mx-auto py-8 sm:grid sm:grid-cols-3 text-secondary">
                 <div class="p-4">
                     <h2 class="font-GraphikMedium text-xl my-4">About Us</h2>
                     <p class="text-justify">

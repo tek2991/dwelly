@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -14,10 +15,31 @@ class PublicPageController extends Controller
         return view('public.index');
     }
 
-    public function allProperties()
+    public function allProperties(Request $request)
     {
-        return view('public.allProperties');
+        // Get the properties
+        $properties = Property::paginate(10);
+
+        // Get the amenities with suffix _frienly in the name
+        $amenities = DB::table('amenities')->where('name', 'like', '%_friendly')->get();
+
+        // Get the property types for Apartment and House
+        $propertyTypes = DB::table('property_types')->whereIn('name', ['Apartment', 'House'])->get();
+
+        // Get the Furnishings
+        $furnishings = DB::table('furnishings')->get();
+
+        // Get the amenities for Lift, Parking, Power Backup, Security, and Swimming Pool
+        $amenities2 = DB::table('amenities')->whereIn('name', ['Lift', 'Parking', 'Power Backup', 'Security', 'Swimming Pool'])->get();
+
+        // Get the localities
+        $localities = DB::table('localities')->get();
+
+        // dd($properties);
+
+        return view('public.allProperties', compact('properties', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities'));
     }
+
 
     public function about()
     {

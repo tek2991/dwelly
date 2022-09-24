@@ -91,9 +91,20 @@ class Property extends Model
         return $this->belongsToMany(Amenity::class);
     }
 
+    public function checkPropertyAminity($aminity_name)
+    {
+        return $this->amenities->contains('name', $aminity_name);
+    }
+
     public function rooms()
     {
         return $this->belongsToMany(Room::class)->withPivot('quantity');
+    }
+
+    public function getNoOfRooms($room_name)
+    {
+        $room = $this->rooms()->where('name', $room_name)->first();
+        return $room ? $room->pivot->quantity : 0;
     }
 
     public function furnitures()
