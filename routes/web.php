@@ -35,14 +35,16 @@ Route::middleware([
         return view('app.dashboard');
     })->name('dashboard');
 
-    Route::resource('user', UserController::class)->only([
-        'index', 'show', 'edit', 'update'
-    ]);
-
-    Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
-    Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
-
-    Route::resource('role', RoleController::class)->only([
-        'index', 'show', 'create', 'store', 'edit', 'update'
-    ]);
+    // Admin Routes
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('user', UserController::class)->only([
+            'index', 'show', 'edit', 'update'
+        ]);
+    
+        Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
+        Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
+        Route::resource('role', RoleController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
+        ]);
+    });
 });

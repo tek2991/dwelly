@@ -98,6 +98,8 @@ final class UserTable extends PowerGridComponent
             })
 
             ->addColumn('email')
+            ->addColumn('phone_1')
+            ->addColumn('phone_2')
             ->addColumn('created_at_formatted', fn (User $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (User $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -124,6 +126,12 @@ final class UserTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('EMAIL', 'email')
+                ->searchable(),
+
+            Column::make('PHONE 1', 'phone_1')
+                ->searchable(),
+
+            Column::make('PHONE 2', 'phone_2')
                 ->searchable(),
 
             Column::make('ROLES', 'roles')
