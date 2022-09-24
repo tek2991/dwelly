@@ -12,10 +12,10 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-jet-nav-link>
                     @hasrole('admin')
-                        <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-jet-nav-link>
                         {{-- User Management --}}
                         <x-nav-dropdown-button data-dropdown-toggle="user_management_dropdownNavbar">
                             {{ __('User Management') }}
@@ -29,6 +29,15 @@
                             </x-nav-dropdown-item>
                         </x-nav-dropdown-wrapper>
                     @endhasrole
+                    {{-- Property Management --}}
+                    <x-nav-dropdown-button data-dropdown-toggle="property_management_dropdownNavbar">
+                        {{ __('Property Management') }}
+                    </x-nav-dropdown-button>
+                    <x-nav-dropdown-wrapper id="property_management_dropdownNavbar">
+                        <x-nav-dropdown-item :href="route('property.index')" :active="request()->routeIs('property.index')">
+                            {{ __('Properties') }}
+                        </x-nav-dropdown-item>
+                    </x-nav-dropdown-wrapper>
                 </div>
             </div>
 

@@ -381,9 +381,9 @@ class PublicPageController extends Controller
                 'longitude' => $property['longitude'],
 
                 'rent' => $property['rent'],
-                'securityDeposit' => $property['security_deposit'],
-                'societyFee' => $property['society_fee'],
-                'bookingAmount' => $property['booking_amt'],
+                'security_deposit' => $property['security_deposit'],
+                'society_fee' => $property['society_fee'],
+                'booking_amount' => $property['booking_amt'],
                 // 'rent_in_cents' => $property['rent'] * 100,
                 // 'security_deposit_in_cents' => $property['security_deposit'] * 100,
                 // 'society_fee_in_cents' => $property['society_fee'] * 100,

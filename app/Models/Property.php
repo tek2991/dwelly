@@ -40,11 +40,13 @@ class Property extends Model
         'bookingAmount' => 'integer',
     ];
 
+
+
     protected $appends = [
         'rent',
-        'securityDeposit',
-        'societyFee',
-        'bookingAmount',
+        'security_deposit',
+        'society_fee',
+        'booking_amount',
     ];
 
     protected $hidden = [
@@ -74,7 +76,8 @@ class Property extends Model
         return $this->belongsTo(Locality::class);
     }
 
-    public function isAvailable(){
+    public function isAvailable()
+    {
         return $this->available_from <= now();
     }
 
@@ -113,9 +116,9 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function rent(): Attribute
+    protected function rent(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn ($value, $attributes) => $attributes['rent_in_cents'] / 100,
 
             set: fn ($value) => [
@@ -129,9 +132,9 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function securityDeposit(): Attribute
+    protected function securityDeposit(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn ($value, $attributes) => $attributes['security_deposit_in_cents'] / 100,
 
             set: fn ($value) => [
@@ -145,9 +148,9 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function societyFee(): Attribute
+    protected function societyFee(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn ($value, $attributes) => $attributes['society_fee_in_cents'] / 100,
 
             set: fn ($value) => [
@@ -161,9 +164,9 @@ class Property extends Model
      *
      * @return \Illuminate\Database\Eloquent\Casts\Attribute
      */
-    public function bookingAmount(): Attribute
+    protected function bookingAmount(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn ($value, $attributes) => $attributes['booking_amount_in_cents'] / 100,
 
             set: fn ($value) => [

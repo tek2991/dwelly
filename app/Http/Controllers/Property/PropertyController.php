@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Property;
 
-use App\Models\Locality;
+use App\Http\Controllers\Controller;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
-class LocalityController extends Controller
+class PropertyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class LocalityController extends Controller
      */
     public function index()
     {
-        //
+        return view('app.property.index');
     }
 
     /**
@@ -41,10 +42,10 @@ class LocalityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Locality  $locality
+     * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function show(Locality $locality)
+    public function show(Property $property)
     {
         //
     }
@@ -52,10 +53,10 @@ class LocalityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Locality  $locality
+     * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function edit(Locality $locality)
+    public function edit(Property $property)
     {
         //
     }
@@ -64,10 +65,10 @@ class LocalityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Locality  $locality
+     * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Locality $locality)
+    public function update(Request $request, Property $property)
     {
         //
     }
@@ -75,10 +76,10 @@ class LocalityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Locality  $locality
+     * @param  \App\Models\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Locality $locality)
+    public function destroy(Property $property)
     {
         //
     }

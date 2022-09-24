@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\Property\PropertyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,9 @@ Route::middleware([
             'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
     });
+
+    // Property Routes
+    Route::resource('property', PropertyController::class)->only([
+        'index', 'show', 'create', 'store', 'edit', 'update'
+    ]);
 });
