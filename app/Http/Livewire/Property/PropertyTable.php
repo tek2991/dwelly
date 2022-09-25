@@ -93,9 +93,9 @@ final class PropertyTable extends PowerGridComponent
                 return strtolower(e($model->code));
             })
 
-            ->addColumn('bhk')
+            ->addColumn('bhk_id')
             ->addColumn('bhk_name', function (Property $model) {
-                return $model->bhk . ' BHK';
+                return $model->bhk->name;
             })
             ->addColumn('floor_space')
             ->addColumn('property_type_id')
@@ -163,7 +163,10 @@ final class PropertyTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('BHK', 'bhk_name', 'bhk'),
+            Column::make('BHK', 'bhk_name', 'bhk')
+                ->sortable()
+                ->searchable()
+                ->makeInputSelect(\App\Models\Bhk::all(), 'name', 'bhk_id', ['live-search' => 'true']),
 
             Column::make('SQ Ft', 'floor_space')
                 ->makeInputRange(),

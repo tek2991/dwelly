@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             RoomSeeder::class,
             EstablishmentTypeSeeder::class,
             BhkSeeder::class,
+            RoleSeeder::class,
         ]);
     }
 }
