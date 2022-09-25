@@ -605,7 +605,7 @@ class PublicPageController extends Controller
                 $property_image = \App\Models\PropertyImage::create([
                     'property_id' => $property->id,
                     'image_path' => $image_path,
-                    'cover' => $image['cover'],
+                    'is_cover' => $image['cover'],
                     'image_order' => $image['image_order'],
                     'show' => $image['image_status'],
                 ]);

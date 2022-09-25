@@ -124,7 +124,17 @@
                                 {{ $property->isAvailable() ? 'Available Now' : $property->available_from->diffForHumans() }}
                             </div>
                             <div>
-                                <img src="{{ url('storage/' . $property->propertyImages->first()->image_path) }}"
+                                @php
+                                    $image_url = 'https://via.placeholder.com/600x400.png?text=No+Image+Uploaded';
+                                    $images = $property->propertyImages;
+                                    // Check if there is a cover image
+                                    $coverImage = $images->where('is_cover', true)->first();
+                                    // If there is no cover image, get the first image
+                                    $coverImage = $coverImage ? $coverImage : $images->first();
+                                    // If there is an image, get the url
+                                    $image_url = $coverImage ? $coverImage->image_path : $image_url;
+                                @endphp
+                                <img src="{{ url('storage/' . $image_url) }}"
                                     alt="" class="w-full h-60 object-cover">
                             </div>
                             <div class="flex flex-col justify-between text-darker-3 mt-6 lg:mt-0">
