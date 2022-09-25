@@ -1,3 +1,4 @@
+@props(['filters'])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -17,7 +18,7 @@
         @if (Route::is('owners'))
             <x-nav-owners />
         @elseif (Route::is('allProperties'))
-            <x-nav-search />
+            <x-nav-search :filters="$filters" />
         @else
             <x-nav-main />
         @endif

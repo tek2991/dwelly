@@ -1,7 +1,9 @@
-<x-public-layout>
+<x-public-layout :filters="$filters">
     <div class="mx-auto mt-12 sm:mt-8 flex Site-Max-Width" id="filters-container">
         <div class="hidden sm:block overflow-y-scroll h-screen p-4 sticky top-20 sm:w-80 sm:mr-8" id="filters">
-            <form action="" class="text-darker-3">
+            <form action="{{ route('allProperties') }}" method="GET" class="text-darker-3" id="allPropertiesForm">
+                <input type="hidden" name="search" id="hidden-search" value="">
+                <input type="hidden" name="sortBy", id="hidden-sort-by" value="recomended">
                 <h3 class="font-GraphikBold text-lg mb-4">Filters</h3>
                 <div class="mb-2 pb-6 border-b-2 border-b-secondary">
                     <h4 class="font-GraphikMedium mb-2 text-sm">Bedroom</h4>
@@ -9,9 +11,9 @@
                         @for ($i = 1; $i <= 4; $i++)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="bedroom[]" value="{{ $i }}" id="bedroom-{{ $i }}">
+                                    name="bhks[]" value="{{ $i }}" id="bhk-{{ $i }}" @if (in_array($i, $filters->bhks)) checked @endif>
                                 <label class="text-gray-400 text-sm"
-                                    for="bedroom-{{ $i }}">{{ $i }} BHK</label>
+                                    for="bhk-{{ $i }}">{{ $i }} BHK</label>
                             </div>
                         @endfor
                     </div>
@@ -22,7 +24,7 @@
                         @foreach ($amenities as $amenity)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="amenity[]" value="{{ $amenity->id }}" id="amenity-{{ $amenity->id }}">
+                                    name="amenities[]" value="{{ $amenity->id }}" id="amenity-{{ $amenity->id }}" @if (in_array($amenity->id, $filters->amenities)) checked @endif>
                                 <label class="text-gray-400 text-sm" for="amenity-{{ $amenity->id }}">
                                     {{ str_replace(' Friendly', '', $amenity->name) }}
                                 </label>
@@ -36,8 +38,8 @@
                         @foreach ($propertyTypes as $propertyType)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="accomodation_type[]" value="{{ $propertyType->id }}"
-                                    id="property_type-{{ $propertyType->id }}">
+                                    name="propertyTypes[]" value="{{ $propertyType->id }}"
+                                    id="property_type-{{ $propertyType->id }}" @if (in_array($propertyType->id, $filters->propertyTypes)) checked @endif>
                                 <label class="text-gray-400 text-sm" for="property_type-{{ $propertyType->id }}">
                                     {{ $propertyType->name }}
                                 </label>
@@ -51,8 +53,8 @@
                         @foreach ($furnishings as $furnishing)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="furnishing[]" value="{{ $furnishing->id }}"
-                                    id="furnishing-{{ $furnishing->id }}">
+                                    name="furnishings[]" value="{{ $furnishing->id }}"
+                                    id="furnishing-{{ $furnishing->id }}" @if (in_array($furnishing->id, $filters->furnishings)) checked @endif>
                                 <label class="text-gray-400 text-sm" for="furnishing-{{ $furnishing->id }}">
                                     {{ $furnishing->name }}
                                 </label>
@@ -66,7 +68,7 @@
                         @foreach ($amenities2 as $amenity)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="amenity[]" value="{{ $amenity->id }}" id="amenity-{{ $amenity->id }}">
+                                    name="amenities[]" value="{{ $amenity->id }}" id="amenity-{{ $amenity->id }}" @if (in_array($amenity->id, $filters->amenities)) checked @endif>
                                 <label class="text-gray-400 text-sm" for="amenity-{{ $amenity->id }}">
                                     {{ $amenity->name }}
                                 </label>
@@ -80,7 +82,7 @@
                         @foreach ($localities as $locality)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="locality[]" value="{{ $locality->id }}" id="locality-{{ $locality->id }}">
+                                    name="localities[]" value="{{ $locality->id }}" id="locality-{{ $locality->id }}" @if (in_array($locality->id, $filters->localities)) checked @endif>
                                 <label class="text-gray-400 text-sm" for="locality-{{ $locality->id }}">
                                     {{ $locality->name }}
                                 </label>
@@ -103,10 +105,12 @@
                             <h3 class="text-md text-darker-2 mr-3">Sort by:</h3>
                         </div>
                         <div class="ml-4">
-                            <select name="sort_by" id="sort_by" class="text-darker-3 border-0 p-0 focus:ring-0">
-                                <option value="recomended">Featured</option>
-                                <option value="price_asc">Price: Low to High</option>
-                                <option value="price_desc">Price: High to Low</option>
+                            <select name="sort_by" id="sort-by"
+                                class="text-darker-3 border-0 p-0 focus:ring-0 cursor-pointer w-44"
+                                onchange="updateSortBy(this)">
+                                <option value="recomended" @if ($filters->sortBy =="recomended") selected @endif>Featured</option>
+                                <option value="price_asc" @if ($filters->sortBy =="price_asc") selected @endif>Price: Low to High</option>
+                                <option value="price_desc" @if ($filters->sortBy =="price_desc") selected @endif>Price: High to Low</option>
                             </select>
                         </div>
                     </div>
@@ -203,15 +207,72 @@
             const filtersContainer = document.getElementById('filters-container');
             // When the user clicks on the button, toggle the filters
             mobileFilterButton.addEventListener('click', function() {
-                const classes_to_toggle = ['hidden', 'sm:block', 'sticky', 'top-20', 'shadow-md', 'border-b-1', 'border-l-1', 'border-r-1', 'border-b-darker-3', 'pb-4', 'rounded-b-2xl']
+                const classes_to_toggle = ['hidden', 'sm:block', 'sticky', 'top-20', 'shadow-md',
+                    'border-b-1', 'border-l-1', 'border-r-1', 'border-b-darker-3', 'pb-4',
+                    'rounded-b-2xl'
+                ]
                 classes_to_toggle.forEach(function(class_to_toggle) {
                     document.getElementById('filters').classList.toggle(class_to_toggle);
                 })
-                
-
-
                 document.getElementById('filters-container').classList.toggle('flex');
             });
         })
+
+        function updateSortBy(element) {
+            const sort_by = element.value;
+            const hidden_sort_by = document.getElementById('hidden-sort-by');
+            hidden_sort_by.value = sort_by;
+
+            // Submit the form
+            submitForm();
+        }
+
+        // Function is called from nav-search.blade.php
+        function updateBHK(element) {
+            const bhk = element.value;
+            // get the bhks checkboxes
+            const bhk_checkboxes = document.getElementsByName('bhks[]');
+            // Loop through the checkboxes
+            bhk_checkboxes.forEach(function(bhk_checkbox) {
+                // Check if the checkbox value is equal to the bhk value
+                if (bhk_checkbox.value == bhk) {
+                    // If yes, then check the checkbox
+                    bhk_checkbox.checked = true;
+                } else {
+                    // If no, then uncheck the checkbox
+                    bhk_checkbox.checked = false;
+                }
+            });
+
+            // Submit the form
+            submitForm();
+        }
+
+        // Function is called from nav-search.blade.php
+        function updateSearch(element) {
+            console.log(element);
+            const search = element.value;
+            const hidden_search = document.getElementById('hidden-search');
+            hidden_search.value = search;
+
+            // If the user has pressed enter, submit the form
+            if (event.keyCode === 13) {
+                // Submit the form
+                submitForm();
+            }
+        }
+
+        // Get the allPropertiesForm
+        const allPropertiesForm = document.getElementById('allPropertiesForm');
+
+        // function to submit the form
+        function submitForm() {
+            allPropertiesForm.submit();
+        }
+
+        // Listen for any input changes and submit the form
+        allPropertiesForm.addEventListener('input', function(event) {
+            submitForm();
+        });
     </script>
 </x-public-layout>

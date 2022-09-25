@@ -35,9 +35,37 @@ class PublicPageController extends Controller
         // Get the localities
         $localities = DB::table('localities')->get();
 
-        // dd($properties);
+        // declare an object to store the filters
+        $filters = new \stdClass();
+        // Declare empty arrays for each filter
+        $filters->bhks = [];
+        $filters->amenities = [];
+        $filters->propertyTypes = [];
+        $filters->furnishings = [];
+        $filters->localities = [];
+        $filters->sortBy = 'recommended';
 
-        return view('public.allProperties', compact('properties', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities'));
+        // Get the filters from the request
+        if ($request->has('bhks')) {
+            $filters->bhks = $request->input('bhks');
+        }
+        if ($request->has('amenities')) {
+            $filters->amenities = $request->input('amenities');
+        }
+        if ($request->has('propertyTypes')) {
+            $filters->propertyTypes = $request->input('propertyTypes');
+        }
+        if ($request->has('furnishings')) {
+            $filters->furnishings = $request->input('furnishings');
+        }
+        if ($request->has('localities')) {
+            $filters->localities = $request->input('localities');
+        }
+        if ($request->has('sortBy')) {
+            $filters->sortBy = $request->input('sortBy');
+        }
+
+        return view('public.allProperties', compact('properties', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters'));
     }
 
 

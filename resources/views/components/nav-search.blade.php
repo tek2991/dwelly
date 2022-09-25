@@ -1,3 +1,4 @@
+@props(['filters'])
 <div class="fixed w-full z-20 Gradient-Top-Banner pt-3">
     <div class="flex justify-between mx-auto w-full Site-Max-Width p-4 pt-2">
         <!-- Logo -->
@@ -18,16 +19,30 @@
                         document.getElementById('bhk_name').innerHTML = name;
                         // click the button with id = bhk_button
                         document.getElementById('bhk_button').click();
+
+                        updateBHK(document.getElementById('bhk_id'));
                     }
                 </script>
-                <input type="hidden" name="bhk_id" value="1" id="bhk_id">
+                <input type="hidden" name="bhk_id" value="" id="bhk_id">
                 <div class="flex justify-center">
                     <div class="flex">
                         <button id="bhk_button" data-dropdown-toggle="bhk_dropdown"
                             class="flex w-full min-w-max bg-secondary rounded-bl-2xl w-fill pl-4 pr-2 py-2 md:pl-3 md:pr-2 md:py-3 lg:pl-8 lg:gap-6"
                             type="button">
                             <span id="bhk_name" class="text-sm md:text-base">
-                                1 BHK
+                                @php
+                                    $bhks = $filters->bhks;
+                                    // Chcek if bhks contains only one element
+                                    if (count($bhks) == 1) {
+                                        // If yes, then set the bhk_id to that element
+                                        echo $bhks[0] . ' BHK';
+                                        echo '<script>document.getElementById("bhk_id").value = ' . $bhks[0] . '</script>';
+                                    } else {
+                                        // If no, then set the bhk_id to 0
+                                        echo 'BHK';
+                                        echo '<script>document.getElementById("bhk_id").value = 0</script>';
+                                    }
+                                @endphp
                             </span>
                             <svg aria-hidden="true" class="ml-1 md:mt-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -66,10 +81,10 @@
                             </ul>
                         </div>
                     </div>
-                    <input type="text" name="string" id=""
+                    <input type="text" id="search" onkeyup="updateSearch(this)" 
                         class="w-full border-l-0 border-r-0 text-sm rounded-tr-2xl sm:text-base border-t-secondary border-b-secondary focus:border-t-secondary focus:border-b-piss-yellow focus:ring-0"
-                        placeholder="Location, Amenities...">
-                    <button type="button"
+                        placeholder="Location, Amenities..." value="">
+                    <button type="button" onclick="submitForm()"
                         class="bg-piss-yellow rounded-tr-3xl rounded-bl-2xl -ml-5 px-8 py-2 text-sm sm:text-base md:py-3 hover:bg-darker ease-in-out duration-300 hidden sm:block">Search</button>
                 </div>
             </div>
@@ -92,10 +107,10 @@
                 <h3 class="text-md text-darker-2 mr-3">Sort by:</h3>
             </div>
             <div class="ml-4">
-                <select name="sort_by" id="sort_by" class="text-darker-3 border-0 p-0 focus:ring-0 bg-gray-50">
-                    <option value="recomended">Featured</option>
-                    <option value="price_asc">Price: Low to High</option>
-                    <option value="price_desc">Price: High to Low</option>
+                <select name="sort_by" id="sort_by" class="text-darker-3 border-0 p-0 focus:ring-0 bg-gray-50 w-44" onchange="updateSortBy(this)">
+                    <option value="recomended" @if ($filters->sortBy =="recomended") selected @endif>Featured</option>
+                    <option value="price_asc" @if ($filters->sortBy =="price_asc") selected @endif>Price: Low to High</option>
+                    <option value="price_desc" @if ($filters->sortBy =="price_desc") selected @endif>Price: High to Low</option>
                 </select>
             </div>
         </div>
