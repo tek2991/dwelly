@@ -20,4 +20,8 @@ class Locality extends Model
     {
         return $this->hasMany(Property::class);
     }
+
+    public function hasProperties(){
+        return $this->properties()->count() > 0;
+    }
 }

@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 {{-- Properties --}}
-                @foreach ($properties as $property)
+                @forelse ($properties as $property)
                     <div id="property-{{ $property->id }}" class="mb-8 border-t-2 pt-4">
                         <div class="lg:grid lg:grid-cols-2 gap-6 justify-between">
                             <div
@@ -165,7 +165,11 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="text-center">
+                        <h3 class="text-2xl font-GraphikMedium text-darker-3">No Properties Found!</h3>
+                    </div>
+                @endforelse
                 <div class="flex justify-center mt-24 mb-14">
                     {{ $properties->links('vendor.pagination.styled-tailwind') }}
                 </div>

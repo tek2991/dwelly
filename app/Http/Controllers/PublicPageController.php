@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Locality;
 use App\Models\User;
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -17,9 +18,6 @@ class PublicPageController extends Controller
 
     public function allProperties(Request $request)
     {
-        // Get the properties
-        $properties = Property::where('is_available', True)->paginate(10);
-
         // Get the bhks
         $bhks = DB::table('bhks')->get();
 
@@ -36,7 +34,7 @@ class PublicPageController extends Controller
         $amenities2 = DB::table('amenities')->whereIn('name', ['Lift', 'Parking', 'Power Backup', 'Security', 'Swimming Pool'])->get();
 
         // Get the localities
-        $localities = DB::table('localities')->get();
+        $localities = Locality::whereHas('properties')->get();
 
         // declare an object to store the filters
         $filters = new \stdClass();
@@ -68,7 +66,48 @@ class PublicPageController extends Controller
             $filters->sortBy = $request->input('sortBy');
         }
 
-        return view('public.allProperties', compact('properties', 'bhks', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters'));
+        // Get the search query from the request
+        $searchQuery = $request->input('search');
+
+        // Get the properties
+        $properties = Property::search($searchQuery)
+            ->when($filters->bhks, function ($query, $bhks) {
+                return $query->whereIn('bhk_id', $bhks);
+            })
+            ->when($filters->amenities, function ($query, $amenities) {
+                // Get the amenities names
+                $amenitiesNames = DB::table('amenities')->whereIn('id', $amenities)->pluck('name');
+                // Check for each amenity
+                foreach ($amenitiesNames as $amenity) {
+                    return $query->where("'".$amenity."'", 'true');
+                }
+            })
+            ->when($filters->propertyTypes, function ($query, $propertyTypes) {
+                return $query->whereIn('property_type_id', $propertyTypes);
+            })
+            ->when($filters->furnishings, function ($query, $furnishings) {
+                return $query->whereIn('furnishing_id', $furnishings);
+            })
+            ->when($filters->localities, function ($query, $localities) {
+                return $query->whereIn('locality_id', $localities);
+            })
+            // ->when($filters->sortBy, function ($query, $sortBy) {
+            //     if ($sortBy === 'rent') {
+            //         return $query->orderBy('rent');
+            //     }
+            //     if ($sortBy === 'bhk') {
+            //         return $query->orderBy('bhk_id');
+            //     }
+            //     if ($sortBy === 'locality') {
+            //         return $query->orderBy('locality_id');
+            //     }
+            //     if ($sortBy === 'recommended') {
+            //         return $query->orderBy('id', 'desc');
+            //     }
+            // })
+            ->paginate(12);
+
+        return view('public.allProperties', compact('properties', 'bhks', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters', 'request'));
     }
 
 
@@ -98,7 +137,7 @@ class PublicPageController extends Controller
 
         // increase max execution time of function to 10 mins
         ini_set('max_execution_time', 600);
-        
+
 
         function csvToArray($filename = '', $delimiter = ',')
         {
@@ -459,7 +498,7 @@ class PublicPageController extends Controller
                 // check if there are room names like in the rooms table
                 $room_exists = DB::table('rooms')->where('name', 'like', '%' . ucfirst($room) . '%')->exists();
                 // If the room exists get the id
-                if ($room_exists) {
+                if ($room_exists && $quantity > 0) {
                     $room_id = DB::table('rooms')->where('name', 'like', '%' . ucfirst($room) . '%')->first()->id;
                     // Sync the room with the property with the quantity
                     $property->rooms()->syncWithoutDetaching([$room_id => ['quantity' => $quantity]]);
@@ -482,7 +521,7 @@ class PublicPageController extends Controller
                 // check if there are furniture names like in the furnitures table
                 $furniture_exists = DB::table('furniture')->where('name', 'like', '%' . ucfirst($furniture) . '%')->exists();
                 // If the furniture exists get the id
-                if ($furniture_exists) {
+                if ($furniture_exists && $quantity > 0) {
                     $furniture_id = DB::table('furniture')->where('name', 'like', '%' . ucfirst($furniture) . '%')->first()->id;
                     // Sync the furniture with the property with the quantity and description
                     $property->furnitures()->syncWithoutDetaching([$furniture_id => ['quantity' => $quantity, 'description' => $furniture_description]]);
@@ -557,10 +596,10 @@ class PublicPageController extends Controller
             foreach ($property_image as $image) {
                 // download the image and save it as the property code with the image order in storage/app/public/uploads/properties
                 $image_name = $property->code . '_' . $image['image_order'] . '.jpeg';
-                $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
+                // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
 
                 // Image path
-                // $image_path = 'uploads/properties/' . $image_name;
+                $image_path = 'uploads/properties/' . $image_name;
 
                 // Create a new property image with the property id, image path, cover and image order
                 $property_image = \App\Models\PropertyImage::create([

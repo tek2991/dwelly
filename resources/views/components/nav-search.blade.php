@@ -83,7 +83,7 @@
                     </div>
                     <input type="text" id="search" onkeyup="updateSearch(this)" 
                         class="w-full border-l-0 border-r-0 text-sm rounded-tr-2xl sm:text-base border-t-secondary border-b-secondary focus:border-t-secondary focus:border-b-piss-yellow focus:ring-0"
-                        placeholder="Location, Amenities..." value="">
+                        placeholder="Location, Amenities..." value="{{ request('search') }}">
                     <button type="button" onclick="submitForm()"
                         class="bg-piss-yellow rounded-tr-3xl rounded-bl-2xl -ml-5 px-8 py-2 text-sm sm:text-base md:py-3 hover:bg-darker ease-in-out duration-300 hidden sm:block">Search</button>
                 </div>

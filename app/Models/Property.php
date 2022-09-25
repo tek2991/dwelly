@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Property extends Model
 {
+    use Searchable;
     protected $fillable = [
         'code',
         'bhk_id',
@@ -84,7 +86,7 @@ class Property extends Model
 
     public function isAvailable()
     {
-        return $this->available_from <= now();
+        return $this->available_from <= now() && $this->is_available;
     }
 
     public function createdBy()
@@ -190,5 +192,61 @@ class Property extends Model
                 'booking_amount_in_cents' => $value * 100,
             ]
         );
+    }
+
+    /**
+     * Set ammenities attributes indexable by Scout.
+     *
+     * @return array
+     */
+    public function ammenitiesAttributes(): array
+    {
+        return [
+            'Lift', 'Parking', 'Power Backup', 'Security', 'Swimming Pool', "Pets Friendly", "Bachelor Friendly", "Student Friendly", "Couples Friendly", "Family Friendly"
+        ];
+    }
+
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        // Return only the fields you want to index
+        $property = [
+            'code' => $this->code,
+            'address' => $this->address,
+            'building_name' => $this->building_name,
+            'landmark' => $this->landmark,
+
+            'bhk' => $this->bhk->name,
+            'bhk_id' => $this->bhk->id,
+
+            'property_type' => $this->propertyType->name,
+            'property_type_id' => $this->propertyType->id,
+
+            'flooring' => $this->flooring->name,
+            'flooring_id' => $this->flooring->id,
+
+            'furnishing' => $this->furnishing->name,
+            'furnishing_id' => $this->furnishing->id,
+
+            'locality' => $this->locality->name,
+            'locality_id' => $this->locality->id,
+
+            // Add the names separated by comma of the amenities, rooms and furnitures
+            'amenities' => $this->amenities->pluck('name',)->implode(','),
+            'rooms' => $this->rooms->pluck('name')->implode(','),
+            'furnitures' => $this->furnitures->pluck('name')->implode(','),
+        ];
+
+        // Add the names separated by comma of the amenities attributes
+        foreach ($this->ammenitiesAttributes() as $attribute) {
+            $property[$attribute] = $this->checkPropertyAminity($attribute);
+        }
+
+        return $property;
     }
 }
