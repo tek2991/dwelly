@@ -18,7 +18,10 @@ class PublicPageController extends Controller
     public function allProperties(Request $request)
     {
         // Get the properties
-        $properties = Property::paginate(10);
+        $properties = Property::where('is_available', True)->paginate(10);
+
+        // Get the bhks
+        $bhks = DB::table('bhks')->get();
 
         // Get the amenities with suffix _frienly in the name
         $amenities = DB::table('amenities')->where('name', 'like', '%_friendly')->get();
@@ -65,7 +68,7 @@ class PublicPageController extends Controller
             $filters->sortBy = $request->input('sortBy');
         }
 
-        return view('public.allProperties', compact('properties', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters'));
+        return view('public.allProperties', compact('properties', 'bhks', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters'));
     }
 
 
@@ -119,7 +122,6 @@ class PublicPageController extends Controller
 
         // $properties = csvToArray('database/old_data/properties.csv');
         $properties = csvToArray(base_path('database/old_data/properties.csv'));
-
 
         // Sample property item in the array
         /**
@@ -413,7 +415,7 @@ class PublicPageController extends Controller
             //  Create the property
             $property = \App\Models\Property::create([
                 'code' => $property['property_code'],
-                'bhk' => $property['bhk'],
+                'bhk_id' => $property['bhk'],
                 'floor_space' => $property['floor_space'],
                 'property_type_id' => $property['type'],
                 'flooring_id' => $property['flooring'],
@@ -431,9 +433,9 @@ class PublicPageController extends Controller
                 'longitude' => $property['longitude'],
 
                 'rent' => $property['rent'],
-                'security_deposit' => $property['security_deposit'],
-                'society_fee' => $property['society_fee'],
-                'booking_amount' => $property['booking_amt'],
+                'securityDeposit' => $property['security_deposit'],
+                'societyFee' => $property['society_fee'],
+                'bookingAmount' => $property['booking_amt'],
                 // 'rent_in_cents' => $property['rent'] * 100,
                 // 'security_deposit_in_cents' => $property['security_deposit'] * 100,
                 // 'society_fee_in_cents' => $property['society_fee'] * 100,
@@ -442,9 +444,11 @@ class PublicPageController extends Controller
                 'is_promoted' => $property['vip'],
 
                 'available_from' => $property['available_from'],
+                'is_available' => $property['available'] == 1 ? true : false,
 
                 'created_by' => User::first()->id,
             ]);
+
 
             //  Loop through $property_room and sync with the property with quantity in the pivot table
             foreach ($property_room[0] as $room => $quantity) {
@@ -554,6 +558,10 @@ class PublicPageController extends Controller
                 // download the image and save it as the property code with the image order in storage/app/public/uploads/properties
                 $image_name = $property->code . '_' . $image['image_order'] . '.jpeg';
                 $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
+
+                // Image path
+                // $image_path = 'uploads/properties/' . $image_name;
+
                 // Create a new property image with the property id, image path, cover and image order
                 $property_image = \App\Models\PropertyImage::create([
                     'property_id' => $property->id,

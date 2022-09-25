@@ -9,7 +9,7 @@ class Property extends Model
 {
     protected $fillable = [
         'code',
-        'bhk',
+        'bhk_id',
         'floor_space',
         'property_type_id',
         'flooring_id',
@@ -28,6 +28,7 @@ class Property extends Model
         'bookingAmount',
         'is_promoted',
         'available_from',
+        'is_available',
         'created_by',
     ];
 
@@ -55,6 +56,11 @@ class Property extends Model
         'society_fee_in_cents',
         'booking_amount_in_cents',
     ];
+
+    public function bhk()
+    {
+        return $this->belongsTo(Bhk::class);
+    }
 
     public function propertyType()
     {

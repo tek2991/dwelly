@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             // Basics
             $table->string('code')->unique();
-            $table->integer('bhk');
+            $table->foreignId('bhk_id')->constrained();
             $table->integer('floor_space');
             $table->foreignId('property_type_id')->constrained();
             $table->foreignId('flooring_id')->constrained();
@@ -48,6 +48,7 @@ return new class extends Migration
 
             // Availability
             $table->date('available_from')->nullable();
+            $table->boolean('is_available')->default(true);
 
             // Created by
             $table->foreignId('created_by')->constrained('users');

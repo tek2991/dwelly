@@ -8,14 +8,14 @@
                 <div class="mb-2 pb-6 border-b-2 border-b-secondary">
                     <h4 class="font-GraphikMedium mb-2 text-sm">Bedroom</h4>
                     <div class="grid grid-cols-2 gap-4">
-                        @for ($i = 1; $i <= 4; $i++)
+                        @foreach ($bhks as $bhk)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="bhks[]" value="{{ $i }}" id="bhk-{{ $i }}" @if (in_array($i, $filters->bhks)) checked @endif>
+                                    name="bhks[]" value="{{ $bhk->id }}" id="bhk-{{ $bhk->id }}" @if (in_array($bhk->id, $filters->bhks)) checked @endif>
                                 <label class="text-gray-400 text-sm"
-                                    for="bhk-{{ $i }}">{{ $i }} BHK</label>
+                                    for="bhk-{{ $bhk->id }}">{{ $bhk->name }}</label>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </div>
                 <div class="mb-2 pb-6 border-b-2 border-b-secondary">
@@ -130,7 +130,7 @@
                             <div class="flex flex-col justify-between text-darker-3 mt-6 lg:mt-0">
                                 <div class="flex justify-between">
                                     <h2 class="text-xl font-GraphikMedium">
-                                        {{ $property->bhk . 'BHK ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
+                                        {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
                                     </h2>
                                     <button>
                                         <img src="{{ url('resources/icons/share.svg') }}" alt="">
