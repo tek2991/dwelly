@@ -75,7 +75,7 @@ class PublicPageController extends Controller
                 $amenitiesNames = DB::table('amenities')->whereIn('id', $amenities)->pluck('name');
                 // Check for each amenity
                 foreach ($amenitiesNames as $amenity) {
-                    return $query->where("'".$amenity."'", 'true');
+                    return $query->where("'" . $amenity . "'", 'true');
                 }
             })
             ->when($filters->propertyTypes, function ($query, $propertyTypes) {
@@ -98,10 +98,13 @@ class PublicPageController extends Controller
                     return $query->orderBy('id', 'desc');
                 }
             })
-            ->paginate(12)
+            ->when(!$request->input('sortBy'), function ($query, $sortBy) {
+                return $query->orderBy('id', 'desc');
+            })
+            ->paginate(10)
             ->withQueryString();
 
-            // dd($filters);
+        // dd($filters);
 
         return view('public.allProperties', compact('properties', 'bhks', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters', 'request'));
     }
