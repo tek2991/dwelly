@@ -44,9 +44,8 @@ class PublicPageController extends Controller
         $filters->propertyTypes = [];
         $filters->furnishings = [];
         $filters->localities = [];
-        $filters->sortBy = 'recommended';
 
-        // Get the filters from the request
+        // Check the filters from the request, if any and store them in the object
         if ($request->has('bhks')) {
             $filters->bhks = $request->input('bhks');
         }
@@ -62,12 +61,9 @@ class PublicPageController extends Controller
         if ($request->has('localities')) {
             $filters->localities = $request->input('localities');
         }
-        if ($request->has('sortBy')) {
-            $filters->sortBy = $request->input('sortBy');
-        }
 
         // Get the search query from the request
-        $searchQuery = $request->input('search');
+        $searchQuery = $request->input('query');
 
         // Get the properties
         $properties = Property::search($searchQuery)
@@ -91,21 +87,21 @@ class PublicPageController extends Controller
             ->when($filters->localities, function ($query, $localities) {
                 return $query->whereIn('locality_id', $localities);
             })
-            // ->when($filters->sortBy, function ($query, $sortBy) {
-            //     if ($sortBy === 'rent') {
-            //         return $query->orderBy('rent');
-            //     }
-            //     if ($sortBy === 'bhk') {
-            //         return $query->orderBy('bhk_id');
-            //     }
-            //     if ($sortBy === 'locality') {
-            //         return $query->orderBy('locality_id');
-            //     }
-            //     if ($sortBy === 'recommended') {
-            //         return $query->orderBy('id', 'desc');
-            //     }
-            // })
-            ->paginate(12);
+            ->when($request->input('sortBy'), function ($query, $sortBy) {
+                if ($sortBy === 'price_asc') {
+                    return $query->orderBy('rent');
+                }
+                if ($sortBy === 'price_desc') {
+                    return $query->orderBy('rent', 'desc');
+                }
+                if ($sortBy === 'recomended') {
+                    return $query->orderBy('id', 'desc');
+                }
+            })
+            ->paginate(12)
+            ->withQueryString();
+
+            // dd($filters);
 
         return view('public.allProperties', compact('properties', 'bhks', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters', 'request'));
     }

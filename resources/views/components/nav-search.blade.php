@@ -36,11 +36,15 @@
                                     if (count($bhks) == 1) {
                                         // If yes, then set the bhk_id to that element
                                         echo $bhks[0] . ' BHK';
-                                        echo '<script>document.getElementById("bhk_id").value = ' . $bhks[0] . '</script>';
+                                        echo '<script>
+                                            document.getElementById("bhk_id").value = ' . $bhks[0] . '
+                                        </script>';
                                     } else {
                                         // If no, then set the bhk_id to 0
                                         echo 'BHK';
-                                        echo '<script>document.getElementById("bhk_id").value = 0</script>';
+                                        echo '<script>
+                                            document.getElementById("bhk_id").value = 0
+                                        </script>';
                                     }
                                 @endphp
                             </span>
@@ -81,9 +85,9 @@
                             </ul>
                         </div>
                     </div>
-                    <input type="text" id="search" onkeyup="updateSearch(this)" 
+                    <input type="text" id="search" onkeyup="updateSearch(this)"
                         class="w-full border-l-0 border-r-0 text-sm rounded-tr-2xl sm:text-base border-t-secondary border-b-secondary focus:border-t-secondary focus:border-b-piss-yellow focus:ring-0"
-                        placeholder="Location, Amenities..." value="{{ request('search') }}">
+                        placeholder="Location, Amenities..." value="{{ request('query') }}">
                     <button type="button" onclick="submitForm()"
                         class="bg-piss-yellow rounded-tr-3xl rounded-bl-2xl -ml-5 px-8 py-2 text-sm sm:text-base md:py-3 hover:bg-darker ease-in-out duration-300 hidden sm:block">Search</button>
                 </div>
@@ -101,16 +105,20 @@
             </button>
         </div>
     </div>
-    <div class="flex sm:hidden justify-center rounded-b-2xl shadow-md border-b-1 border-l-1 border-r-1 border-b-darker-3 pb-4">
+    <div
+        class="flex sm:hidden justify-center rounded-b-2xl shadow-md border-b-1 border-l-1 border-r-1 border-b-darker-3 pb-4">
         <div class="flex items-center">
             <div>
                 <h3 class="text-md text-darker-2 mr-3">Sort by:</h3>
             </div>
             <div class="ml-4">
-                <select name="sort_by" id="sort_by" class="text-darker-3 border-0 p-0 focus:ring-0 bg-gray-50 w-44" onchange="updateSortBy(this)">
-                    <option value="recomended" @if ($filters->sortBy =="recomended") selected @endif>Featured</option>
-                    <option value="price_asc" @if ($filters->sortBy =="price_asc") selected @endif>Price: Low to High</option>
-                    <option value="price_desc" @if ($filters->sortBy =="price_desc") selected @endif>Price: High to Low</option>
+                <select name="sort_by" id="sort_by" class="text-darker-3 border-0 p-0 focus:ring-0 bg-gray-50 w-44"
+                    onchange="updateSortBy(this)">
+                    <option value="recomended" @if (request('sortBy') == 'recomended') selected @endif>Featured</option>
+                    <option value="price_asc" @if (request('sortBy') == 'price_asc') selected @endif>Price: Low to High
+                    </option>
+                    <option value="price_desc" @if (request('sortBy') == 'price_desc') selected @endif>Price: High to Low
+                    </option>
                 </select>
             </div>
         </div>

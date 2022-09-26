@@ -40,6 +40,7 @@ class UpdateMeilisearchIndex extends Command
     protected function updateSortableAttributes(Client $client): void
     {
         $client->index('properties')->updateSortableAttributes([
+            'id',
             'rent',
         ]);
 

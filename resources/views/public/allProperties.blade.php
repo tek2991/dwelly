@@ -2,18 +2,48 @@
     <div class="mx-auto mt-12 sm:mt-8 flex Site-Max-Width" id="filters-container">
         <div class="hidden sm:block overflow-y-scroll h-screen p-4 sticky top-20 sm:w-80 sm:mr-8" id="filters">
             <form action="{{ route('allProperties') }}" method="GET" class="text-darker-3" id="allPropertiesForm">
-                <input type="hidden" name="search" id="hidden-search" value="">
+                <input type="hidden" name="query" id="hidden-search" value="">
                 <input type="hidden" name="sortBy", id="hidden-sort-by" value="recomended">
                 <h3 class="font-GraphikBold text-lg mb-4">Filters</h3>
+                <div>
+                    @foreach ($filters as $filterType => $items)
+                        @foreach ($items as $filter)
+                            @php
+                                // Table name in nsake case
+                                $tableName = Str::snake($filterType);
+                                $attribute = DB::table($tableName)
+                                    ->where('id', $filter)
+                                    ->first();
+                            @endphp
+                            <span id="badge-dismiss-default"
+                                class="inline-flex items-center py-1 px-2 mr-2 mb-2 text-sm font-medium text-darker-3 bg-secondary rounded-sm">
+                                {{ $attribute->name }}
+                                <button type="button"
+                                    onclick="removeFilter('{{ $tableName }}', '{{ $filter }}')"
+                                    class="inline-flex items-center p-0.5 ml-2 text-sm text-darker-3 bg-transparent rounded-sm hover:bg-darker"
+                                    data-dismiss-target="#badge-dismiss-default" aria-label="Remove">
+                                    <svg aria-hidden="true" class="w-3.5 h-3.5" aria-hidden="true" fill="currentColor"
+                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"></path>
+                                    </svg>
+                                    <span class="sr-only">Remove badge</span>
+                                </button>
+                            </span>
+                        @endforeach
+                    @endforeach
+                </div>
                 <div class="mb-2 pb-6 border-b-2 border-b-secondary">
                     <h4 class="font-GraphikMedium mb-2 text-sm">Bedroom</h4>
                     <div class="grid grid-cols-2 gap-4">
                         @foreach ($bhks as $bhk)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="bhks[]" value="{{ $bhk->id }}" id="bhk-{{ $bhk->id }}" @if (in_array($bhk->id, $filters->bhks)) checked @endif>
+                                    name="bhks[]" value="{{ $bhk->id }}" id="bhks-{{ $bhk->id }}"
+                                    @if (in_array($bhk->id, $filters->bhks)) checked @endif>
                                 <label class="text-gray-400 text-sm"
-                                    for="bhk-{{ $bhk->id }}">{{ $bhk->name }}</label>
+                                    for="bhks-{{ $bhk->id }}">{{ $bhk->name }}</label>
                             </div>
                         @endforeach
                     </div>
@@ -24,8 +54,9 @@
                         @foreach ($amenities as $amenity)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="amenities[]" value="{{ $amenity->id }}" id="amenity-{{ $amenity->id }}" @if (in_array($amenity->id, $filters->amenities)) checked @endif>
-                                <label class="text-gray-400 text-sm" for="amenity-{{ $amenity->id }}">
+                                    name="amenities[]" value="{{ $amenity->id }}" id="amenities-{{ $amenity->id }}"
+                                    @if (in_array($amenity->id, $filters->amenities)) checked @endif>
+                                <label class="text-gray-400 text-sm" for="amenities-{{ $amenity->id }}">
                                     {{ str_replace(' Friendly', '', $amenity->name) }}
                                 </label>
                             </div>
@@ -39,8 +70,9 @@
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
                                     name="propertyTypes[]" value="{{ $propertyType->id }}"
-                                    id="property_type-{{ $propertyType->id }}" @if (in_array($propertyType->id, $filters->propertyTypes)) checked @endif>
-                                <label class="text-gray-400 text-sm" for="property_type-{{ $propertyType->id }}">
+                                    id="propertyTypes-{{ $propertyType->id }}"
+                                    @if (in_array($propertyType->id, $filters->propertyTypes)) checked @endif>
+                                <label class="text-gray-400 text-sm" for="propertyTypes-{{ $propertyType->id }}">
                                     {{ $propertyType->name }}
                                 </label>
                             </div>
@@ -54,8 +86,9 @@
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
                                     name="furnishings[]" value="{{ $furnishing->id }}"
-                                    id="furnishing-{{ $furnishing->id }}" @if (in_array($furnishing->id, $filters->furnishings)) checked @endif>
-                                <label class="text-gray-400 text-sm" for="furnishing-{{ $furnishing->id }}">
+                                    id="furnishings-{{ $furnishing->id }}"
+                                    @if (in_array($furnishing->id, $filters->furnishings)) checked @endif>
+                                <label class="text-gray-400 text-sm" for="furnishings-{{ $furnishing->id }}">
                                     {{ $furnishing->name }}
                                 </label>
                             </div>
@@ -68,8 +101,9 @@
                         @foreach ($amenities2 as $amenity)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="amenities[]" value="{{ $amenity->id }}" id="amenity-{{ $amenity->id }}" @if (in_array($amenity->id, $filters->amenities)) checked @endif>
-                                <label class="text-gray-400 text-sm" for="amenity-{{ $amenity->id }}">
+                                    name="amenities[]" value="{{ $amenity->id }}" id="amenities-{{ $amenity->id }}"
+                                    @if (in_array($amenity->id, $filters->amenities)) checked @endif>
+                                <label class="text-gray-400 text-sm" for="amenities-{{ $amenity->id }}">
                                     {{ $amenity->name }}
                                 </label>
                             </div>
@@ -82,8 +116,10 @@
                         @foreach ($localities as $locality)
                             <div>
                                 <input class="text-piss-yellow rounded-sm border-gray-400 focus:ring-0" type="checkbox"
-                                    name="localities[]" value="{{ $locality->id }}" id="locality-{{ $locality->id }}" @if (in_array($locality->id, $filters->localities)) checked @endif>
-                                <label class="text-gray-400 text-sm" for="locality-{{ $locality->id }}">
+                                    name="localities[]" value="{{ $locality->id }}"
+                                    id="localities-{{ $locality->id }}"
+                                    @if (in_array($locality->id, $filters->localities)) checked @endif>
+                                <label class="text-gray-400 text-sm" for="localities-{{ $locality->id }}">
                                     {{ $locality->name }}
                                 </label>
                             </div>
@@ -108,9 +144,13 @@
                             <select name="sort_by" id="sort-by"
                                 class="text-darker-3 border-0 p-0 focus:ring-0 cursor-pointer w-44"
                                 onchange="updateSortBy(this)">
-                                <option value="recomended" @if ($filters->sortBy =="recomended") selected @endif>Featured</option>
-                                <option value="price_asc" @if ($filters->sortBy =="price_asc") selected @endif>Price: Low to High</option>
-                                <option value="price_desc" @if ($filters->sortBy =="price_desc") selected @endif>Price: High to Low</option>
+                                <option value="recomended" @if (request('sortBy') == 'recomended') selected @endif>Featured
+                                </option>
+                                <option value="price_asc" @if (request('sortBy') == 'price_asc') selected @endif>Price: Low
+                                    to High</option>
+                                <option value="price_desc" @if (request('sortBy') == 'price_desc') selected @endif>Price:
+                                    High
+                                    to Low</option>
                             </select>
                         </div>
                     </div>
@@ -134,8 +174,8 @@
                                     // If there is an image, get the url
                                     $image_url = $coverImage ? $coverImage->image_path : $image_url;
                                 @endphp
-                                <img src="{{ url('storage/' . $image_url) }}"
-                                    alt="" class="w-full h-60 object-cover">
+                                <img src="{{ url('storage/' . $image_url) }}" alt=""
+                                    class="w-full h-60 object-cover">
                             </div>
                             <div class="flex flex-col justify-between text-darker-3 mt-6 lg:mt-0">
                                 <div class="flex justify-between">
@@ -169,15 +209,21 @@
                                 </span>
                                 <p class="my-2 lg:my-0">Rent <span
                                         class="text-xl text-red-600">₹{{ $property->rent }}/-</span></p>
-                                <button
+                                <button onclick="resetSearchForm()"
                                     class="bg-darker-3 text-piss-yellow rounded-sm text-center text-sm mt-3 lg:mt-0 py-2 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full">BOOK
                                     A VISIT</button>
                             </div>
                         </div>
                     </div>
                 @empty
-                    <div class="text-center">
-                        <h3 class="text-2xl font-GraphikMedium text-darker-3">No Properties Found!</h3>
+                    <div class="flex flex-col justify-center">
+                        <img src="{{ url('resources/images/no_match_found.png') }}" alt=""
+                            class="mx-auto w-80">
+                        <h3 class="text-2xl font-GraphikMedium text-darker-3 text-center">Sorry, No Properties Found!
+                        </h3>
+                        <p class="text-lg text-darker-3 text-center mb-6 mt-2">Please check the spelling or reset some filters.</p>
+                        <a href="{{ route('allProperties') }}"
+                            class="bg-darker-3 text-piss-yellow rounded-sm text-center text-sm lg:mt-0 py-2 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full sm:w-96 sm:mx-auto">Reset Search</a>
                     </div>
                 @endforelse
                 <div class="flex justify-center mt-24 mb-14">
@@ -288,5 +334,15 @@
         allPropertiesForm.addEventListener('input', function(event) {
             submitForm();
         });
+
+        // Remove filters
+        function removeFilter(attributeName, attributeValue) {
+            // Get the attribute input
+            const attributeInput = document.getElementById(attributeName + '-' + attributeValue);
+            // Uncheck the attribute input
+            attributeInput.checked = false;
+            // Submit the form
+            submitForm();
+        }
     </script>
 </x-public-layout>

@@ -208,6 +208,17 @@ class Property extends Model
 
 
     /**
+     * Determine if the model should be searchable.
+     *
+     * @return bool
+     */
+    public function shouldBeSearchable()
+    {
+        return $this->isAvailable();
+    }
+
+
+    /**
      * Get the indexable data array for the model.
      *
      * @return array
@@ -220,6 +231,8 @@ class Property extends Model
             'address' => $this->address,
             'building_name' => $this->building_name,
             'landmark' => $this->landmark,
+
+            'rent' => $this->rent,
 
             'bhk' => $this->bhk->name,
             'bhk_id' => $this->bhk->id,
