@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Locality;
 use App\Models\User;
+use App\Models\Contact;
+use App\Models\Locality;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +14,9 @@ class PublicPageController extends Controller
 {
     public function index()
     {
-        return view('public.index');
+        // Get the latest 6 properties
+        $properties = Property::where('is_available', true)->latest()->take(6)->get();
+        return view('public.index', compact('properties'));
     }
 
     public function allProperties(Request $request)

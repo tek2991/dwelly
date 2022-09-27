@@ -3,25 +3,26 @@
         class="text-darker-2 font-Graphik text-md max-w-4xl mx-auto pt-6 pb-2 px-4 sm:px-0 sm:text-piss-yellow sm:text-3xl sm:py-8">
         <h1>Want a place to Stay?</h1>
     </header>
-    <form action="#" method="get" class="max-w-4xl mx-auto px-4 lg:px-0">
+    <form action="{{ route('allProperties') }}" method="GET" class="max-w-4xl mx-auto px-4 lg:px-0">
         <script>
             function set_bhk(id, name) {
-                // get input element with id = bhk_id and set its value to id
+                // empty the array of options
                 document.getElementById('bhk_id').value = id;
+                document.getElementById('bhk_id').removeAttribute('disabled');
                 // Get span with id = bhk_name and set its innerHTML to name
                 document.getElementById('bhk_name').innerHTML = name;
                 // click the button with id = bhk_button
                 document.getElementById('bhk_button').click();
             }
         </script>
-        <input type="hidden" name="bhk_id" value="1" id="bhk_id">
+        <input type="hidden" name="bhks[]" value="" id="bhk_id" disabled>
         <div class="flex justify-center">
             <div class="flex">
                 <button id="bhk_button" data-dropdown-toggle="bhk_dropdown"
                     class="flex w-full bg-secondary rounded-bl-3xl pl-4 pr-2 py-2 md:rounded-bl-3xl md:pl-3 md:pr-2 md:py-3 lg:pl-8 lg:gap-6"
                     type="button">
                     <span id="bhk_name" class="text-sm md:text-base">
-                        1 BHK
+                        BHK
                     </span>
                     <svg aria-hidden="true" class="ml-1 md:mt-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +61,7 @@
                     </ul>
                 </div>
             </div>
-            <input type="text" name="string" id=""
+            <input type="text" name="query" id=""
                 class="w-1/2 md:w-3/4 border-l-0 border-r-0 text-sm sm:text-base border-t-secondary border-b-secondary focus:border-t-secondary focus:border-b-piss-yellow focus:ring-0"
                 placeholder="Location, Amenities...">
             <button type="submit"
@@ -112,9 +113,8 @@
     <div class="sm:hidden">
         <div class="p-4">
             <h2 class="font-GraphikLight text-sm text-darker-2">Have a place to rent out?</h2>
-            <button
-                class="bg-darker-3 text-piss-yellow w-full font-GraphikSemibold text-sm uppercase p-2 rounded-sm">Learn
-                More About Renting Out</button>
+            <a href="{{ route('owners') }}" class="bg-darker-3 text-piss-yellow font-GraphikSemibold text-sm  text-center uppercase p-2 rounded-sm w-full block">Learn
+                More About Renting Out</a>
         </div>
         <h2 class="text-center font-GraphikMedium text-2xl text-darker-3 py-6">Dwelly for Tenants</h2>
         <div class="bg-darker-3 h-56">
@@ -174,34 +174,34 @@
             <div class="splide__track">
                 <ul class="splide__list">
                     {{-- Repeat 2 times --}}
-                    @for ($i = 0; $i < 7; $i++)
+                    @foreach ($properties as $property)
                         <li class="splide__slide">
                             <div class="p-0 sm:p-2">
-                                <img src="{{ url('resources/images/sample_prop.jpeg') }}" alt="Tools"
-                                    class="w-full h-56 object-cover">
+                                <img src="{{ url('storage/' . $property->propertyImages->where('is_cover', true)->first()->image_path) }}"
+                                    alt="Tools" class="w-full h-56 object-cover">
                                 <div class="grid grid-cols-7 pt-2 px-2">
                                     <p class="col-span-2 flex items-center gap-1">
                                         <svg height="10" width="10">
                                             <circle cx="5" cy="5" r="5" fill="#686868" />
                                         </svg>
-                                        3 BHK
+                                        {{ $property->bhk->name }}
                                     </p>
                                     <p class="col-span-3 flex justify-center items-center gap-1">
                                         <svg height="10" width="10">
                                             <circle cx="5" cy="5" r="5" fill="#686868" />
                                         </svg>
-                                        Sample Property
+                                        {{ $property->building_name }}
                                     </p>
                                     <p class="col-span-2 flex justify-end items-center gap-1">
                                         <svg height="10" width="10">
                                             <circle cx="5" cy="5" r="5" fill="#e8c811" />
                                         </svg>
-                                        ₹ 15,000
+                                        ₹ {{ $property->rent }}
                                     </p>
                                 </div>
                             </div>
                         </li>
-                    @endfor
+                    @endforeach
                 </ul>
             </div>
         </section>
@@ -297,7 +297,7 @@
                         alt="No Paperworks">
                     <h3 class="text-dark-2 font-GraphikLight text-center">No paperwork</h3>
                 </div>
-                <a href="#"
+                <a href="{{ route('owners') }}"
                     class="col-span-3 mx-12 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 text-lg hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300">
                     LEARN MORE ABOUT RENTING OUT</a>
             </div>
@@ -365,9 +365,10 @@
             </section>
         </div>
         <div class="p-4 my-2">
-            <button class="bg-darker-3 text-piss-yellow w-full font-GraphikSemibold text-sm uppercase p-2 rounded-sm">
+            <a href="{{ route('owners') }}"
+                class="bg-darker-3 text-piss-yellow font-GraphikSemibold text-sm  text-center uppercase p-2 rounded-sm w-full block">
                 Learn More About Renting Out
-            </button>
+            </a>
         </div>
     </div>
 

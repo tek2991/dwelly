@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Styles -->
+    @livewireStyles
 </head>
 
 <body class="antialiased">
@@ -78,6 +80,7 @@
             document.getElementById('drawer-navigation').classList.remove('hidden');
         });
     </script>
+    @livewireScripts
 </body>
 
 </html>

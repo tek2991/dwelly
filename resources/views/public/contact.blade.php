@@ -43,41 +43,7 @@
             </div>
         </div>
         <div class="bg-white border-2 border-secondary rounded-sm shadow-md p-4 md:p-8 mt-8 md:-mt-32 Right-Space">
-            <form action="#">
-                <h2 class="font-GraphikSemibold text-darker-3 text-3xl">Have queries?</h2>
-                <p class="text-darker-2 text-lg">
-                    Drop your details and we will get back to you.
-                </p>
-                <div class="">
-                    <div class="my-4">
-                        <label for="name" class="font-GraphikMedium text-darker-3">Name</label>
-                        <input type="text" name="name" id="name"
-                            class="w-full border-2 border-secondary rounded-sm p-2 focus:ring-0 focus:border-piss-yellow"
-                            required>
-                    </div>
-                    <div class="my-4">
-                        <label for="email" class="font-GraphikMedium text-darker-3">Email</label>
-                        <input type="email" name="email" id="email"
-                            class="w-full border-2 border-secondary rounded-sm p-2 focus:ring-0 focus:border-piss-yellow"
-                            required>
-                    </div>
-                    <div class="my-4">
-                        <label for="phone" class="font-GraphikMedium text-darker-3">Phone</label>
-                        <input type="tel" name="phone" id="phone"
-                            class="w-full border-2 border-secondary rounded-sm p-2 focus:ring-0 focus:border-piss-yellow"
-                            required>
-                    </div>
-                    <div class="my-4">
-                        <label for="message" class="font-GraphikMedium text-darker-3">Message</label>
-                        <textarea name="message" id="message" cols="30" rows="5"
-                            class="w-full border-2 border-secondary rounded-sm p-2 focus:ring-0 focus:border-piss-yellow"></textarea>
-                    </div>
-                    <div class="my-4">
-                        <button type="submit"
-                            class="w-full bg-piss-yellow text-darker-3  rounded-sm text-center p-4 text-lg hover:bg-darker-3 hover:text-piss-yellow ease-in-out duration-300">SUBMIT</button>
-                    </div>
-                </div>
-            </form>
+            <livewire:contact-form />
         </div>
     </div>
     <div id="map" class="w-full mt-20">
