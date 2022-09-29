@@ -209,7 +209,7 @@
                                 </span>
                                 <p class="my-2 lg:my-0">Rent <span
                                         class="text-xl text-red-600">₹{{ $property->rent }}/-</span></p>
-                                <button onclick="resetSearchForm()"
+                                <button onclick='Livewire.emit("openModal", "book-property-modal", {{ json_encode(["property_id" => $property->id]) }})'
                                     class="bg-darker-3 text-piss-yellow rounded-sm text-center text-sm mt-3 lg:mt-0 py-2 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full">BOOK
                                     A VISIT</button>
                             </div>
