@@ -9,13 +9,13 @@ use LivewireUI\Modal\ModalComponent;
 class BookPropertyModal extends ModalComponent
 {
     public $property_id;
-
+    public $property;
     public $name;
     public $phone;
     public $email;
     public $message;
 
-    // public $success = false;
+    public $success = true;
 
     protected $rules = [
         'name' => 'required',
@@ -26,7 +26,9 @@ class BookPropertyModal extends ModalComponent
 
     public function mount($property_id)
     {
+
         $this->property_id = $property_id;
+        $this->property = Property::find($property_id);
     }
 
     public function submit()
@@ -34,16 +36,13 @@ class BookPropertyModal extends ModalComponent
         $this->validate();
 
         // Create the contact
-
         $contact = Contact::create([
             'name' => $this->name,
             'phone' => $this->phone,
             'email' => $this->email,
             'message' => $this->message,
+            'property_id' => $this->property_id,
         ]);
-
-        // Sync the contact to the property
-        $contact->property()->associate($this->property);
 
         $this->reset();
 
