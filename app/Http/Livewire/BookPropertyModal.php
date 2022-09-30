@@ -15,7 +15,7 @@ class BookPropertyModal extends ModalComponent
     public $email;
     public $message;
 
-    public $success = true;
+    public $success = false;
 
     protected $rules = [
         'name' => 'required',
