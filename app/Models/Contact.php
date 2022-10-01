@@ -18,4 +18,9 @@ class Contact extends Model
     {
         return $this->belongsTo(Property::class);
     }
+
+    public function rentOuts()
+    {
+        return $this->hasMany(RentOut::class);
+    }
 }

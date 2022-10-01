@@ -15,7 +15,7 @@
                     <p class="py-4 text-darker-3 text-md sm:text-lg max-w-sm">
                         End to end property management <br class="hidden md:block"> solutions for residential properties
                     </p>
-                    <button type="button"
+                    <button type="button" onclick='Livewire.emit("openModal", "rent-out-modal")'
                         class="col-span-3 bg-darker-3 text-piss-yellow rounded-sm text-center p-4 xl:text-lg hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full max-w-sm">
                         RENT OUT WITH DWELLY
                     </button>
