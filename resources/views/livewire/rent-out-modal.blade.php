@@ -48,7 +48,6 @@
                     <option value="4">4</option>
                 </x-input-select>
             </div>
-            {{ print_r($property_type) }}
             <div class="">
                 @for ($i = 0; $i < $num_of_properties; $i++)
                     <h3 class="text-darker-3 font-GraphikMedium text-lg px-4 pb-2 pt-10">Property {{ $i + 1 }}
