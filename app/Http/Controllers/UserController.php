@@ -25,7 +25,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::all();
+        return view('app.user.create', compact('roles'));
     }
 
     /**
@@ -36,7 +37,25 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+            'phone_1' => 'required',
+            'phone_2' => 'nullable',
+            'role_ids.*' => 'required|exists:roles,id',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt($validated['password']),
+            'phone_1' => $validated['phone_1'],
+            'phone_2' => $validated['phone_2'],
+        ]);
+        $user->roles()->attach($validated['role_ids']);
+
+        return redirect()->route('user.index')->banner('User created successfully');
     }
 
     /**

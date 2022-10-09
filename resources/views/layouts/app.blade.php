@@ -42,7 +42,7 @@
     <x-jet-banner />
 
     <div class="min-h-screen bg-gray-100">
-        <div class="fixed w-full">
+        <div class="fixed w-full z-20">
             @livewire('navigation-menu')
         </div>
 

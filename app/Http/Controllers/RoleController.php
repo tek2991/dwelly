@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -24,7 +25,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        $permissions = Permission::all();
+        return view('app.role.create', compact('permissions'));
     }
 
     /**
@@ -35,7 +37,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name',
+            'permission_ids.*' => 'required|exists:permissions,id'
+        ]);
+
+        $role = Role::firstOrCreate([
+            'name' => $request->name,
+            'guard_name' => 'web'
+        ]);
+
+        $role->permissions()->attach($request->permission_ids);
+
+        return redirect()->route('role.index')->with('success', 'Role created successfully');
     }
 
     /**
@@ -57,7 +71,7 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        //
+        return view('app.role.edit', compact('role'));
     }
 
     /**
@@ -81,5 +95,44 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+    }
+
+    public function detatchPermission(Role $role, Permission $permission)
+    {
+
+        // Do not allow users who are not admins to detatch permissions
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->dangerBanner('You do not have permission to do that.');
+        }
+
+        // Prevent modification of the admin role
+        if ($role->name == 'admin') {
+            return redirect()->back()->dangerBanner('You cannot modify the admin role.');
+        }
+
+        $role->revokePermissionTo($permission->name);
+        return redirect()->route('role.edit', $role)->banner('Permission detatched.');
+    }
+
+    public function attachPermission(Request $request, Role $role)
+    {
+        // Do not allow users who are not admins to attach roles
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->back()->dangerBanner('You do not have permission to do that.');
+        }
+
+        // Prevent modification of the admin role
+        if ($role->name == 'admin') {
+            return redirect()->back()->dangerBanner('You cannot modify the admin role.');
+        }
+
+        $permission = Permission::find($request->permission_id);
+        // Do not allow attaching the same permission twice
+        if ($role->hasPermissionTo($permission->name)) {
+            return redirect()->back()->dangerBanner('That permission is already attached to this role.');
+        }
+
+        $role->givePermissionTo($permission->name);
+        return redirect()->route('role.edit', $role)->banner('Permission attached.');
     }
 }

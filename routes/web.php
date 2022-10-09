@@ -38,15 +38,19 @@ Route::middleware([
 
     // Admin Routes
     Route::middleware(['role:admin'])->group(function () {
+        // User Routes
         Route::resource('user', UserController::class)->only([
-            'index', 'show', 'edit', 'update'
+            'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
-    
         Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
         Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
+        // Role Routes
         Route::resource('role', RoleController::class)->only([
             'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
+        Route::delete('role/{role}/detatch-permission/{permission}', [RoleController::class, 'detatchPermission'])->name('role.detatchPermission');
+        Route::put('role/{role}/attach-permission', [RoleController::class, 'attachPermission'])->name('role.attachPermission');
+
     });
 
     // Property Routes

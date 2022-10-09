@@ -2,17 +2,25 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Carbon;
-use Illuminate\Database\QueryException;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class RoleTable extends PowerGridComponent
+final class RolesPermissionsTable extends PowerGridComponent
 {
     use ActionButton;
+
+    // Set the role variable
+    public $role;
+
+    public function __construct($role)
+    {
+        $this->role = $role;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +59,8 @@ final class RoleTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Role::query();
+        $permission_ids = $this->role->permissions->pluck('id')->toArray();
+        return Permission::query()->whereIn('id', $permission_ids);
     }
 
     /*
@@ -87,11 +96,9 @@ final class RoleTable extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('name')
-            ->addColumn('name_lower', fn (Role $model) => strtolower(e($model->name)))
-            ->addColumn('permissions', fn (Role $model) => $model->permissions->pluck('name')->implode(', '))
-            ->addColumn('created_at')
-            ->addColumn('created_at_formatted', fn (Role $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
+            ->addColumn('name');
+        // ->addColumn('created_at_formatted', fn (Role $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+        // ->addColumn('updated_at_formatted', fn (Role $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -111,10 +118,21 @@ final class RoleTable extends PowerGridComponent
     public function columns(): array
     {
         return [
+            Column::make('DB ID', 'id')
+                ->searchable(),
             Column::make('Name', 'name')
-                ->searchable()
-                ->sortable(),
-            Column::make('Permissions', 'permissions')
+                ->searchable(),
+
+            // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker(),
+
+            // Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker(),
+
         ];
     }
 
@@ -135,17 +153,15 @@ final class RoleTable extends PowerGridComponent
     public function actions(): array
     {
         return [
-            Button::make('edit', 'Edit')
-                ->class('bg-indigo-500 cursor-pointer text-white px-2.5 py-1 m-1 rounded text-sm')
-                ->route('role.edit', ['role' => 'id'])
-                ->target(''),
-
             /*
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('role.destroy', ['role' => 'id'])
-               ->method('delete')
-               */
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('role.edit', ['role' => 'id']),
+
+                */
+                Button::make('destroy', 'Remove')
+                ->class('bg-red-500 cursor-pointer text-white px-2.5 py-1.5 m-1 rounded text-sm')
+                ->openModal('confirm-detatch-modal', ['route' => 'role.detatchPermission', 'model_id' => $this->role->id, 'model_name' => 'Role', 'detatching_model_id' => 'id', 'detatching_model_name' => 'Permission', 'action' => 'detatch'])
         ];
     }
 
