@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Property;
 
-use App\Http\Controllers\Controller;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PropertyController extends Controller
 {
@@ -25,7 +25,19 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        //
+        $propertyTypes = \App\Models\PropertyType::all();
+        $bhks = \App\Models\Bhk::all();
+        $floorings = \App\Models\Flooring::all();
+        $furnishings = \App\Models\Furnishing::all();
+        $localities = \App\Models\Locality::all();
+
+        return view('app.property.create', compact(
+            'propertyTypes',
+            'bhks',
+            'floorings',
+            'furnishings',
+            'localities'
+        ));
     }
 
     /**
@@ -47,7 +59,40 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        //
+        $propertyTypes = \App\Models\PropertyType::all();
+        $bhks = \App\Models\Bhk::all();
+        $floorings = \App\Models\Flooring::all();
+        $furnishings = \App\Models\Furnishing::all();
+        $localities = \App\Models\Locality::all();
+
+        $amenities = \App\Models\Amenity::all();
+        $rooms = \App\Models\Room::all();
+        $furnitures = \App\Models\Furniture::all();
+
+        // Get the nearby establishments ordered by distance and grouped by type
+        $nearbyEstablishments = $property->nearbyEstablishments()
+            ->with('establishmentType')
+            ->orderBy('distance_in_kms')
+            ->get()
+            ->groupBy('establishment_type_id');
+
+        $propertyImages = $property->propertyImages()->orderBy('is_cover', 'desc')->orderBy('order', 'desc')->get();
+
+        return view('app.property.show', compact(
+            'property',
+            'propertyTypes',
+            'bhks',
+            'floorings',
+            'furnishings',
+            'localities',
+
+            'amenities',
+            'rooms',
+            'furnitures',
+            'nearbyEstablishments',
+
+            'propertyImages'
+        ));
     }
 
     /**

@@ -87,6 +87,9 @@ final class PropertyTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('code')
+            ->addColumn('code_link', function (Property $model) {
+                return '<a href="' . route('property.show', $model->id) . '" class="text-indigo-600 hover:text-indigo-900 hover:underline">' . $model->code . '</a>';
+            })
 
            /** Example of custom column using a closure **/
             ->addColumn('code_lower', function (Property $model) {
@@ -159,7 +162,7 @@ final class PropertyTable extends PowerGridComponent
                 ->hidden()
                 ->visibleInExport(True),
 
-            Column::make('CODE', 'code')
+            Column::make('CODE', 'code_link', 'code')
                 ->sortable()
                 ->searchable(),
 
@@ -198,7 +201,7 @@ final class PropertyTable extends PowerGridComponent
             Column::make('LOCALITY', 'locality_name', 'locality_id')
                 ->makeInputSelect(\App\Models\Locality::all(), 'name', 'locality_id', ['live-search' => true]),
 
-            Column::make('MAP', 'gmap_link'),
+            // Column::make('MAP', 'gmap_link'),
 
             Column::make('GNTEE', 'is_promoted_name', 'is_promoted')
                 ->sortable(),
