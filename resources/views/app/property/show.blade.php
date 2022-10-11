@@ -13,24 +13,7 @@
 
 
     {{-- Rooms --}}
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Rooms</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @foreach ($rooms as $room)
-                        <div>
-                            <x-jet-label for="room_{{ $room->id }}" :value="__($room->name)" />
-                            <x-jet-input id="room_{{ $room->id }}" class="block mt-1 w-full" type="number"
-                                name="room_{{ $room->id }}"
-                                value="{{ $property->rooms->contains($room->id) ? $property->rooms->find($room->id)->pivot->quantity : 0 }}"
-                                disabled />
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
+    @livewire('property.property-rooms', ['property' => $property])
 
     {{-- Furnitures --}}
     <div class="py-12">
