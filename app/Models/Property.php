@@ -35,7 +35,6 @@ class Property extends Model
     ];
 
     protected $casts = [
-        'is_promoted' => 'boolean',
         'available_from' => 'date',
         'rent' => 'integer',
         'securityDeposit' => 'integer',
