@@ -8,32 +8,9 @@
     {{-- Property Details --}}
     @livewire('property.property-details', ['property' => $property])
 
-    {{-- Property Images --}}
-
     {{-- Amenities --}}
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Amenities</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @foreach ($amenities as $aminity)
-                        <div>
-                            <x-jet-label for="amenity_{{ $aminity->id }}" :value="__($aminity->name)" />
-                            <x-input-select id="amenity_{{ $aminity->id }}" name="amenity_{{ $aminity->id }}"
-                                disabled>
-                                <option value="0"
-                                    {{ $property->amenities->contains($aminity->id) ? 'selected' : '' }}>
-                                    No</option>
-                                <option value="1"
-                                    {{ $property->amenities->contains($aminity->id) ? 'selected' : '' }}>
-                                    Yes</option>
-                            </x-input-select>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
+    @livewire('property.property-amenities', ['property' => $property])
+
 
     {{-- Rooms --}}
     <div class="py-12">

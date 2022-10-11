@@ -26,13 +26,13 @@
                     @enderror
                     @if ($editing === true)
                         <x-input-select id="is_available" wire:model.defer="is_available">
-                            <option value="0" {{ $is_available == 0 ? 'selected' : '' }}>No</option>
-                            <option value="1" {{ $is_available == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </x-input-select>
                     @else
                         <x-input-select id="is_available" wire:model.defer="is_available" disabled>
-                            <option value="0" {{ $is_available == 0 ? 'selected' : '' }}>No</option>
-                            <option value="1" {{ $is_available == 1 ? 'selected' : '' }}>Yes</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
                         </x-input-select>
                     @endif
                 </div>
