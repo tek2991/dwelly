@@ -5,6 +5,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\Property\PropertyController;
+use App\Http\Controllers\NearbyEstablishmentController;
 
 /*
 |--------------------------------------------------------------------------

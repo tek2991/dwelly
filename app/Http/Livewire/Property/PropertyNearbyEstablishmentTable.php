@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Property;
 
-use App\Models\Role;
+use App\Models\EstablishmentType;
+use App\Models\NearbyEstablishment;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class UsersRolesTable extends PowerGridComponent
+final class PropertyNearbyEstablishmentTable extends PowerGridComponent
 {
     use ActionButton;
 
-    // Set the user variable
-    public $user;
+    public $property_id;
 
-    public function __construct($user)
+    public function __construct($property_id)
     {
-        $this->user = $user;
+        $this->property_id = $property_id;
     }
 
     /*
@@ -33,9 +33,6 @@ final class UsersRolesTable extends PowerGridComponent
         $this->showCheckBox();
 
         return [
-            Exportable::make('export')
-                ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -54,13 +51,14 @@ final class UsersRolesTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Role>
+     * @return Builder<\App\Models\NearbyEstablishment>
      */
     public function datasource(): Builder
     {
-        // Get the user's role ids
-        $role_ids = $this->user->roles()->get()->pluck('id')->toArray();
-        return Role::query()->whereIn('id', $role_ids);
+        return NearbyEstablishment::query()
+            ->where('property_id', $this->property_id)
+            ->join('establishment_types', 'establishment_types.id', '=', 'nearby_establishments.establishment_type_id')
+            ->select('nearby_establishments.*', 'establishment_types.name as establishment_type_name');
     }
 
     /*
@@ -81,6 +79,21 @@ final class UsersRolesTable extends PowerGridComponent
         return [];
     }
 
+
+    protected function getListeners(): array
+    {
+        return array_merge(
+            parent::getListeners(),
+            [
+                'reload-property-nearby-establishment-table' => 'refreshTable',
+            ]
+        );
+    }
+
+    public function refreshTable(){
+        $this->refresh();
+    }
+
     /*
     |--------------------------------------------------------------------------
     |  Add Column
@@ -95,13 +108,22 @@ final class UsersRolesTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            ->addColumn('id')
-            ->addColumn('name')
-            ->addColumn('permissions', function (Role $role) {
-                return $role->permissions()->get()->pluck('name')->implode(', ');
+            ->addColumn('establishment_type_id')
+            ->addColumn('establishment_type_name')
+            ->addColumn('property_id')
+            ->addColumn('description', function (NearbyEstablishment $model) {
+                // Line break for long descriptions every 50 characters
+                return implode('<br>', str_split($model->description, 50));
             })
-            ->addColumn('created_at_formatted', fn (Role $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Role $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+
+            /** Example of custom column using a closure **/
+            ->addColumn('description_lower', function (NearbyEstablishment $model) {
+                return strtolower(e($model->description));
+            })
+
+            ->addColumn('distance_in_kms')
+            ->addColumn('created_at_formatted', fn (NearbyEstablishment $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+            ->addColumn('updated_at_formatted', fn (NearbyEstablishment $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -121,10 +143,16 @@ final class UsersRolesTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Role', 'name')
+            Column::make('TYPE', 'establishment_type_name')
                 ->sortable()
                 ->searchable(),
-            Column::make('Permissions', 'permissions')
+
+            Column::make('DESCRIPTION', 'description')
+                ->sortable()
+                ->searchable(),
+
+            Column::make('DISTANCE IN KMS', 'distance_in_kms')
+                ->sortable()
                 ->searchable(),
         ];
     }
@@ -138,7 +166,7 @@ final class UsersRolesTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Role Action Buttons.
+     * PowerGrid NearbyEstablishment Action Buttons.
      *
      * @return array<int, Button>
      */
@@ -146,16 +174,14 @@ final class UsersRolesTable extends PowerGridComponent
     public function actions(): array
     {
         return [
-            //    Button::make('edit', 'Edit')
-            //        ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-            //        ->route('role.edit', ['role' => 'id']),
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->openModal('property.edit-nearby-establishment-modal', ['property_id' => $this->property_id, 'nearby_establishment_id' => 'id']),
 
-            Button::make('destroy', 'Remove')
-                ->class('bg-red-500 cursor-pointer text-white px-2.5 py-1.5 m-1 rounded text-sm')
-                //    ->route('user.detatchRole', ['user' => $this->user->id, 'role' => 'id'])
-                //    ->method('delete')
-                //    ->target('')
-                ->openModal('confirm-detatch-modal', ['route' => 'user.detatchRole', 'model_id' => $this->user->id, 'model_name' => 'User', 'detatching_model_id' => 'id', 'detatching_model_name' => 'Role', 'action' => 'detatch'])
+            //    Button::make('destroy', 'Delete')
+            //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+            //        ->route('nearby-establishment.destroy', ['nearby-establishment' => 'id'])
+            //        ->method('delete')
         ];
     }
 
@@ -168,7 +194,7 @@ final class UsersRolesTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Role Action Rules.
+     * PowerGrid NearbyEstablishment Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -180,7 +206,7 @@ final class UsersRolesTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($role) => $role->id === 1)
+                ->when(fn($nearby-establishment) => $nearby-establishment->id === 1)
                 ->hide(),
         ];
     }

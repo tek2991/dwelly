@@ -23,25 +23,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Nearby Establishments</h2>
-                @foreach ($nearbyEstablishments as $nearbyEstablishmentTypes)
-                <div class="pt-4">
-                    <h2 class="my-2 font-bold text-lg text-gray-800 leading-tight">
-                        {{ $nearbyEstablishmentTypes->first()->establishmentType->name }}
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 border-b-2">
-                        @foreach ($nearbyEstablishmentTypes as $nearbyEstablishment)
-                            <div>
-                                <p>
-                                    {{ $nearbyEstablishment->description }}
-                                </p>
-                                <p>
-                                    {{ $nearbyEstablishment->distance_in_kms }} kms
-                                </p>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-                @endforeach
+                <livewire:property.property-nearby-establishment-table property_id="{{ $property->id }}" />
             </div>
         </div>
     </div>

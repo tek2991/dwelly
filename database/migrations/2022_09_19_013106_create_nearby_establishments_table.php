@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('nearby_establishments', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('establishment_type_id')->constrained();
             $table->foreignId('property_id')->constrained();
             $table->string('description')->nullable();
