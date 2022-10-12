@@ -17,8 +17,6 @@ class PropertyImages extends Component
     public Property $property;
     public $images;
 
-    public $uploads = [];
-
     public function mount(Property $property)
     {
         $this->property = $property;
@@ -44,25 +42,23 @@ class PropertyImages extends Component
         // Set the selected image to cover image
         $image = PropertyImage::find($image_id);
         $image->is_cover = true;
+        $image->show = true;
         $image->save();
+        
 
         $this->images = PropertyImage::where('property_id', $this->property->id)->orderBy('order')->get();
     }
 
-    public function upload()
-    {
-        $this->validate([
-            'uploads.*' => 'image|max:2024', // 2MB Max
-        ]);
-
-        foreach ($this->uploads as $upload) {
-            $image = new PropertyImage();
-            $image->property_id = $this->property->id;
-            $image->image = $upload->store('public/properties');
-            $image->save();
+    public function updateImageShow($image_id)
+    {   
+        // Do not allow toggle if image is cover image
+        $image = PropertyImage::find($image_id);
+        if ($image->is_cover) {
+            return;
         }
+        $image->show = !$image->show;
+        $image->save();
 
-        $this->uploads = [];
         $this->images = PropertyImage::where('property_id', $this->property->id)->orderBy('order')->get();
     }
 
