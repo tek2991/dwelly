@@ -17,7 +17,16 @@
             <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> {{ $property->locality->name }} </h3>
         </div>
         <div>
-
+            <form wire:submit.prevent="uploadImages">
+                {{-- File pond  --}}
+                <div class="flex justify-center">
+                    <input type="file" class="filepond" name="filepond" multiple data-max-file-size="3MB"
+                        data-max-files="25" />
+                </div>
+                <div class="flex justify-center">
+                    <button type="button" wire:click="saveImages" class="mt-4 btn btn-primary">Upload</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
