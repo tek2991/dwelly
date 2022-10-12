@@ -8,7 +8,7 @@
         </svg>
     </button>
     <div class="p-6 text-center">
-        <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400"> Create Nearby Establishment </h3>
+        <h3 class="my-2 text-lg font-normal text-red-500 dark:text-red-400"> Delete Nearby Establishment </h3>
         <div class="flex justify-between">
             <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> {{ $property->code }} </h3>
             <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900">
@@ -22,11 +22,8 @@
                 <div class="flex flex-col mt-4">
                     <label class="mb-1 text-xs font-bold tracking-wide text-gray-700 uppercase dark:text-gray-200"
                         for="establishment_type">Establishment Type</label>
-                        @error('establishment_type_id')
-                            <span class="text-red-500 text-xs">{{ $message }}</span>
-                        @enderror
-                    <select wire:model="establishment_type_id" id="establishment_type"
-                        class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
+                    <select wire:model="establishment_type_id" id="establishment_type" disabled
+                        class="block w-full px-4 py-3 mb-3 leading-tight disabled:bg-gray-100 text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline">
                         <option value="">Select Establishment Type</option>
                         @foreach ($establishmentTypes as $establishmentType)
                             <option value="{{ $establishmentType->id }}">
@@ -39,30 +36,30 @@
                 <div class="flex flex-col mt-4">
                     <label class="mb-1 text-xs font-bold tracking-wide text-gray-700 uppercase dark:text-gray-200"
                         for="description">Description</label>
-                    @error('description')
-                        <span class="text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                    <textarea wire:model="description"
-                        class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    <textarea wire:model="description" disabled
+                        class="block w-full px-4 py-3 mb-3 leading-tight disabled:bg-gray-100 text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="description">
                         </textarea>
+                    @error('description')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="flex flex-col mt-4">
                     <label class="mb-1 text-xs font-bold tracking-wide text-gray-700 uppercase dark:text-gray-200"
                         for="distance">Distance (KM)</label>
-                    @error('distance_in_kms')
-                        <span class="text-red-500 text-xs">{{ $message }}</span>
-                    @enderror
-                    <input wire:model="distance_in_kms"
-                        class="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                    <input wire:model="distance_in_kms" disabled
+                        class="block w-full px-4 py-3 mb-3 leading-tight disabled:bg-gray-100 text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="distance" type="number" placeholder="Distance">
+                    @error('distance_in_kms')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             </form>
-            <button type="button" wire:click="save"
-                class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                Save
+            <button type="button" wire:click="destroy"
+                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                Delete
             </button>
             <button type="button" wire:click="$emit('closeModal')" id="close-modal"
                 class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">

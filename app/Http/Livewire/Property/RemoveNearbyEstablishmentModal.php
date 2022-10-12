@@ -7,7 +7,7 @@ use App\Models\EstablishmentType;
 use App\Models\NearbyEstablishment;
 use LivewireUI\Modal\ModalComponent;
 
-class EditNearbyEstablishmentModal extends ModalComponent
+class RemoveNearbyEstablishmentModal extends ModalComponent
 {
     public $property_id;
     public $nearby_establishment_id;
@@ -33,21 +33,9 @@ class EditNearbyEstablishmentModal extends ModalComponent
         $this->distance_in_kms = $this->nearby_establishment->distance_in_kms;
     }
 
-    protected $rules = [
-        'establishment_type_id' => 'required|exists:establishment_types,id',
-        'description' => 'required|string|max:755',
-        'distance_in_kms' => 'required|numeric',
-    ];
-
-    public function update()
+    public function destroy()
     {
-        $this->validate();
-        
-        $this->nearby_establishment->update([
-            'establishment_type_id' => $this->establishment_type_id,
-            'description' => $this->description,
-            'distance_in_kms' => $this->distance_in_kms,
-        ]);
+        $this->nearby_establishment->delete();
 
         $this->emit('pg:eventRefresh-default');
 
@@ -56,6 +44,6 @@ class EditNearbyEstablishmentModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.property.edit-nearby-establishment-modal');
+        return view('livewire.property.remove-nearby-establishment-modal');
     }
 }

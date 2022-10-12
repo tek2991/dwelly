@@ -79,21 +79,6 @@ final class PropertyNearbyEstablishmentTable extends PowerGridComponent
         return [];
     }
 
-
-    protected function getListeners(): array
-    {
-        return array_merge(
-            parent::getListeners(),
-            [
-                'reload-property-nearby-establishment-table' => 'refreshTable',
-            ]
-        );
-    }
-
-    public function refreshTable(){
-        $this->refresh();
-    }
-
     /*
     |--------------------------------------------------------------------------
     |  Add Column
@@ -143,9 +128,10 @@ final class PropertyNearbyEstablishmentTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('TYPE', 'establishment_type_name')
+            Column::make('ESTABLISHMENT TYPE', 'establishment_type_name')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->makeInputSelect( EstablishmentType::all(), 'name', 'establishment_type_id' ),
 
             Column::make('DESCRIPTION', 'description')
                 ->sortable()
@@ -178,10 +164,9 @@ final class PropertyNearbyEstablishmentTable extends PowerGridComponent
                 ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                 ->openModal('property.edit-nearby-establishment-modal', ['property_id' => $this->property_id, 'nearby_establishment_id' => 'id']),
 
-            //    Button::make('destroy', 'Delete')
-            //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-            //        ->route('nearby-establishment.destroy', ['nearby-establishment' => 'id'])
-            //        ->method('delete')
+            Button::make('destroy', 'Delete')
+                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                ->openModal('property.remove-nearby-establishment-modal', ['property_id' => $this->property_id, 'nearby_establishment_id' => 'id']),
         ];
     }
 
