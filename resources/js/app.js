@@ -12,3 +12,5 @@ import Flowbite from 'flowbite';
 // Import Splide
 import Splide from '@splidejs/splide';
 window.Splide = Splide;
+
+import '@nextapps-be/livewire-sortablejs';
