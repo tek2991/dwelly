@@ -14,3 +14,6 @@ import Splide from '@splidejs/splide';
 window.Splide = Splide;
 
 import '@nextapps-be/livewire-sortablejs';
+
+import * as FilePond from 'filepond';
+window.FilePond = FilePond;

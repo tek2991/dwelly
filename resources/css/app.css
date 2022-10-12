@@ -1,5 +1,6 @@
 /* Import Splide css from node folder */
 @import "../../node_modules/@splidejs/splide/dist/css/splide.min.css";
+@import '../../node_modules/filepond/dist/filepond.min.css';
 
 @tailwind base;
 @tailwind components;

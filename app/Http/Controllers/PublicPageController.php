@@ -597,18 +597,18 @@ class PublicPageController extends Controller
             // Loop through the property images and save them to the property
             foreach ($property_image as $image) {
                 // download the image and save it as the property code with the image order in storage/app/public/uploads/properties
-                $image_name = $property->code . '_' . $image['image_order'] . '.jpeg';
-                // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
+                $uid = uniqid();
+                $image_name = $property->code . '_' . $uid . '.jpeg';
+                $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
 
-                // Image path
-                $image_path = 'uploads/properties/' . $image_name;
+                // $image_path = 'uploads/properties/' . $image_name;
 
                 // Create a new property image with the property id, image path, cover and image order
                 $property_image = \App\Models\PropertyImage::create([
                     'property_id' => $property->id,
                     'image_path' => $image_path,
                     'is_cover' => $image['cover'],
-                    'image_order' => $image['image_order'],
+                    'order' => $image['image_order'],
                     'show' => $image['image_status'],
                 ]);
             }
