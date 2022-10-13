@@ -114,7 +114,8 @@ class PublicPageController extends Controller
 
     public function viewProperty(Property $property)
     {
-        return view('public.viewProperty', compact('property'));
+        $primaryRooms = \App\Models\Room::primaryRooms();
+        return view('public.viewProperty', compact('property', 'primaryRooms'));
     }
 
 
@@ -502,6 +503,10 @@ class PublicPageController extends Controller
                 if ($room == 'washroom') {
                     $room = 'bathroom';
                 }
+                // if room is pooja change it to puja
+                if ($room == 'pooja') {
+                    $room = 'puja';
+                }
                 // check if there are room names like in the rooms table
                 $room_exists = DB::table('rooms')->where('name', 'like', '%' . ucfirst($room) . '%')->exists();
                 // If the room exists get the id
@@ -604,9 +609,9 @@ class PublicPageController extends Controller
                 // download the image and save it as the property code with the image order in storage/app/public/uploads/properties
                 $uid = uniqid();
                 $image_name = $property->code . '_' . $uid . '.jpeg';
-                $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
+                // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
 
-                // $image_path = 'uploads/properties/' . $image_name;
+                $image_path = 'uploads/properties/' . $image_name;
 
                 // Create a new property image with the property id, image path, cover and image order
                 $property_image = \App\Models\PropertyImage::create([

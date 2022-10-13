@@ -119,6 +119,18 @@ class Property extends Model
         return $this->belongsToMany(Furniture::class)->withPivot('quantity', 'description');
     }
 
+    public function getNoOfFurnitures($furniture_name)
+    {
+        $furniture = $this->furnitures()->where('name', $furniture_name)->first();
+        return $furniture ? $furniture->pivot->quantity : 0;
+    }
+
+    public function getFurnitureIcon($furniture_name)
+    {
+        $furniture = $this->furnitures()->where('name', $furniture_name)->first();
+        return $furniture ? $furniture->icon_path : '';
+    }
+
     public function nearbyEstablishments()
     {
         return $this->hasMany(NearbyEstablishment::class);

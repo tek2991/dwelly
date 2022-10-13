@@ -23,7 +23,7 @@ class RoomSeeder extends Seeder
             ['name' => 'Lobby', 'show' => true],
             ['name' => 'Bedroom', 'show' => true],
             ['name' => 'Bathroom', 'show' => true],
-            ['name' => 'Pooja Room', 'show' => true],
+            ['name' => 'Puja Room', 'show' => true],
             ['name' => 'Servant Room', 'show' => true],
             ['name' => 'Balcony', 'show' => true],
         ];

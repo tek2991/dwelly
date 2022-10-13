@@ -1,5 +1,12 @@
 <x-public-layout filters="">
     <div>
+        <div class="flex justify-end lg:hidden">
+            <button
+                onclick='Livewire.emit("openModal", "book-property-modal", {{ json_encode(['property_id' => $property->id]) }})'
+                class="bg-darker-3 w-44 text-piss-yellow p-3 rounded-sm text-center text-md mb-4 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer">
+                BOOK A VISIT
+            </button>
+        </div>
         <section id="images-slide" class="splide" aria-label="Beautiful Images">
             <div class="splide__track">
                 <ul class="splide__list">
@@ -18,19 +25,24 @@
             </div>
         </section>
     </div>
-    <div class="flex justify-between Site-Max-Width Left-Space items-center mt-4 p-4">
+    <div class="flex justify-between Site-Max-Width Left-Space items-center lg:mt-4 p-4">
         <div class="text-darker-3 flex flex-col space-y-3">
+            <div
+                class="font-GraphikLight text-lg lg:hidden {{ $property->isAvailable() ? 'text-green-800' : 'text-darker' }}">
+                {{ $property->isAvailable() ? 'Available Now' : $property->available_from->diffForHumans() }}
+            </div>
             <div>
                 <h2 class="text-3xl font-GraphikMedium">
                     {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
                 </h2>
             </div>
             <h3 class="text-2xl font-GraphikMedium my-1 lg:my-0">{{ $property->address }}</h3>
-            <h3 class="text-xl font-GraphikLight my-1 lg:my-0">{{ $property->landmark }}, {{ $property->locality->name }}</h3>
+            <h3 class="text-xl font-GraphikLight my-1 lg:my-0">{{ $property->landmark }},
+                {{ $property->locality->name }}</h3>
         </div>
-        <div class="w-full max-w-sm">
+        <div class="w-full max-w-sm hidden lg:block">
             <div
-                class="py-2 col-span-2 mb-2 font-GraphikLight text-lg {{ $property->isAvailable() ? 'text-green-800' : 'text-darker' }}">
+                class="py-2 mb-2 font-GraphikLight text-lg {{ $property->isAvailable() ? 'text-green-800' : 'text-darker' }}">
                 {{ $property->isAvailable() ? 'Available Now' : $property->available_from->diffForHumans() }}
             </div>
             <button
@@ -41,12 +53,64 @@
         </div>
     </div>
 
-    <div class="w-full">
-        <div class="bg-darker-3 max-w-xl flex justify-between mr-4">
+    <div class="w-full mt-6">
+        <div class="bg-darker-3 max-w-xl xl:max-w-3xl flex justify-between mr-4">
             <div class="max-w-md Left-Space p-4">
-                <span class="text-white text-2xl font-Graphik">Rent: <span class="text-piss-yellow">₹{{ $property->rent }}</span></span>
+                <span class="text-white text-2xl font-Graphik">Rent: <span
+                        class="text-piss-yellow">₹{{ $property->rent }}</span></span>
             </div>
             <div class="bg-piss-yellow text-2xl h-full w-32 p-4">&nbsp;</div>
+        </div>
+    </div>
+
+    <div class="Site-Max-Width Left-Space items-center lg:mt-4 p-4">
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Property Description
+                </h3>
+            </div>
+            <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
+                @foreach ($primaryRooms as $room)
+                    <div>
+                        <p>{{ $room }}: <span
+                                class="font-GraphikSemibold">{{ $property->getNoOfRooms($room) }}</span></p>
+                    </div>
+                @endforeach
+                <div>
+                    <p>Floor: <span class="font-GraphikSemibold">{{ $property->floors }} of {{ $property->total_floors }}</span></p>
+                </div>
+                <div>
+                    <p>Floor Space: <span class="font-GraphikSemibold">{{ $property->floor_space }} ft<sup>2</sup></span></p>
+                </div>
+                <div>
+                    <p>Flooring: <span class="font-GraphikSemibold">{{ $property->flooring->name }} ft<sup>2</sup></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Furnishing Type
+                </h3>
+            </div>
+            <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
+                <div>
+                    <p>{{ $property->furnishing->name }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Furnishing Amenities
+                </h3>
+            </div>
+            <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
+                <div>
+                    <p> <img src="{{ url('resources/' . $property->getFurnitureIcon('Fan')) }}" alt=""> Fans: <span class="font-GraphikSemibold">{{ $property->getNoOfFurnitures('Fan') }}</span></p>
+                </div>
+            </div>
         </div>
     </div>
 
