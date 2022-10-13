@@ -19,8 +19,8 @@
     <div>
         @if (Route::is('owners'))
             <x-nav-owners />
-        @elseif (Route::is('allProperties'))
-            <x-nav-search :filters="$filters" />
+        @elseif (Route::is('allProperties') || Route::is('viewProperty'))
+            <x-nav-search :filters="$filters"/>
         @else
             <x-nav-main />
         @endif

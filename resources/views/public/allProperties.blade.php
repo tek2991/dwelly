@@ -174,8 +174,10 @@
                                     // If there is an image, get the url
                                     $image_url = $coverImage ? $coverImage->image_path : $image_url;
                                 @endphp
-                                <img src="{{ url('storage/' . $image_url) }}" alt=""
-                                    class="w-full h-60 object-cover">
+                                <a href="{{ route('viewProperty', $property) }}">
+                                    <img src="{{ url('storage/' . $image_url) }}" alt=""
+                                        class="w-full h-60 object-cover">
+                                </a>
                             </div>
                             <div class="flex flex-col justify-between text-darker-3 mt-6 lg:mt-0">
                                 <div class="flex justify-between">

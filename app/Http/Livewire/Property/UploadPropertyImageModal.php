@@ -14,9 +14,7 @@ class UploadPropertyImageModal extends ModalComponent
 
     public $property_id;
     public Property $property;
-
     public $uploads = [];
-
 
     public function mount($property_id)
     {
@@ -31,14 +29,10 @@ class UploadPropertyImageModal extends ModalComponent
         ]);
 
         foreach ($this->uploads as $image) {
-            // Get last image order
             $lastOrder = $this->property->propertyImages()->orderBy('order', 'desc')->first() ? $this->property->propertyImages()->orderBy('order', 'desc')->first()->order : 0;
             $uid = uniqid();
             $image_name = $this->property->code . '_' . $uid . '.' . $image->extension();
-
             $image_path = $image->storeAs('uploads/properties', $image_name, 'public');
-
-            // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $this->upload, $image_name);
 
             PropertyImage::create([
                 'property_id' => $this->property_id,

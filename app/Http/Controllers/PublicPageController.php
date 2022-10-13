@@ -112,6 +112,11 @@ class PublicPageController extends Controller
         return view('public.allProperties', compact('properties', 'bhks', 'amenities', 'propertyTypes', 'furnishings', 'amenities2', 'localities', 'filters', 'request'));
     }
 
+    public function viewProperty(Property $property)
+    {
+        return view('public.viewProperty', compact('property'));
+    }
+
 
     public function about()
     {
