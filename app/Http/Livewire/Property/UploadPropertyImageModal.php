@@ -36,7 +36,7 @@ class UploadPropertyImageModal extends ModalComponent
             $uid = uniqid();
             $image_name = $this->property->code . '_' . $uid . '.' . $image->extension();
 
-            $image_path = $image->storeAs('public/properties/', $image_name, 'public');
+            $image_path = $image->storeAs('uploads/properties', $image_name, 'public');
 
             // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $this->upload, $image_name);
 
