@@ -15,7 +15,7 @@ class UploadPropertyImageModal extends ModalComponent
     public $property_id;
     public Property $property;
 
-    public $upload;
+    public $uploads = [];
 
 
     public function mount($property_id)
@@ -24,25 +24,30 @@ class UploadPropertyImageModal extends ModalComponent
         $this->property = Property::find($property_id);
     }
 
-    public function saveImage()
+    public function saveImages()
     {
         $this->validate([
-            'upload' => 'required|image|max:4096', // 4MB Max
+            'uploads.*' => 'image|max:2048', // 2MB Max
         ]);
 
-        // Get last image order
-        $lastOrder = $this->property->images()->orderBy('order', 'desc')->first() ? $this->property->images()->orderBy('order', 'desc')->first()->order : 0;
-        $uid = uniqid();
-        $image_name = $this->property->code . '_' . $uid . '.' . $this->upload->getClientOriginalExtension();
-        $image_path = Storage::disk('public')->putFileAs('uploads/properties', $this->upload, $image_name);
+        foreach ($this->uploads as $image) {
+            // Get last image order
+            $lastOrder = $this->property->propertyImages()->orderBy('order', 'desc')->first() ? $this->property->propertyImages()->orderBy('order', 'desc')->first()->order : 0;
+            $uid = uniqid();
+            $image_name = $this->property->code . '_' . $uid . '.' . $image->extension();
 
-        PropertyImage::create([
-            'property_id' => $this->property_id,
-            'image_path' => $image_path,
-            'order' => $lastOrder + 1,
-            'is_cover' => false,
-            'show' => true,
-        ]);
+            $image_path = $image->storeAs('public/properties/' . $image_name);
+
+            // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $this->upload, $image_name);
+
+            PropertyImage::create([
+                'property_id' => $this->property_id,
+                'image_path' => $image_path,
+                'order' => $lastOrder + 1,
+                'is_cover' => false,
+                'show' => true,
+            ]);
+        }
 
         $this->emit('refreshPropertyImages');
         $this->closeModal();

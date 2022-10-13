@@ -17,6 +17,14 @@ class PropertyImages extends Component
     public Property $property;
     public $images;
 
+    // listeners
+    protected $listeners = ['refreshPropertyImages' => 'refresh'];
+
+    public function refresh()
+    {
+        $this->images = PropertyImage::where('property_id', $this->property->id)->orderBy('order')->get();
+    }
+
     public function mount(Property $property)
     {
         $this->property = $property;
@@ -31,7 +39,7 @@ class PropertyImages extends Component
             $image->save();
         }
 
-        $this->images = PropertyImage::where('property_id', $this->property->id)->orderBy('order')->get();
+        $this->refresh();
     }
 
     public function setCoverImage($image_id)
@@ -46,7 +54,7 @@ class PropertyImages extends Component
         $image->save();
         
 
-        $this->images = PropertyImage::where('property_id', $this->property->id)->orderBy('order')->get();
+        $this->refresh();
     }
 
     public function updateImageShow($image_id)
@@ -59,7 +67,7 @@ class PropertyImages extends Component
         $image->show = !$image->show;
         $image->save();
 
-        $this->images = PropertyImage::where('property_id', $this->property->id)->orderBy('order')->get();
+        $this->refresh();
     }
 
     public function render()

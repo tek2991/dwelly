@@ -16,15 +16,27 @@
             </h3>
             <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> {{ $property->locality->name }} </h3>
         </div>
-        <div  wire:ignore class="mt-4">
-            <form wire:submit.prevent="uploadImages">
+        <div wire:ignore class="mt-4">
+            <form wire:submit.prevent="saveImages">
                 {{-- File pond  --}}
-                <x-filepond wire:model="upload" />
+                <x-filepond
+                multiple
+                wire:model="uploads" 
+                allowImagePreview 
+                allowFileTypeValidation 
+                imagePreviewMaxHeight="200"
+                allowFileTypeValidation 
+                acceptedFileTypes="['image/png', 'image/jpg', 'image/jpeg']" 
+                allowFileSizeValidation
+                maxFileSize="4mb"
+                allowImageResize
+
+                />
                 @error('upload')
                     <p class="text-red-500 text-xs">{{ $message }}</p>
                 @enderror
                 <div class="flex justify-center">
-                    <button type="button" wire:click="saveImages" class="mt-4 btn btn-primary">Upload</button>
+                    <button type="submit" class="mt-4 btn btn-primary">Upload</button>
                 </div>
             </form>
         </div>
