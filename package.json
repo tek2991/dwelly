@@ -26,6 +26,8 @@
         "filepond-plugin-image-resize": "^2.0.10",
         "filepond-plugin-image-transform": "^3.8.7",
         "flowbite": "^1.5.3",
+        "jquery": "^3.6.1",
+        "lightbox2": "^2.11.3",
         "materialize-css": "^1.0.0-rc.2"
     }
 }

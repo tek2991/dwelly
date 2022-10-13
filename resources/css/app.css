@@ -2,6 +2,7 @@
 @import "../../node_modules/@splidejs/splide/dist/css/splide.min.css";
 @import '../../node_modules/filepond/dist/filepond.min.css';
 @import '../../node_modules/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+@import '../../node_modules/lightbox2/dist/css/lightbox.min.css';
 
 @tailwind base;
 @tailwind components;

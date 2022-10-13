@@ -181,9 +181,11 @@
                             </div>
                             <div class="flex flex-col justify-between text-darker-3 mt-6 lg:mt-0">
                                 <div class="flex justify-between">
-                                    <h2 class="text-xl font-GraphikMedium">
-                                        {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
-                                    </h2>
+                                    <a href="{{ route('viewProperty', $property) }}">
+                                        <h2 class="text-xl font-GraphikMedium">
+                                            {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
+                                        </h2>
+                                    </a>
                                     <button>
                                         <img src="{{ url('resources/icons/share.svg') }}" alt="">
                                     </button>
@@ -211,7 +213,8 @@
                                 </span>
                                 <p class="my-2 lg:my-0">Rent <span
                                         class="text-xl text-red-600">₹{{ $property->rent }}/-</span></p>
-                                <button onclick='Livewire.emit("openModal", "book-property-modal", {{ json_encode(["property_id" => $property->id]) }})'
+                                <button
+                                    onclick='Livewire.emit("openModal", "book-property-modal", {{ json_encode(['property_id' => $property->id]) }})'
                                     class="bg-darker-3 text-piss-yellow rounded-sm text-center text-sm mt-3 lg:mt-0 py-2 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full">BOOK
                                     A VISIT</button>
                             </div>
@@ -223,9 +226,11 @@
                             class="mx-auto w-80">
                         <h3 class="text-2xl font-GraphikMedium text-darker-3 text-center">Sorry, No Properties Found!
                         </h3>
-                        <p class="text-lg text-darker-3 text-center mb-6 mt-2">Please check the spelling or reset some filters.</p>
+                        <p class="text-lg text-darker-3 text-center mb-6 mt-2">Please check the spelling or reset some
+                            filters.</p>
                         <a href="{{ route('allProperties') }}"
-                            class="bg-darker-3 text-piss-yellow rounded-sm text-center text-sm lg:mt-0 py-2 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full sm:w-96 sm:mx-auto">Reset Search</a>
+                            class="bg-darker-3 text-piss-yellow rounded-sm text-center text-sm lg:mt-0 py-2 hover:bg-piss-yellow hover:text-darker-3 ease-in-out duration-300 cursor-pointer w-full sm:w-96 sm:mx-auto">Reset
+                            Search</a>
                     </div>
                 @endforelse
                 <div class="flex justify-center mt-24 mb-14">

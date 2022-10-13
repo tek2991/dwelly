@@ -31,3 +31,7 @@ FilePond.registerPlugin(
     FilePondPluginImageResize,
     FilePondPluginImageTransform
 );
+
+
+import $ from 'jquery';
+import 'lightbox2/dist/js/lightbox.min.js';
