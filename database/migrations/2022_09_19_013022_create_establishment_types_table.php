@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('establishment_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('icon_path');
             $table->timestamps();
         });
     }

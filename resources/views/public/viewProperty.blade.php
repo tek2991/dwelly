@@ -130,7 +130,8 @@
                 @foreach ($amenities as $amenity)
                     <div>
                         <p> <img src="{{ url('storage/' . $amenity->icon_path) }}" alt="{{ $amenity->name }}"
-                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold"> {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
+                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold">
+                                {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
                         </p>
                     </div>
                 @endforeach
@@ -152,15 +153,47 @@
         <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
             <div class="mb-3 md:mb-0 md:w-1/3">
                 <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
-                   Category
+                    Category
                 </h3>
             </div>
             <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
                 @foreach ($amenities2 as $amenity)
                     <div>
                         <p> <img src="{{ url('storage/' . $amenity->icon_path) }}" alt="{{ $amenity->name }}"
-                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold"> {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
+                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold">
+                                {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
                         </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Nearby Establishments
+                </h3>
+            </div>
+            <div class="md:w-2/3 font-Graphik text-base">
+                @foreach ($nearbyEstablishments as $establishmentTypeId => $establishments)
+                    <div class="grid grid-cols-3 mb-12">
+                        <div>
+                            <p> <img src="{{ url('storage/' . $establishments[0]->establishmentType->icon_path) }}"
+                                    alt="{{ $establishments[0]->establishmentType->name }}" class="inline w-5">
+                                {{ $establishments[0]->establishmentType->name }}: <span class="font-GraphikSemibold">
+                            </p>
+                        </div>
+                        <div class="col-span-2">
+                            <ul>
+                                @foreach ($establishments as $establishment)
+                                    @php
+                                        // Get the words before the first comma from description of the establishment
+                                        $description = explode(',', $establishment->description)[0];
+                                    @endphp
+                                    <li class="mb-1">{{ $description }}, {{ $establishment->distance_in_kms }}Km
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -168,17 +201,38 @@
         <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
             <div class="mb-3 md:mb-0 md:w-1/3">
                 <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
-                    Nearby Establishments
+                    Amount Description
                 </h3>
             </div>
-            <div class="grid grid-cols-2 gap-y-4 md:w-2/3 font-Graphik text-base">
-                @foreach ($amenities as $amenity)
-                    <div>
-                        <p> <img src="{{ url('storage/' . $amenity->icon_path) }}" alt="{{ $amenity->name }}"
-                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold"> {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
-                        </p>
-                    </div>
-                @endforeach
+            <div class="grid grid-cols-1 gap-y-4 md:w-2/3 font-Graphik text-base">
+                <p>Rent: <span class="font-GraphikSemibold text-lg"> ₹{{ $property->rent }} Monthly </span></p>
+                <p>Society Fee: <span class="font-GraphikSemibold text-lg"> ₹{{ $property->society_fee }} Monthly
+                    </span></p>
+                <p>Security Deposit: <span class="font-GraphikSemibold text-lg"> ₹{{ $property->security_deposit }}
+                    </span></p>
+                <p>One time service fee: <span class="font-GraphikSemibold text-lg"> ₹5000 </span>
+                </p>
+            </div>
+        </div>
+        <div class="text-darker-3 font-GraphikMedium pt-4">
+            <div class="mb-3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Location
+                </h3>
+            </div>
+            <div>
+                @php
+                    $lat = $property->latitude;
+                    $lng = $property->longitude;
+                    $address = $property->address;
+                    $api_key = config('services.google_maps.key');
+                @endphp
+                <iframe 
+                    width="100%" height="450px" frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?key={{ $api_key }}&q={{ $lat }},+{{ $lng }}"
+                    allowfullscreen
+                    loading="lazy"
+                ></iframe>
             </div>
         </div>
     </div>

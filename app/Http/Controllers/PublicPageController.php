@@ -126,6 +126,8 @@ class PublicPageController extends Controller
             ->orderBy('distance_in_kms')
             ->get()
             ->groupBy('establishment_type_id');
+        
+        // dd($nearbyEstablishments[1]);
 
         return view('public.viewProperty', compact('property', 'primaryRooms', 'furnitures', 'amenities', 'amenities2', 'nearbyEstablishments'));
     }

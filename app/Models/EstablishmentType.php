@@ -8,6 +8,7 @@ class EstablishmentType extends Model
 {
     protected $fillable = [
         'name',
+        'icon_path',
     ];
 
     public function nearbyEstablishments()
