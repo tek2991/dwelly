@@ -78,13 +78,16 @@
                     </div>
                 @endforeach
                 <div>
-                    <p>Floor: <span class="font-GraphikSemibold">{{ $property->floors }} of {{ $property->total_floors }}</span></p>
+                    <p>Floor: <span class="font-GraphikSemibold">{{ $property->floors }} of
+                            {{ $property->total_floors }}</span></p>
                 </div>
                 <div>
-                    <p>Floor Space: <span class="font-GraphikSemibold">{{ $property->floor_space }} ft<sup>2</sup></span></p>
+                    <p>Floor Space: <span class="font-GraphikSemibold">{{ $property->floor_space }}
+                            ft<sup>2</sup></span></p>
                 </div>
                 <div>
-                    <p>Flooring: <span class="font-GraphikSemibold">{{ $property->flooring->name }} ft<sup>2</sup></span></p>
+                    <p>Flooring: <span class="font-GraphikSemibold">{{ $property->flooring->name }}
+                            ft<sup>2</sup></span></p>
                 </div>
             </div>
         </div>
@@ -107,9 +110,75 @@
                 </h3>
             </div>
             <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
-                <div>
-                    <p> <img src="{{ url('resources/' . $property->getFurnitureIcon('Fan')) }}" alt=""> Fans: <span class="font-GraphikSemibold">{{ $property->getNoOfFurnitures('Fan') }}</span></p>
-                </div>
+                @foreach ($furnitures as $furniture)
+                    <div>
+                        <p> <img src="{{ url('storage/' . $furniture->icon_path) }}" alt="{{ $furniture->name }}"
+                                class="inline w-5"> {{ $furniture->name }}: <span
+                                class="font-GraphikSemibold">{{ $furniture->pivot->quantity }}</span>
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Society Amenities
+                </h3>
+            </div>
+            <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
+                @foreach ($amenities as $amenity)
+                    <div>
+                        <p> <img src="{{ url('storage/' . $amenity->icon_path) }}" alt="{{ $amenity->name }}"
+                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold"> {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Address
+                </h3>
+            </div>
+            <div class="md:w-2/3 font-Graphik text-base">
+                <p>{{ $property->building_name }}</p>
+                <p>{{ $property->address }}</p>
+                <p>{{ $property->locality->name }}</p>
+                <p>{{ $property->landmark }}</p>
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                   Category
+                </h3>
+            </div>
+            <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
+                @foreach ($amenities2 as $amenity)
+                    <div>
+                        <p> <img src="{{ url('storage/' . $amenity->icon_path) }}" alt="{{ $amenity->name }}"
+                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold"> {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
+            <div class="mb-3 md:mb-0 md:w-1/3">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                    Nearby Establishments
+                </h3>
+            </div>
+            <div class="grid grid-cols-2 gap-y-4 md:w-2/3 font-Graphik text-base">
+                @foreach ($amenities as $amenity)
+                    <div>
+                        <p> <img src="{{ url('storage/' . $amenity->icon_path) }}" alt="{{ $amenity->name }}"
+                                class="inline w-5"> {{ $amenity->name }}: <span class="font-GraphikSemibold"> {{ $property->checkPropertyAminity($amenity->name) ? 'Yes' : 'No' }} </span>
+                        </p>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

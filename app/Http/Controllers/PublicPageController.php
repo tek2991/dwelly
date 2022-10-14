@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Contact;
 use App\Models\Locality;
 use App\Models\Property;
 use Illuminate\Http\Request;
@@ -115,7 +114,20 @@ class PublicPageController extends Controller
     public function viewProperty(Property $property)
     {
         $primaryRooms = \App\Models\Room::primaryRooms();
-        return view('public.viewProperty', compact('property', 'primaryRooms'));
+        // Get the property's furnitures which has an icon_path and where show is true
+        $furnitures = $property->furnitures()->where('icon_path', '!=', null)->where('show', true)->get();
+        // Get the amenities which has an icon_path and does not have the word friendly in the name
+        $amenities = \App\Models\Amenity::where('icon_path', '!=', null)->where('show', true)->where('name', 'not like', '%_friendly')->get();
+        // Get the amenities which has an icon_path and has the word friendly in the name
+        $amenities2 = \App\Models\Amenity::where('icon_path', '!=', null)->where('show', true)->where('name', 'like', '%_friendly')->get();
+        // Get the properties nearby establishments
+        $nearbyEstablishments = $property->nearbyEstablishments()
+            ->with('establishmentType')
+            ->orderBy('distance_in_kms')
+            ->get()
+            ->groupBy('establishment_type_id');
+
+        return view('public.viewProperty', compact('property', 'primaryRooms', 'furnitures', 'amenities', 'amenities2', 'nearbyEstablishments'));
     }
 
 
@@ -609,9 +621,9 @@ class PublicPageController extends Controller
                 // download the image and save it as the property code with the image order in storage/app/public/uploads/properties
                 $uid = uniqid();
                 $image_name = $property->code . '_' . $uid . '.jpeg';
-                // $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
+                $image_path = Storage::disk('public')->putFileAs('uploads/properties', $image['image_url'], $image_name);
 
-                $image_path = 'uploads/properties/' . $image_name;
+                // $image_path = 'uploads/properties/' . $image_name;
 
                 // Create a new property image with the property id, image path, cover and image order
                 $property_image = \App\Models\PropertyImage::create([

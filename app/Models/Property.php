@@ -127,7 +127,7 @@ class Property extends Model
 
     public function getFurnitureIcon($furniture_name)
     {
-        $furniture = $this->furnitures()->where('name', $furniture_name)->first();
+        $furniture = Furniture::where('name', $furniture_name)->first();
         return $furniture ? $furniture->icon_path : '';
     }
 
