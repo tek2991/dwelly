@@ -1,0 +1,53 @@
+{
+  "public/resources/fonts/GraphikRegular.otf": {
+    "file": "assets/GraphikRegular.8e758310.otf",
+    "src": "public/resources/fonts/GraphikRegular.otf"
+  },
+  "public/resources/fonts/GraphikLight.otf": {
+    "file": "assets/GraphikLight.b0229814.otf",
+    "src": "public/resources/fonts/GraphikLight.otf"
+  },
+  "public/resources/fonts/GraphikSemibold.otf": {
+    "file": "assets/GraphikSemibold.4d663da5.otf",
+    "src": "public/resources/fonts/GraphikSemibold.otf"
+  },
+  "public/resources/fonts/GraphikMedium.otf": {
+    "file": "assets/GraphikMedium.ebd6d324.otf",
+    "src": "public/resources/fonts/GraphikMedium.otf"
+  },
+  "public/resources/fonts/GraphikBold.otf": {
+    "file": "assets/GraphikBold.75c911d1.otf",
+    "src": "public/resources/fonts/GraphikBold.otf"
+  },
+  "node_modules/lightbox2/dist/images/loading.gif": {
+    "file": "assets/loading.225aa88b.gif",
+    "src": "node_modules/lightbox2/dist/images/loading.gif"
+  },
+  "public/resources/fonts/ADELIA.otf": {
+    "file": "assets/ADELIA.912949fb.otf",
+    "src": "public/resources/fonts/ADELIA.otf"
+  },
+  "public/resources/fonts/SecularOneRegular.ttf": {
+    "file": "assets/SecularOneRegular.489bea3a.ttf",
+    "src": "public/resources/fonts/SecularOneRegular.ttf"
+  },
+  "public/resources/fonts/GloriaHallelujahRegular.ttf": {
+    "file": "assets/GloriaHallelujahRegular.4206cbda.ttf",
+    "src": "public/resources/fonts/GloriaHallelujahRegular.ttf"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app.de534434.js",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/lightbox2.js": {
+    "file": "assets/lightbox2.7e0886d6.js",
+    "src": "resources/js/lightbox2.js",
+    "isEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "assets/app.1f290bb9.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  }
+}
