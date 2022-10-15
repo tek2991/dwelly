@@ -25,8 +25,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/contact', [PublicPageController::class, 'contact'])->name('contact');
     Route::get('/about', [PublicPageController::class, 'about'])->name('about');
     Route::get('/owners', [PublicPageController::class, 'owners'])->name('owners');
-
-    Route::get('update', [PublicPageController::class, 'update'])->name('update');
 });
 
 Route::middleware([
