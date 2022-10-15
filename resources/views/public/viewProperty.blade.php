@@ -31,10 +31,11 @@
                 class="font-GraphikLight text-lg lg:hidden {{ $property->isAvailable() ? 'text-green-800' : 'text-darker' }}">
                 {{ $property->isAvailable() ? 'Available Now' : $property->available_from->diffForHumans() }}
             </div>
-            <div>
+            <div class="flex items-center">
                 <h2 class="text-3xl font-GraphikMedium">
                     {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
                 </h2>
+                <x-property-share-button :property="$property" />
             </div>
             <h3 class="text-2xl font-GraphikMedium my-1 lg:my-0">{{ $property->address }}</h3>
             <h3 class="text-xl font-GraphikLight my-1 lg:my-0">{{ $property->landmark }},
