@@ -106,7 +106,7 @@
         </div>
         <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
             <div class="mb-3 md:mb-0 md:w-1/3">
-                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold"> 
                     Furnishing Amenities
                 </h3>
             </div>
