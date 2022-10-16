@@ -38,6 +38,18 @@
                             {{ __('Properties') }}
                         </x-nav-dropdown-item>
                     </x-nav-dropdown-wrapper>
+                    {{-- Contact Management --}}
+                    <x-nav-dropdown-button data-dropdown-toggle="contact_management_dropdownNavbar">
+                        {{ __('Contact Management') }}
+                    </x-nav-dropdown-button>
+                    <x-nav-dropdown-wrapper id="contact_management_dropdownNavbar">
+                        <x-nav-dropdown-item :href="route('contactForm.index')" :active="request()->routeIs('contactForm.index')">
+                            {{ __('Contacts & Bookings') }}
+                        </x-nav-dropdown-item>
+                        <x-nav-dropdown-item :href="route('rentOut.index')" :active="request()->routeIs('rentOut.index')">
+                            {{ __('Rentouts') }}
+                        </x-nav-dropdown-item>
+                    </x-nav-dropdown-wrapper>
                 </div>
             </div>
 

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\RentOutController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\Property\PropertyController;
 use App\Http\Controllers\NearbyEstablishmentController;
@@ -56,5 +58,15 @@ Route::middleware([
     // Property Routes
     Route::resource('property', PropertyController::class)->only([
         'index', 'show', 'create', 'store', 'edit', 'update'
+    ]);
+
+    // Contact Routes
+    Route::resource('contactForm', ContactController::class)->only([
+        'index', 'show'
+    ]);
+
+    // Rent Out Routes
+    Route::resource('rentOut', RentOutController::class)->only([
+        'index', 'show'
     ]);
 });
