@@ -12,10 +12,16 @@ class RentOutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('app.rentout.index');
+        $this->validate($request, [
+            'contact_id' => 'nullable|exists:contacts,id',
+        ]);
+        return view('app.rentout.index', [
+            'contact_id' => $request->contact_id,
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

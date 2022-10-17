@@ -16,6 +16,13 @@ final class ContactTable extends PowerGridComponent
     public string $sortField = 'id';
     public string $sortDirection = 'desc';
 
+    public $rentout_id;
+
+    public function __construct($rentout_id = null)
+    {
+        $this->rentout_id = $rentout_id;
+    }
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -53,7 +60,13 @@ final class ContactTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Contact::query();
+        if($this->rentout_id) {
+            return Contact::query()->whereHas('rentOuts', function($query) {
+                $query->where('id', $this->rentout_id);
+            });
+        }else{
+            return Contact::query();
+        }
     }
 
     /*
@@ -103,17 +116,19 @@ final class ContactTable extends PowerGridComponent
             ->addColumn('property', function (Contact $model) {
                 // Check if the contact has a property
                 if ($model->property) {
-                    return $model->property->name;
+                    return $model->property->code;
                 }else{
-                    return 'No property';
+                    return 'N/A';
                 }
             })
             ->addColumn('rent_outs', function (Contact $model) {
                 // Check if the contact has rent outs
                 if ($model->rentOuts->count() > 0) {
-                    return $model->rentOuts->count();
+                    $count =  $model->rentOuts->count();
+                    $url = route('rentOut.index', ['contact_id' => $model->id]);
+                    return "<a href='$url'>$count</a>";
                 }else{
-                    return 'No rent outs';
+                    return 'N/A';
                 }
             })
             ->addColumn('created_at_formatted', fn (Contact $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))

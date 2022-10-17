@@ -12,9 +12,14 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('app.contact.index');
+        $this->validate($request, [
+            'rentout_id' => 'nullable|exists:rent_outs,id',
+        ]);
+        return view('app.contact.index', [
+            'rentout_id' => $request->rentout_id,
+        ]);
     }
 
     /**

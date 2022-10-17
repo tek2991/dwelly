@@ -13,6 +13,16 @@ final class RentOutTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public string $sortField = 'id';
+    public string $sortDirection = 'desc';
+
+    public $contact_id;
+
+    public function __construct($contact_id = null)
+    {
+        $this->contact_id = $contact_id;
+    }
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -50,7 +60,11 @@ final class RentOutTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return RentOut::query();
+        if($this->contact_id) {
+            return RentOut::query()->where('contact_id', $this->contact_id);
+        } else {
+            return RentOut::query();
+        }
     }
 
     /*
@@ -88,15 +102,17 @@ final class RentOutTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('contact_id')
             ->addColumn('contact_name', function (RentOut $model) {
-                return e($model->contact->name);
+                $name = $model->contact->name;
+                $url = route('contactForm.index', ['rentout_id' => $model->id]);
+                return "<a href='$url'>$name</a>";
             })
             ->addColumn('property_type_id')
             ->addColumn('property_type_name', function (RentOut $model) {
                 return e($model->propertyType->name);
             })
             ->addColumn('availability')
-            ->addColumn('vancant', function (RentOut $model) {
-                return e($model->availability ? 'Yes' : 'No');
+            ->addColumn('vacant', function (RentOut $model) {
+                return ($model->availability == 1 ? 'Yes' : 'No');
             })
             ->addColumn('bedroom')
             ->addColumn('bathroom')
@@ -134,8 +150,7 @@ final class RentOutTable extends PowerGridComponent
 
             Column::make('PROPERTY TYPE', 'property_type_name', 'property_type_id'),
 
-            Column::make('AVAILABILITY', 'vacant', 'availability')
-                ->toggleable(),
+            Column::make('AVAILABILITY', 'vacant', 'availability'),
 
             Column::make('BEDROOM', 'bedroom'),
 
