@@ -176,30 +176,32 @@
                     {{-- Repeat 2 times --}}
                     @foreach ($properties as $property)
                         <li class="splide__slide">
-                            <div class="p-0 sm:p-2">
-                                <img src="{{ url('storage/' . $property->propertyImages->where('is_cover', true)->first()->image_path) }}"
-                                    alt="Tools" class="w-full h-56 object-cover">
-                                <div class="grid grid-cols-7 pt-2 px-2">
-                                    <p class="col-span-2 flex items-center gap-1">
-                                        <svg height="10" width="10">
-                                            <circle cx="5" cy="5" r="5" fill="#686868" />
-                                        </svg>
-                                        {{ $property->bhk->name }}
-                                    </p>
-                                    <p class="col-span-3 flex justify-center items-center gap-1">
-                                        <svg height="10" width="10">
-                                            <circle cx="5" cy="5" r="5" fill="#686868" />
-                                        </svg>
-                                        {{ $property->building_name }}
-                                    </p>
-                                    <p class="col-span-2 flex justify-end items-center gap-1">
-                                        <svg height="10" width="10">
-                                            <circle cx="5" cy="5" r="5" fill="#e8c811" />
-                                        </svg>
-                                        ₹ {{ $property->rent }}
-                                    </p>
+                            <a href="{{ route('viewProperty', $property->id) }}">
+                                <div class="p-0 sm:p-2">
+                                    <img src="{{ url('storage/' . $property->propertyImages->where('is_cover', true)->first()->image_path) }}"
+                                        alt="Tools" class="w-full h-56 object-cover">
+                                    <div class="grid grid-cols-7 pt-2 px-2">
+                                        <p class="col-span-2 flex items-center gap-1">
+                                            <svg height="10" width="10">
+                                                <circle cx="5" cy="5" r="5" fill="#686868" />
+                                            </svg>
+                                            {{ $property->bhk->name }}
+                                        </p>
+                                        <p class="col-span-3 flex justify-center items-center gap-1">
+                                            <svg height="10" width="10">
+                                                <circle cx="5" cy="5" r="5" fill="#686868" />
+                                            </svg>
+                                            {{ $property->building_name }}
+                                        </p>
+                                        <p class="col-span-2 flex justify-end items-center gap-1">
+                                            <svg height="10" width="10">
+                                                <circle cx="5" cy="5" r="5" fill="#e8c811" />
+                                            </svg>
+                                            ₹ {{ $property->rent }}
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
