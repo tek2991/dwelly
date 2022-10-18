@@ -79,29 +79,32 @@ class PropertyDetails extends Component
         $this->available_from = $property->available_from->format('Y-m-d');
     }
 
-    protected $rules = [
-        'code' => 'required|string|max:255',
-        'is_available' => 'required|boolean',
-        'bhk_id' => 'required|integer',
-        'property_type_id' => 'required|integer',
-        'floor_space' => 'required|integer',
-        'flooring_id' => 'required|integer',
-        'furnishing_id' => 'required|integer',
-        'floors' => 'required|integer',
-        'total_floors' => 'required|integer',
-        'address' => 'required|string|max:255',
-        'building_name' => 'nullable|string|max:255',
-        'landmark' => 'nullable|string|max:255',
-        'locality_id' => 'required|integer',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-        'rent' => 'required|integer',
-        'security_deposit' => 'required|integer',
-        'society_fee' => 'required|integer',
-        'booking_amount' => 'required|integer',
-        'is_promoted' => 'required|boolean',
-        'available_from' => 'required|date',
-    ];
+    protected function rules(){
+        return [
+            // Code is unique except for the current property
+            'code' => 'required|string|max:255|unique:properties,code, ' . $this->property->id,
+            'is_available' => 'required|boolean',
+            'bhk_id' => 'required|integer',
+            'property_type_id' => 'required|integer',
+            'floor_space' => 'required|integer',
+            'flooring_id' => 'required|integer',
+            'furnishing_id' => 'required|integer',
+            'floors' => 'required|integer',
+            'total_floors' => 'required|integer',
+            'address' => 'required|string|max:255',
+            'building_name' => 'nullable|string|max:255',
+            'landmark' => 'nullable|string|max:255',
+            'locality_id' => 'required|integer',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'rent' => 'required|integer',
+            'security_deposit' => 'required|integer',
+            'society_fee' => 'required|integer',
+            'booking_amount' => 'required|integer',
+            'is_promoted' => 'required|boolean',
+            'available_from' => 'required|date',
+        ];
+    }
 
     public function edit()
     {
