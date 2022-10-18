@@ -141,6 +141,11 @@ class Property extends Model
         return $this->hasMany(PropertyImage::class);
     }
 
+    public function coverImage()
+    {
+        return $this->hasOne(PropertyImage::class)->where('is_cover', true);
+    }
+
     /**
      * Interact with the rent_in_cents column.
      *

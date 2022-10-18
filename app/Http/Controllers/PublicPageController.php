@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Locality;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class PublicPageController extends Controller
 {
@@ -126,10 +126,36 @@ class PublicPageController extends Controller
             ->orderBy('distance_in_kms')
             ->get()
             ->groupBy('establishment_type_id');
-        
+
         // dd($nearbyEstablishments[1]);
 
         return view('public.viewProperty', compact('property', 'primaryRooms', 'furnitures', 'amenities', 'amenities2', 'nearbyEstablishments'));
+    }
+
+    public function propertyBrocure(Property $property)
+    {
+        $coverImage = $property->coverImage;
+        $coverImage = Image::make(storage_path('app/public/' . $coverImage->image_path))->resize(640, 480, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('data-url');
+
+        $first3images = $property->propertyImages()->where('is_cover', false)->where('show', true)->take(3)->get();
+        $images = [];
+        foreach ($first3images as $image) {
+            $images[] = Image::make(storage_path('app/public/' . $image->image_path))->resize(480, 320, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('data-url');
+        }
+
+        $nearbyEstablishments = $property->nearbyEstablishments()
+            ->with('establishmentType')
+            ->orderBy('distance_in_kms')
+            ->get()
+            ->groupBy('establishment_type_id');
+
+        $pdf = PDF::loadView('pdf.propertyBrochure', compact('property', 'coverImage', 'images', 'nearbyEstablishments'));
+        $filename = $property->code . '_Brochure.pdf';
+        return $pdf->download($filename);
     }
 
 

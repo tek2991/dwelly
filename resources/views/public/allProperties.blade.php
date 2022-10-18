@@ -186,9 +186,7 @@
                                             {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
                                         </h2>
                                     </a>
-                                    <button>
-                                        <img src="{{ url('resources/icons/share.svg') }}" alt="">
-                                    </button>
+                                    <x-property-share-button :property="$property" :iconOnly="true" />
                                 </div>
                                 <h3 class="text-darker-2 my-1 lg:my-0">{{ $property->building_name }}</h3>
                                 <h3 class="font-GraphikLight text-sm my-1 lg:my-0">

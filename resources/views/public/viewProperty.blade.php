@@ -87,8 +87,7 @@
                             ft<sup>2</sup></span></p>
                 </div>
                 <div>
-                    <p>Flooring: <span class="font-GraphikSemibold">{{ $property->flooring->name }}
-                            ft<sup>2</sup></span></p>
+                    <p>Flooring: <span class="font-GraphikSemibold">{{ $property->flooring->name }}</p>
                 </div>
             </div>
         </div>
