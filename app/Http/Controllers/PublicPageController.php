@@ -127,9 +127,9 @@ class PublicPageController extends Controller
             ->get()
             ->groupBy('establishment_type_id');
 
-        // dd($nearbyEstablishments[1]);
+        $propertyImages = $property->propertyImages()->orderBy('order', 'asc')->get();
 
-        return view('public.viewProperty', compact('property', 'primaryRooms', 'furnitures', 'amenities', 'amenities2', 'nearbyEstablishments'));
+        return view('public.viewProperty', compact('property', 'primaryRooms', 'furnitures', 'amenities', 'amenities2', 'nearbyEstablishments', 'propertyImages'));
     }
 
     public function propertyBrocure(Property $property)

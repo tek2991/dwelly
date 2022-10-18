@@ -11,7 +11,7 @@
             <div class="splide__track">
                 <ul class="splide__list">
                     {{-- Repeat 2 times --}}
-                    @foreach ($property->propertyImages as $image)
+                    @foreach ($propertyImages as $image)
                         <li class="splide__slide">
                             <div class="p-0 sm:p-2">
                                 <a href="{{ url('storage/' . $image->image_path) }}" data-lightbox="property-img">
