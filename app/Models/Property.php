@@ -210,6 +210,16 @@ class Property extends Model
         );
     }
 
+    public function tenants()
+    {
+        return $this->belongsToMany(User::class, 'tenants', 'property_id', 'id');
+    }
+
+    public function owners()
+    {
+        return $this->belongsToMany(User::class, 'owners', 'property_id', 'id');
+    }
+
     /**
      * Set ammenities attributes indexable by Scout.
      *
