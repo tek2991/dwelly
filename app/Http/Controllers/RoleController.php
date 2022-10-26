@@ -37,6 +37,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request['name'] = strtolower($request->name);
         $request->validate([
             'name' => 'required|unique:roles,name',
             'permission_ids.*' => 'required|exists:permissions,id'
@@ -105,9 +106,9 @@ class RoleController extends Controller
             return redirect()->back()->dangerBanner('You do not have permission to do that.');
         }
 
-        // Prevent modification of the admin role
-        if ($role->name == 'admin') {
-            return redirect()->back()->dangerBanner('You cannot modify the admin role.');
+        // Prevent modification of fixed roles
+        if (in_array($role->name, Role::fixedRoles())) {
+            return redirect()->back()->dangerBanner('You cannot modify fixed roles.');
         }
 
         $role->revokePermissionTo($permission->name);
@@ -121,9 +122,9 @@ class RoleController extends Controller
             return redirect()->back()->dangerBanner('You do not have permission to do that.');
         }
 
-        // Prevent modification of the admin role
-        if ($role->name == 'admin') {
-            return redirect()->back()->dangerBanner('You cannot modify the admin role.');
+        // Prevent modification of fixed roles
+        if (in_array($role->name, Role::fixedRoles())) {
+            return redirect()->back()->dangerBanner('You cannot modify fixed roles.');
         }
 
         $permission = Permission::find($request->permission_id);

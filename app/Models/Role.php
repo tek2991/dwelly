@@ -10,6 +10,17 @@ class Role extends \Spatie\Permission\Models\Role
         return [
             'admin',
             'user',
+            'owner',
+            'tenant',
+        ];
+    }
+
+    public static function fixedRoles()
+    {
+        return [
+            'admin',
+            'owner',
+            'tenant',
         ];
     }
 }
