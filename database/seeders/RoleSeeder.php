@@ -31,8 +31,8 @@ class RoleSeeder extends Seeder
                 // Assign all permissions
                 $role->syncPermissions(\App\Models\Permission::all());
                 $this->command->info('Admin granted all the permissions');
-            } else {
-                // For others by default only read access
+            } else if ($role->name == 'user') {
+                // For users by default only read access
                 $role->syncPermissions(\App\Models\Permission::where('name', 'LIKE', 'view_%')->get());
             }
         }
