@@ -212,12 +212,12 @@ class Property extends Model
 
     public function tenants()
     {
-        return $this->belongsToMany(User::class, 'tenants', 'property_id', 'property_id', 'user_id');
+        return $this->belongsToMany(User::class, 'tenants', 'property_id', 'user_id');
     }
 
     public function owners()
     {
-        return $this->belongsToMany(User::class, 'owners', 'property_id', 'property_id', 'user_id');
+        return $this->belongsToMany(User::class, 'owners', 'property_id', 'user_id');
     }
 
     /**
