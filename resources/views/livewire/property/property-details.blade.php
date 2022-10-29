@@ -11,9 +11,9 @@
                     @enderror
 
                     @if ($editing === true)
-                        <x-jet-input id="code" class="block mt-1 w-full" type="text" wire:model.defer="code" />
+                        <x-jet-input id="code" class="block mt-1 w-full" type="text" wire:model="code" />
                     @else
-                        <x-jet-input id="code" class="block mt-1 w-full" type="text" wire:model.defer="code"
+                        <x-jet-input id="code" class="block mt-1 w-full" type="text" wire:model="code"
                             disabled />
                     @endif
 
@@ -25,12 +25,12 @@
                         <label for="is_available" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="is_available" wire:model.defer="is_available">
+                        <x-input-select id="is_available" wire:model="is_available">
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </x-input-select>
                     @else
-                        <x-input-select id="is_available" wire:model.defer="is_available" disabled>
+                        <x-input-select id="is_available" wire:model="is_available" disabled>
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </x-input-select>
@@ -43,13 +43,13 @@
                         <label for="bhk_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="bhk_id" wire:model.defer="bhk_id">
+                        <x-input-select id="bhk_id" wire:model="bhk_id">
                             @foreach ($bhks as $bhk)
                                 <option value="{{ $bhk->id }}">{{ $bhk->name }}</option>
                             @endforeach
                         </x-input-select>
                     @else
-                        <x-input-select id="bhk_id" wire:model.defer="bhk_id" disabled>
+                        <x-input-select id="bhk_id" wire:model="bhk_id" disabled>
                             @foreach ($bhks as $bhk)
                                 <option value="{{ $bhk->id }}">{{ $bhk->name }}</option>
                             @endforeach
@@ -64,13 +64,13 @@
                         <label for="property_type_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="property_type_id" wire:model.defer="property_type_id">
+                        <x-input-select id="property_type_id" wire:model="property_type_id">
                             @foreach ($propertyTypes as $propertyType)
                                 <option value="{{ $propertyType->id }}">{{ $propertyType->name }}</option>
                             @endforeach
                         </x-input-select>
                     @else
-                        <x-input-select id="property_type_id" wire:model.defer="property_type_id" disabled>
+                        <x-input-select id="property_type_id" wire:model="property_type_id" disabled>
                             @foreach ($propertyTypes as $propertyType)
                                 <option value="{{ $propertyType->id }}">{{ $propertyType->name }}</option>
                             @endforeach
@@ -87,10 +87,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="floor_space" class="block mt-1 w-full" type="text"
-                            wire:model.defer="floor_space" />
+                            wire:model="floor_space" />
                     @else
                         <x-jet-input id="floor_space" class="block mt-1 w-full" type="text"
-                            wire:model.defer="floor_space" disabled />
+                            wire:model="floor_space" disabled />
                     @endif
                 </div>
 
@@ -102,13 +102,13 @@
                         <label for="flooring_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="flooring_id" wire:model.defer="flooring_id">
+                        <x-input-select id="flooring_id" wire:model="flooring_id">
                             @foreach ($floorings as $flooring)
                                 <option value="{{ $flooring->id }}">{{ $flooring->name }}</option>
                             @endforeach
                         </x-input-select>
                     @else
-                        <x-input-select id="flooring_id" wire:model.defer="flooring_id" disabled>
+                        <x-input-select id="flooring_id" wire:model="flooring_id" disabled>
                             @foreach ($floorings as $flooring)
                                 <option value="{{ $flooring->id }}">{{ $flooring->name }}</option>
                             @endforeach
@@ -124,13 +124,13 @@
                         <label for="furnishing_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="furnishing_id" wire:model.defer="furnishing_id">
+                        <x-input-select id="furnishing_id" wire:model="furnishing_id">
                             @foreach ($furnishings as $furnishing)
                                 <option value="{{ $furnishing->id }}">{{ $furnishing->name }}</option>
                             @endforeach
                         </x-input-select>
                     @else
-                        <x-input-select id="furnishing_id" wire:model.defer="furnishing_id" disabled>
+                        <x-input-select id="furnishing_id" wire:model="furnishing_id" disabled>
                             @foreach ($furnishings as $furnishing)
                                 <option value="{{ $furnishing->id }}">{{ $furnishing->name }}</option>
                             @endforeach
@@ -148,9 +148,9 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="floors" class="block mt-1 w-full" type="text"
-                            wire:model.defer="floors" />
+                            wire:model="floors" />
                     @else
-                        <x-jet-input id="floors" class="block mt-1 w-full" type="text" wire:model.defer="floors"
+                        <x-jet-input id="floors" class="block mt-1 w-full" type="text" wire:model="floors"
                             disabled />
                     @endif
                 </div>
@@ -164,10 +164,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="total_floors" class="block mt-1 w-full" type="text"
-                            wire:model.defer="total_floors" />
+                            wire:model="total_floors" />
                     @else
                         <x-jet-input id="total_floors" class="block mt-1 w-full" type="text"
-                            wire:model.defer="total_floors" disabled />
+                            wire:model="total_floors" disabled />
                     @endif
                 </div>
 
@@ -180,10 +180,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-textarea id="address" class="block mt-1 w-full" type="text"
-                            wire:model.defer="address" />
+                            wire:model="address" />
                     @else
                         <x-textarea id="address" class="block mt-1 w-full" type="text"
-                            wire:model.defer="address" disabled />
+                            wire:model="address" disabled />
                     @endif
                 </div>
 
@@ -196,10 +196,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="building_name" class="block mt-1 w-full" type="text"
-                            wire:model.defer="building_name" />
+                            wire:model="building_name" />
                     @else
                         <x-jet-input id="building_name" class="block mt-1 w-full" type="text"
-                            wire:model.defer="building_name" disabled />
+                            wire:model="building_name" disabled />
                     @endif
                 </div>
 
@@ -212,10 +212,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="landmark" class="block mt-1 w-full" type="text"
-                            wire:model.defer="landmark" />
+                            wire:model="landmark" />
                     @else
                         <x-jet-input id="landmark" class="block mt-1 w-full" type="text"
-                            wire:model.defer="landmark" disabled />
+                            wire:model="landmark" disabled />
                     @endif
                 </div>
 
@@ -227,13 +227,13 @@
                         <label for="locality_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="locality_id" wire:model.defer="locality_id">
+                        <x-input-select id="locality_id" wire:model="locality_id">
                             @foreach ($localities as $locality)
                                 <option value="{{ $locality->id }}">{{ $locality->name }}</option>
                             @endforeach
                         </x-input-select>
                     @else
-                        <x-input-select id="locality_id" wire:model.defer="locality_id" disabled>
+                        <x-input-select id="locality_id" wire:model="locality_id" disabled>
                             @foreach ($localities as $locality)
                                 <option value="{{ $locality->id }}">{{ $locality->name }}</option>
                             @endforeach
@@ -250,10 +250,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
-                            wire:model.defer="latitude" />
+                            wire:model="latitude" />
                     @else
                         <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
-                            wire:model.defer="latitude" disabled />
+                            wire:model="latitude" disabled />
                     @endif
                 </div>
 
@@ -266,10 +266,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="longitude" class="block mt-1 w-full" type="text"
-                            wire:model.defer="longitude" />
+                            wire:model="longitude" />
                     @else
                         <x-jet-input id="longitude" class="block mt-1 w-full" type="text"
-                            wire:model.defer="longitude" disabled />
+                            wire:model="longitude" disabled />
                     @endif
                 </div>
 
@@ -289,10 +289,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="rent" class="block mt-1 w-full" type="text"
-                            wire:model.defer="rent" />
+                            wire:model="rent" />
                     @else
                         <x-jet-input id="rent" class="block mt-1 w-full" type="text"
-                            wire:model.defer="rent" disabled />
+                            wire:model="rent" disabled />
                     @endif
                 </div>
 
@@ -305,10 +305,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="security_deposit" class="block mt-1 w-full" type="text"
-                            wire:model.defer="security_deposit" />
+                            wire:model="security_deposit" />
                     @else
                         <x-jet-input id="security_deposit" class="block mt-1 w-full" type="text"
-                            wire:model.defer="security_deposit" disabled />
+                            wire:model="security_deposit" disabled />
                     @endif
                 </div>
 
@@ -321,10 +321,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="society_fee" class="block mt-1 w-full" type="text"
-                            wire:model.defer="society_fee" />
+                            wire:model="society_fee" />
                     @else
                         <x-jet-input id="society_fee" class="block mt-1 w-full" type="text"
-                            wire:model.defer="society_fee" disabled />
+                            wire:model="society_fee" disabled />
                     @endif
                 </div>
 
@@ -337,10 +337,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="booking_amount" class="block mt-1 w-full" type="text"
-                            wire:model.defer="booking_amount" />
+                            wire:model="booking_amount" />
                     @else
                         <x-jet-input id="booking_amount" class="block mt-1 w-full" type="text"
-                            wire:model.defer="booking_amount" disabled />
+                            wire:model="booking_amount" disabled />
                     @endif
                 </div>
 
@@ -352,12 +352,12 @@
                         <label for="is_promoted" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-input-select id="is_promoted" wire:model.defer="is_promoted">
+                        <x-input-select id="is_promoted" wire:model="is_promoted">
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </x-input-select>
                     @else
-                        <x-input-select id="is_promoted" wire:model.defer="is_promoted" disabled>
+                        <x-input-select id="is_promoted" wire:model="is_promoted" disabled>
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </x-input-select>
@@ -373,10 +373,10 @@
                     @enderror
                     @if ($editing === true)
                         <x-jet-input id="available_from" class="block mt-1 w-full" type="date"
-                            wire:model.defer="available_from" />
+                            wire:model="available_from" />
                     @else
                         <x-jet-input id="available_from" class="block mt-1 w-full" type="date"
-                            wire:model.defer="available_from" disabled />
+                            wire:model="available_from" disabled />
                     @endif
                 </div>
             </div>

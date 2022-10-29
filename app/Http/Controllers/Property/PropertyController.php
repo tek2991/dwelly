@@ -25,19 +25,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $propertyTypes = \App\Models\PropertyType::all();
-        $bhks = \App\Models\Bhk::all();
-        $floorings = \App\Models\Flooring::all();
-        $furnishings = \App\Models\Furnishing::all();
-        $localities = \App\Models\Locality::all();
-
-        return view('app.property.create', compact(
-            'propertyTypes',
-            'bhks',
-            'floorings',
-            'furnishings',
-            'localities'
-        ));
+        return view('app.property.create');
     }
 
     /**
