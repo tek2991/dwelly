@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documenttypes', function (Blueprint $table) {
+        Schema::create('document_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('Name of the document type');
-            $table->string('description')->comment('Description of the document type');
+            $table->string('description')->nullable()->comment('Description of the document type');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documenttypes');
+        Schema::dropIfExists('document_types');
     }
 };

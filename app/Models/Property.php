@@ -215,9 +215,16 @@ class Property extends Model
         return $this->belongsToMany(User::class, 'tenants', 'property_id', 'user_id');
     }
 
-    public function owners()
+    // Private function to get owners of the property
+    private function owners()
     {
         return $this->belongsToMany(User::class, 'owners', 'property_id', 'user_id');
+    }
+
+    public function owner()
+    {
+        $owners = $this->owners()->get();
+        return $owners->first();
     }
 
     /**
