@@ -22,45 +22,30 @@
                         {{-- Name --}}
                         <div>
                             <x-jet-label for="name" :value="__('Name')" />
-                            @error('name')
-                                <label for="name" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
                             <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name"
                                 :value="old('name')" required autofocus />
                         </div>
                         {{-- Email --}}
                         <div>
                             <x-jet-label for="email" :value="__('Email')" />
-                            @error('email')
-                                <label for="email" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
                             <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email"
                                 :value="old('email')" required />
                         </div>
                         {{-- Phone --}}
                         <div>
                             <x-jet-label for="phone_1" :value="__('Phone')" />
-                            @error('phone')
-                                <label for="phone_1" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
                             <x-jet-input id="phone_1" class="block mt-1 w-full" type="text" name="phone_1"
                                 :value="old('phone')" required />
                         </div>
                         {{-- Phone 2 --}}
                         <div>
                             <x-jet-label for="phone_2" :value="__('Phone Alternate')" />
-                            @error('phone_2')
-                                <label for="phone_2" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
                             <x-jet-input id="phone_2" class="block mt-1 w-full" type="text" name="phone_2"
                                 :value="old('phone_2')" />
                         </div>
                         {{-- Password --}}
                         <div>
                             <x-jet-label for="password" :value="__('Password')" />
-                            @error('password')
-                                <label for="password" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
                             <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password"
                                 required autocomplete="new-password" />
                         </div>

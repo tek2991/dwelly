@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Owner;
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OwnerController extends Controller
@@ -35,7 +36,33 @@ class OwnerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'property_id' => 'required|exists:properties,id',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'phone_1' => 'required|string',
+            'phone_2' => 'nullable|string',
+            'address' => 'required|string',
+            'password' => 'required|password|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'phone_1' => $validated['phone_1'],
+            'phone_2' => $validated['phone_2'],
+        ]);
+
+        $user->assignRole('owner');
+
+        $owner = Owner::create([
+            'user_id' => $user->id,
+            'property_id' => $validated['property_id'],
+            'address' => $validated['address'],
+        ]);
+
+        return redirect()->route('property.show', $validated['property_id'])->with('success', 'Owner created successfully');
     }
 
     /**
