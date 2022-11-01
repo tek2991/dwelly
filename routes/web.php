@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RentOutController;
 use App\Http\Controllers\PublicPageController;
@@ -70,4 +71,10 @@ Route::middleware([
     Route::resource('rentOut', RentOutController::class)->only([
         'index', 'show'
     ]);
+
+    // Owner Routes
+    Route::resource('owner', OwnerController::class)->only([
+        'index'
+    ]);
+    Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
 });

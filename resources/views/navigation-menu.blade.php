@@ -37,6 +37,9 @@
                         <x-nav-dropdown-item :href="route('property.index')" :active="request()->routeIs('property.index')">
                             {{ __('Properties') }}
                         </x-nav-dropdown-item>
+                        <x-nav-dropdown-item :href="route('owner.index')" :active="request()->routeIs('owner.*')">
+                            {{ __('Owners') }}
+                        </x-nav-dropdown-item>
                     </x-nav-dropdown-wrapper>
                     {{-- Contact Management --}}
                     <x-nav-dropdown-button data-dropdown-toggle="contact_management_dropdownNavbar">
