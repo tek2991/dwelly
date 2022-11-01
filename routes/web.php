@@ -74,7 +74,7 @@ Route::middleware([
 
     // Owner Routes
     Route::resource('owner', OwnerController::class)->only([
-        'index'
+        'index', 'store'
     ]);
     Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
 });
