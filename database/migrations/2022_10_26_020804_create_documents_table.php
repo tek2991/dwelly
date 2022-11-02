@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('document_type_id')->constrained();
             $table->string('file_path')->comment('Path to the document in storage/app/uploads/documents');
-            $table->foreignId('document_id')->constrained();
             $table->morphs('documentable');
             $table->timestamps();
         });
