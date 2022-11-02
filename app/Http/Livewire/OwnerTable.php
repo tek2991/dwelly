@@ -50,7 +50,10 @@ final class OwnerTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Owner::query();
+        return Owner::query()
+        ->join('users', 'users.id', '=', 'owners.user_id')
+        ->join('properties', 'properties.id', '=', 'owners.property_id')
+        ->select('owners.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code');
     }
 
     /*
@@ -88,10 +91,19 @@ final class OwnerTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('user_id')
             ->addColumn('property_id')
-            ->addColumn('onboarded_at_formatted', fn (Owner $model) => Carbon::parse($model->onboarded_at)->format('d/m/Y H:i:s'))
-            ->addColumn('outboarded_at_formatted', fn (Owner $model) => Carbon::parse($model->outboarded_at)->format('d/m/Y H:i:s'))
+            ->addColumn('onboarded_at_formatted', fn (Owner $model) => Carbon::parse($model->onboarded_at)->format('d/m/Y'))
+            ->addColumn('outboarded_at_formatted', fn (Owner $model) => $model->outboarded_at ? Carbon::parse($model->outboarded_at)->format('d/m/Y') : 'N/A')
             ->addColumn('created_at_formatted', fn (Owner $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Owner $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('updated_at_formatted', fn (Owner $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
+            ->addColumn('name')
+            ->addColumn('email')
+            ->addColumn('phone_1')
+            ->addColumn('phone_2')
+            ->addColumn('property_code')
+            ->addColumn('property_code_link', function(Owner $model){
+                $link = route('property.show', $model->property_id);
+                return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->property_code}</a>";
+            });
     }
 
     /*
@@ -111,32 +123,30 @@ final class OwnerTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            Column::make('USER ', 'name')
+                ->searchable(),
 
-            Column::make('USER ID', 'user_id')
-                ->makeInputRange(),
+            Column::make('PROPERTY', 'property_code_link', 'property_code')
+                ->searchable()
+                ->sortable(),
 
-            Column::make('PROPERTY ID', 'property_id')
-                ->makeInputRange(),
+            Column::make('EMAIL', 'email')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('PHONE', 'phone_1')
+                ->searchable()
+                ->sortable(),
+
+            Column::make('PHONE 2', 'phone_2')
+                ->searchable()
+                ->sortable(),
 
             Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
-                ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
 
             Column::make('OUTBOARDED AT', 'outboarded_at_formatted', 'outboarded_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
-
-            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
-
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
 

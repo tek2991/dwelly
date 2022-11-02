@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Owner;
 use App\Models\Property;
-use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class OwnerController extends Controller
 {
@@ -38,13 +39,19 @@ class OwnerController extends Controller
     {
         $validated = $request->validate([
             'property_id' => 'required|exists:properties,id',
-            'name' => 'required|string',
-            'email' => 'required|email',
-            'phone_1' => 'required|string',
-            'phone_2' => 'nullable|string',
-            'address' => 'required|string',
-            'password' => 'required|password|confirmed',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone_1' => 'required|string|max:25',
+            'phone_2' => 'nullable|string|max:25',
+            'password' => 'required|string|min:8|confirmed',
+            'onboarded_at' => 'required|date',
         ]);
+
+        // Check if property has an owner
+        $property = Property::find($validated['property_id']);
+        if ($property->owner()) {
+            return redirect()->back()->with('error', 'Property already has an owner');
+        }
 
         $user = User::create([
             'name' => $validated['name'],
@@ -56,10 +63,10 @@ class OwnerController extends Controller
 
         $user->assignRole('owner');
 
-        $owner = Owner::create([
+        Owner::create([
             'user_id' => $user->id,
             'property_id' => $validated['property_id'],
-            'address' => $validated['address'],
+            'onboarded_at' => $validated['onboarded_at'],
         ]);
 
         return redirect()->route('property.show', $validated['property_id'])->with('success', 'Owner created successfully');
@@ -73,7 +80,7 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        //
+        return view('app.owner.show', compact('owner'));
     }
 
     /**
