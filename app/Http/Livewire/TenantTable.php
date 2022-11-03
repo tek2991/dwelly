@@ -13,6 +13,15 @@ final class TenantTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public $property_id;
+    public string $sortField = 'id';
+    public string $sortDirection = 'desc';
+
+    public function __construct($property_id)
+    {
+        $this->property_id = $property_id;
+    }
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -44,13 +53,19 @@ final class TenantTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Tenant>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Tenant>
+     */
     public function datasource(): Builder
     {
-        return Tenant::query();
+        $query = Tenant::query();
+        if ($this->property_id) {
+            $query->where('property_id', $this->property_id);
+        }
+        return $query->join('users', 'users.id', '=', 'tenants.user_id')
+            ->join('properties', 'properties.id', '=', 'tenants.property_id')
+            ->select('tenants.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code');
     }
 
     /*
@@ -88,11 +103,20 @@ final class TenantTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('user_id')
             ->addColumn('property_id')
-            ->addColumn('onboarded_at_formatted', fn (Tenant $model) => Carbon::parse($model->onboarded_at)->format('d/m/Y H:i:s'))
-            ->addColumn('moved_in_at_formatted', fn (Tenant $model) => Carbon::parse($model->moved_in_at)->format('d/m/Y H:i:s'))
-            ->addColumn('moved_out_at_formatted', fn (Tenant $model) => Carbon::parse($model->moved_out_at)->format('d/m/Y H:i:s'))
+            ->addColumn('onboarded_at_formatted', fn (Tenant $model) => $model->onboarded_at ? Carbon::parse($model->onboarded_at)->format('d/m/Y') : 'N/A')
+            ->addColumn('moved_in_at_formatted', fn (Tenant $model) => $model->moved_in_at ? Carbon::parse($model->moved_in_at)->format('d/m/Y') : 'N/A')
+            ->addColumn('moved_out_at_formatted', fn (Tenant $model) => $model->moved_out_at ? Carbon::parse($model->moved_out_at)->format('d/m/Y') : 'N/A')
             ->addColumn('created_at_formatted', fn (Tenant $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Tenant $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('updated_at_formatted', fn (Tenant $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
+            ->addColumn('name')
+            ->addColumn('email')
+            ->addColumn('phone_1')
+            ->addColumn('phone_2')
+            ->addColumn('property_code')
+            ->addColumn('property_code_link', function(Tenant $model){
+                $link = route('property.show', $model->property_id);
+                return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->property_code}</a>";
+            });
     }
 
     /*
@@ -104,7 +128,7 @@ final class TenantTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -112,42 +136,38 @@ final class TenantTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            Column::make('USER ', 'name')
+            ->searchable(),
 
-            Column::make('USER ID', 'user_id')
-                ->makeInputRange(),
+        Column::make('PROPERTY', 'property_code_link', 'property_code')
+            ->searchable()
+            ->sortable(),
 
-            Column::make('PROPERTY ID', 'property_id')
-                ->makeInputRange(),
+        Column::make('EMAIL', 'email')
+            ->searchable()
+            ->sortable(),
 
-            Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+        Column::make('PHONE', 'phone_1')
+            ->searchable()
+            ->sortable(),
 
-            Column::make('MOVED IN AT', 'moved_in_at_formatted', 'moved_in_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+        Column::make('PHONE 2', 'phone_2')
+            ->searchable()
+            ->sortable(),
 
-            Column::make('MOVED OUT AT', 'moved_out_at_formatted', 'moved_out_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+        Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
+            ->sortable()
+            ->makeInputDatePicker(),
 
-            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+        Column::make('MOVED IN AT', 'moved_in_at_formatted', 'moved_in_at')
+            ->sortable()
+            ->makeInputDatePicker(),
 
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+        Column::make('MOVED OUT AT', 'moved_out_at_formatted', 'moved_out_at')
+            ->sortable()
+            ->makeInputDatePicker(),
 
-        ]
-;
+        ];
     }
 
     /*
@@ -158,7 +178,7 @@ final class TenantTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Tenant Action Buttons.
      *
      * @return array<int, Button>
@@ -188,7 +208,7 @@ final class TenantTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Tenant Action Rules.
      *
      * @return array<int, RuleActions>

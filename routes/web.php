@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\TenantController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RentOutController;
 use App\Http\Controllers\DocumentController;
@@ -82,5 +83,9 @@ Route::middleware([
     // Download document route
     Route::get('document/download/{document}', [DocumentController::class, 'downloadDocument'])->name('document.download');
 
-    // 
+    //  Tenant Routes
+    Route::resource('tenant', TenantController::class)->only([
+        'index', 'show', 'store'
+    ]);
+    Route::get('tenant/create/{property}', [TenantController::class, 'create'])->name('tenant.create');
 });
