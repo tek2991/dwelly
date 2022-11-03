@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Property;
 
 use App\Models\Document;
+use App\Models\DocumentType;
 use App\Models\Owner;
 use App\Models\Property;
 use Livewire\WithFileUploads;
@@ -15,6 +16,7 @@ class UploadOwnerDocumentModal extends ModalComponent
     public $owner_id;
     public Owner $owner;
     public Property $property;
+    public $documentTypes;
 
     public $document_type_id;
     public $file;
@@ -24,20 +26,24 @@ class UploadOwnerDocumentModal extends ModalComponent
         $this->owner_id = $owner_id;
         $this->owner = Owner::find($owner_id);
         $this->property = Property::find($this->owner->property_id);
+        $this->documentTypes = DocumentType::all();
     }
 
     public function saveDocument()
     {
         $this->validate([
-            'file' => 'max:2048', // 2MB Max
+            'file' => 'max:4096', // 4MB Max
+            'document_type_id' => 'required|exists:document_types,id',
         ]);
 
         $uid = uniqid();
         $file_name = $this->property->code . '_' . $uid . '.' . $this->file->extension();
         $file_path = $this->file->storeAs('uploads/documents/' . $this->property->code . '/', $file_name, 'public');
 
-        Document::create([
-
+        $this->owner->documents()->create([
+            'document_type_id' => $this->document_type_id,
+            'file_name' => $file_name,
+            'file_path' => $file_path,
         ]);
 
         $this->emit('refreshOwnerDocuments');

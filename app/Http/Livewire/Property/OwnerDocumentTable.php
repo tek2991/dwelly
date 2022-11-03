@@ -32,9 +32,6 @@ final class OwnerDocumentTable extends PowerGridComponent
         $this->showCheckBox();
 
         return [
-            Exportable::make('export')
-                ->striped()
-                ->type(Exportable::TYPE_XLS, Exportable::TYPE_CSV),
             Header::make()->showSearchInput(),
             Footer::make()
                 ->showPerPage()
@@ -155,16 +152,17 @@ final class OwnerDocumentTable extends PowerGridComponent
     public function actions(): array
     {
        return [
-           Button::make('edit', 'Edit')
+           Button::make('download', 'Download')
                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('document.edit', ['document' => 'id']),
+               ->route('document.download', ['document' => 'id']),
 
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('document.destroy', ['document' => 'id'])
-               ->method('delete')
+        //    Button::make('destroy', 'Delete')
+        //        ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+        //        ->route('document.destroy', ['document' => 'id'])
+        //        ->method('delete')
         ];
     }
+    
     
 
     /*

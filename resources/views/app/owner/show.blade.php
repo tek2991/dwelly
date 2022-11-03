@@ -13,7 +13,7 @@
                 <div class="flex justify-between mb-6">
                     <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Documents</h2>
                     <x-jet-button
-                        onclick="Livewire.emit('openModal', 'property.attach-nearby-establishment-modal', {{ json_encode(['property_id' => $owner->id]) }})"
+                        onclick="Livewire.emit('openModal', 'property.upload-owner-document-modal', {{ json_encode(['owner_id' => $owner->id]) }})"
                         class="cursor-pointer">Add New</x-jet-button>
                 </div>
                 <livewire:property.owner-document-table owner_id="{{ $owner->id }}" />

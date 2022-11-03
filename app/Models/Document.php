@@ -19,5 +19,10 @@ class Document extends Model
     {
         return $this->morphedByMany(Tenant::class, 'documentable');
     }
+
+    public function documentType()
+    {
+        return $this->belongsTo(DocumentType::class);
+    }
 }
 
