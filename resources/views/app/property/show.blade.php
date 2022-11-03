@@ -75,9 +75,9 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                     <div class="flex justify-between mb-6">
                         <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Tenants</h2>
-                        <x-jet-button
-                            onclick="Livewire.emit('openModal', 'property.attach-nearby-establishment-modal', {{ json_encode(['property_id' => $property->id]) }})"
-                            class="cursor-pointer">Add New</x-jet-button>
+                        <x-button-link href="{{ route('tenant.create', $property) }}" class="ml-4">
+                            {{ __('Create New') }}
+                        </x-button-link>
                     </div>
                     <livewire:tenant-table property_id="{{ $property->id }}" />
                 </div>

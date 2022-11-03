@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Tenant;
+use App\Models\Property;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TenantController extends Controller
 {
@@ -22,9 +25,9 @@ class TenantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Property $property)
     {
-        //
+        return view('app.tenant.create', compact('property'));
     }
 
     /**
@@ -35,7 +38,33 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'property_id' => 'required|exists:properties,id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'phone_1' => 'required|string|max:25',
+            'phone_2' => 'nullable|string|max:25',
+            'password' => 'required|string|min:8|confirmed',
+            'onboarded_at' => 'required|date',
+        ]);
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'phone_1' => $validated['phone_1'],
+            'phone_2' => $validated['phone_2'],
+        ]);
+
+        $user->assignRole('owner');
+
+        Tenant::create([
+            'user_id' => $user->id,
+            'property_id' => $validated['property_id'],
+            'onboarded_at' => $validated['onboarded_at'],
+        ]);
+
+        return redirect()->route('property.show', $validated['property_id'])->with('success', 'Tenant created successfully');
     }
 
     /**
