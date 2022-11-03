@@ -56,7 +56,7 @@ class TenantController extends Controller
             'phone_2' => $validated['phone_2'],
         ]);
 
-        $user->assignRole('owner');
+        $user->assignRole('tenant');
 
         Tenant::create([
             'user_id' => $user->id,

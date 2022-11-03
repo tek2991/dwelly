@@ -15,7 +15,7 @@
                         {{ $property->code }}
                     </a>
                 </h2>
-                <form method="POST" action="{{ route('owner.store') }}">
+                <form method="POST" action="{{ route('tenant.store') }}">
                     @csrf
                     <x-jet-validation-errors class="mb-4" />
                     <input type="hidden" name="property_id" value="{{ $property->id }}">
