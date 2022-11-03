@@ -46,7 +46,7 @@ class UploadOwnerDocumentModal extends ModalComponent
             'file_path' => $file_path,
         ]);
 
-        $this->emit('refreshOwnerDocuments');
+        $this->emit('pg:eventRefresh-default');
         $this->closeModal();
     }
 
