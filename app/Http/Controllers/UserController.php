@@ -110,9 +110,9 @@ class UserController extends Controller
             return redirect()->back()->dangerBanner('You do not have permission to do that.');
         }
 
-        // Do not allow detatching the admin role
-        if ($role->name == 'admin') {
-            return redirect()->back()->dangerBanner('You cannot detatch the admin role from a user.');
+        // Do not allow detatching fixed roles
+        if (in_array($role->name, Role::fixedRoles())) {
+            return redirect()->back()->dangerBanner('You cannot detatch a fixed role.');
         }
         $user->roles()->detach($role);
         return redirect()->route('user.edit', $user)->banner('Role detached');
@@ -125,9 +125,9 @@ class UserController extends Controller
             return redirect()->back()->dangerBanner('You do not have permission to do that.');
         }
         $role = Role::find($request->role_id);
-        // Do not allow attaching the admin role
-        if ($role->name == 'admin') {
-            return redirect()->back()->dangerBanner('You cannot attach the admin role');
+        // Do not allow attaching the fixed roles
+        if (in_array($role->name, Role::fixedRoles())) {
+            return redirect()->back()->dangerBanner('You cannot attach a fixed role.');
         }
         // Do not allow attaching the same role twice
         if ($user->roles->contains($role)) {

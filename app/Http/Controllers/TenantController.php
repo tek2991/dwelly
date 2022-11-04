@@ -75,7 +75,7 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
-        //
+        return view('app.tenant.show', compact('tenant'));
     }
 
     /**

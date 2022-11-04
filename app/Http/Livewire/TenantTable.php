@@ -184,21 +184,21 @@ final class TenantTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('tenant.edit', ['tenant' => 'id']),
-
+        return [
+            Button::make('show', 'Show')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+            ->route('tenant.show', ['tenant' => 'id']),
+            
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('tenant.destroy', ['tenant' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------

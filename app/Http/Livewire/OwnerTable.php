@@ -44,16 +44,16 @@ final class OwnerTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Owner>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Owner>
+     */
     public function datasource(): Builder
     {
         return Owner::query()
-        ->join('users', 'users.id', '=', 'owners.user_id')
-        ->join('properties', 'properties.id', '=', 'owners.property_id')
-        ->select('owners.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code');
+            ->join('users', 'users.id', '=', 'owners.user_id')
+            ->join('properties', 'properties.id', '=', 'owners.property_id')
+            ->select('owners.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code');
     }
 
     /*
@@ -100,7 +100,7 @@ final class OwnerTable extends PowerGridComponent
             ->addColumn('phone_1')
             ->addColumn('phone_2')
             ->addColumn('property_code')
-            ->addColumn('property_code_link', function(Owner $model){
+            ->addColumn('property_code_link', function (Owner $model) {
                 $link = route('property.show', $model->property_id);
                 return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->property_code}</a>";
             });
@@ -115,7 +115,7 @@ final class OwnerTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -150,8 +150,7 @@ final class OwnerTable extends PowerGridComponent
                 ->sortable()
                 ->makeInputDatePicker(),
 
-        ]
-;
+        ];
     }
 
     /*
@@ -162,27 +161,27 @@ final class OwnerTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Owner Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('owner.edit', ['owner' => 'id']),
+        return [
+            Button::make('show', 'Show')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('owner.show', ['owner' => 'id']),
 
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('owner.destroy', ['owner' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -192,7 +191,7 @@ final class OwnerTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Owner Action Rules.
      *
      * @return array<int, RuleActions>
