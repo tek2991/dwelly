@@ -38,7 +38,7 @@ class UploadOwnerDocumentModal extends ModalComponent
 
         $uid = uniqid();
         $file_name = $this->property->code . '_' . $uid . '.' . $this->file->extension();
-        $file_path = $this->file->storeAs('uploads/documents/owner/' . $this->property->code, $file_name, 'public');
+        $file_path = $this->file->storeAs('uploads/properties/' . $this->property->code . '/documents/owner/' . $this->owner_id, $file_name, 'public');
 
         $this->owner->documents()->create([
             'document_type_id' => $this->document_type_id,

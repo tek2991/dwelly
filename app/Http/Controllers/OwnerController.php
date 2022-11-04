@@ -63,13 +63,13 @@ class OwnerController extends Controller
 
         $user->assignRole('owner');
 
-        Owner::create([
+        $owner = Owner::create([
             'user_id' => $user->id,
             'property_id' => $validated['property_id'],
             'onboarded_at' => $validated['onboarded_at'],
         ]);
 
-        return redirect()->route('property.show', $validated['property_id'])->with('success', 'Owner created successfully');
+        return redirect()->route('owner.show', $owner)->banner('Owner created successfully');
     }
 
     /**

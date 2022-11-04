@@ -58,13 +58,13 @@ class TenantController extends Controller
 
         $user->assignRole('tenant');
 
-        Tenant::create([
+        $tenant = Tenant::create([
             'user_id' => $user->id,
             'property_id' => $validated['property_id'],
             'onboarded_at' => $validated['onboarded_at'],
         ]);
 
-        return redirect()->route('property.show', $validated['property_id'])->with('success', 'Tenant created successfully');
+        return redirect()->route('tenant.show', $tenant)->banner('Tenant created successfully');
     }
 
     /**

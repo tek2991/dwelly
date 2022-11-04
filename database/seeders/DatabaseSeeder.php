@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             EstablishmentTypeSeeder::class,
             BhkSeeder::class,
             RoleSeeder::class,
+            DocumentTypeSeeder::class,
         ]);
     }
 }

@@ -38,7 +38,7 @@ class UploadTenantDocumentModal extends ModalComponent
 
         $uid = uniqid();
         $file_name = $this->property->code . '_' . $uid . '.' . $this->file->extension();
-        $file_path = $this->file->storeAs('uploads/documents/' . $this->property->code . '/tenant/'. $this->tenant->id, $file_name, 'public');
+        $file_path = $this->file->storeAs('uploads/properties/' . $this->property->code . 'documents/tenant/'. $this->tenant_id, $file_name, 'public');
 
         $this->tenant->documents()->create([
             'document_type_id' => $this->document_type_id,

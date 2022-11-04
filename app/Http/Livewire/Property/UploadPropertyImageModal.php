@@ -32,7 +32,7 @@ class UploadPropertyImageModal extends ModalComponent
             $lastOrder = $this->property->propertyImages()->orderBy('order', 'desc')->first() ? $this->property->propertyImages()->orderBy('order', 'desc')->first()->order : 0;
             $uid = uniqid();
             $image_name = $this->property->code . '_' . $uid . '.' . $image->extension();
-            $image_path = $image->storeAs('uploads/properties/' . $this->property->code, $image_name, 'public');
+            $image_path = $image->storeAs('uploads/properties/' . $this->property->code . '/images', $image_name, 'public');
 
             PropertyImage::create([
                 'property_id' => $this->property_id,
