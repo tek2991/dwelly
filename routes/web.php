@@ -37,55 +37,56 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () {
+])->group(function () { 
     Route::get('/dashboard', function () {
         return view('app.dashboard');
     })->name('dashboard');
 
     // Admin Routes
-    Route::middleware(['role:admin'])->group(function () {
-        // User Routes
-        Route::resource('user', UserController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update'
-        ]);
-        Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
-        Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
-        // Role Routes
-        Route::resource('role', RoleController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update'
-        ]);
-        Route::delete('role/{role}/detatch-permission/{permission}', [RoleController::class, 'detatchPermission'])->name('role.detatchPermission');
-        Route::put('role/{role}/attach-permission', [RoleController::class, 'attachPermission'])->name('role.attachPermission');
+    Route::middleware(['role:admin|user'])->group(function () {
+        Route::middleware(['role:admin'])->group(function () {
+            // User Routes
+            Route::resource('user', UserController::class)->only([
+                'index', 'show', 'create', 'store', 'edit', 'update'
+            ]);
+            Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
+            Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
+            // Role Routes
+            Route::resource('role', RoleController::class)->only([
+                'index', 'show', 'create', 'store', 'edit', 'update'
+            ]);
+            Route::delete('role/{role}/detatch-permission/{permission}', [RoleController::class, 'detatchPermission'])->name('role.detatchPermission');
+            Route::put('role/{role}/attach-permission', [RoleController::class, 'attachPermission'])->name('role.attachPermission');
+        });
 
+        // Property Routes
+        Route::resource('property', PropertyController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
+        ]);
+
+        // Contact Routes
+        Route::resource('contactForm', ContactController::class)->only([
+            'index', 'show'
+        ]);
+
+        // Rent Out Routes
+        Route::resource('rentOut', RentOutController::class)->only([
+            'index', 'show'
+        ]);
+
+        // Owner Routes
+        Route::resource('owner', OwnerController::class)->only([
+            'index', 'show', 'store'
+        ]);
+        Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
+
+        // Download document route
+        Route::get('document/download/{document}', [DocumentController::class, 'downloadDocument'])->name('document.download');
+
+        //  Tenant Routes
+        Route::resource('tenant', TenantController::class)->only([
+            'index', 'show', 'store'
+        ]);
+        Route::get('tenant/create/{property}', [TenantController::class, 'create'])->name('tenant.create');
     });
-
-    // Property Routes
-    Route::resource('property', PropertyController::class)->only([
-        'index', 'show', 'create', 'store', 'edit', 'update'
-    ]);
-
-    // Contact Routes
-    Route::resource('contactForm', ContactController::class)->only([
-        'index', 'show'
-    ]);
-
-    // Rent Out Routes
-    Route::resource('rentOut', RentOutController::class)->only([
-        'index', 'show'
-    ]);
-
-    // Owner Routes
-    Route::resource('owner', OwnerController::class)->only([
-        'index', 'show', 'store'
-    ]);
-    Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
-
-    // Download document route
-    Route::get('document/download/{document}', [DocumentController::class, 'downloadDocument'])->name('document.download');
-
-    //  Tenant Routes
-    Route::resource('tenant', TenantController::class)->only([
-        'index', 'show', 'store'
-    ]);
-    Route::get('tenant/create/{property}', [TenantController::class, 'create'])->name('tenant.create');
 });
