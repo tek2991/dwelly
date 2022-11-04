@@ -160,9 +160,9 @@ final class TenantDocumentTable extends PowerGridComponent
                 ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                 ->route('document.download', ['document' => 'id']),
  
-            // Button::make('destroy', 'Delete')
-            //     ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-            //     ->openModal('property.remove-owner-document-modal', ['document_id' => 'id']),
+            Button::make('destroy', 'Delete')
+                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                ->openModal('property.remove-tenant-document-modal', ['document_id' => 'id']),
          ];
     }
     
