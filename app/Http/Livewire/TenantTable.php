@@ -84,7 +84,10 @@ final class TenantTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'user' => ['name', 'email', 'phone_1', 'phone_2'],
+            'property' => ['code'],
+        ];
     }
 
     /*
