@@ -53,7 +53,8 @@ final class OwnerTable extends PowerGridComponent
         return Owner::query()
             ->join('users', 'users.id', '=', 'owners.user_id')
             ->join('properties', 'properties.id', '=', 'owners.property_id')
-            ->select('owners.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code');
+            ->select('owners.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code')
+            ->with('user', 'property');
     }
 
     /*
@@ -71,7 +72,10 @@ final class OwnerTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'user' => ['name', 'email', 'phone_1', 'phone_2'],
+            'property' => ['code'],
+        ];
     }
 
     /*

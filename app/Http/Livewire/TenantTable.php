@@ -65,7 +65,8 @@ final class TenantTable extends PowerGridComponent
         }
         return $query->join('users', 'users.id', '=', 'tenants.user_id')
             ->join('properties', 'properties.id', '=', 'tenants.property_id')
-            ->select('tenants.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code');
+            ->select('tenants.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code')
+            ->with('user', 'property');
     }
 
     /*

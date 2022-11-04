@@ -27,6 +27,10 @@ class OwnerController extends Controller
      */
     public function create(Property $property)
     {
+        // Check if property has an owner
+        if ($property->owner()) {
+            return redirect()->route('property.show', $property)->dangerBanner('This property already has an owner.');
+        }
         return view('app.owner.create', compact('property'));
     }
     /**
@@ -50,7 +54,7 @@ class OwnerController extends Controller
         // Check if property has an owner
         $property = Property::find($validated['property_id']);
         if ($property->owner()) {
-            return redirect()->back()->with('error', 'Property already has an owner');
+            return redirect()->route('property.show', $property)->dangerBanner('This property already has an owner.');
         }
 
         $user = User::create([
