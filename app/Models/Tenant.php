@@ -12,6 +12,8 @@ class Tenant extends Model
         'onboarded_at',
         'moved_in_at',
         'moved_out_at',
+        'is_primary',
+        'primary_tenant_id',
     ];
 
     protected $dates = [
@@ -28,6 +30,16 @@ class Tenant extends Model
     public function property()
     {
         return $this->belongsTo(Property::class);
+    }
+
+    public function primaryTenant()
+    {
+        return $this->belongsTo(Tenant::class, 'primary_tenant_id');
+    }
+
+    public function secondaryTenants()
+    {
+        return $this->hasMany(Tenant::class, 'primary_tenant_id');
     }
 
     public function documents()

@@ -74,7 +74,7 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                     <div class="flex justify-between mb-6">
-                        <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Tenants</h2>
+                        <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">All Tenants</h2>
                         <x-button-link href="{{ route('tenant.create', $property) }}" class="ml-4">
                             {{ __('Create New') }}
                         </x-button-link>

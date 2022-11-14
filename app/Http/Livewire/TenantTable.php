@@ -14,13 +14,16 @@ final class TenantTable extends PowerGridComponent
     use ActionButton;
 
     public $property_id;
+    public $primary_tenant_id;
     public string $sortField = 'id';
     public string $sortDirection = 'desc';
 
-    public function __construct($property_id)
-    {
-        $this->property_id = $property_id;
-    }
+    // public function __construct($property_id)
+    // {
+        // $this->property_id = $property_id;
+        // $this->primary_tenant_id = $primary_tenant_id;
+    // }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -63,6 +66,11 @@ final class TenantTable extends PowerGridComponent
         if ($this->property_id) {
             $query->where('property_id', $this->property_id);
         }
+
+        if ($this->primary_tenant_id) {
+            $query->where('primary_tenant_id', $this->primary_tenant_id);
+        }
+
         return $query->join('users', 'users.id', '=', 'tenants.user_id')
             ->join('properties', 'properties.id', '=', 'tenants.property_id')
             ->select('tenants.*', 'users.name', 'users.email', 'users.phone_1', 'users.phone_2', 'properties.code as property_code')
@@ -113,14 +121,20 @@ final class TenantTable extends PowerGridComponent
             ->addColumn('created_at_formatted', fn (Tenant $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (Tenant $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
             ->addColumn('name')
+            ->addColumn('tenant_link', function (Tenant $model) {
+                $link = route('tenant.show', $model->id);
+                return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->name}</a>";
+            })
             ->addColumn('email')
             ->addColumn('phone_1')
             ->addColumn('phone_2')
             ->addColumn('property_code')
-            ->addColumn('property_code_link', function(Tenant $model){
+            ->addColumn('property_code_link', function (Tenant $model) {
                 $link = route('property.show', $model->property_id);
                 return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->property_code}</a>";
-            });
+            })
+            ->addColumn('is_primary')
+            ->addColumn('is_primary_formatted', fn (Tenant $model) => $model->is_primary ? 'Yes' : 'No');
     }
 
     /*
@@ -140,37 +154,32 @@ final class TenantTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('USER ', 'name')
-            ->searchable(),
+            Column::make('USER ', 'tenant_link', 'name')
+                ->searchable(),
 
-        Column::make('PROPERTY', 'property_code_link', 'property_code')
-            ->searchable()
-            ->sortable(),
+            Column::make('PROPERTY', 'property_code_link', 'property_code')
+                ->searchable()
+                ->sortable(),
 
-        Column::make('EMAIL', 'email')
-            ->searchable()
-            ->sortable(),
+            Column::make('EMAIL', 'email')
+                ->searchable()
+                ->sortable(),
 
-        Column::make('PHONE', 'phone_1')
-            ->searchable()
-            ->sortable(),
+            Column::make('PHONE', 'phone_1')
+                ->searchable()
+                ->sortable(),
 
-        Column::make('PHONE 2', 'phone_2')
-            ->searchable()
-            ->sortable(),
+            Column::make('PHONE 2', 'phone_2')
+                ->searchable()
+                ->sortable(),
 
-        Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
-            ->sortable()
-            ->makeInputDatePicker(),
+            Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
+                ->sortable()
+                ->makeInputDatePicker(),
 
-        Column::make('MOVED IN AT', 'moved_in_at_formatted', 'moved_in_at')
-            ->sortable()
-            ->makeInputDatePicker(),
-
-        Column::make('MOVED OUT AT', 'moved_out_at_formatted', 'moved_out_at')
-            ->sortable()
-            ->makeInputDatePicker(),
-
+            Column::make('PRIMARY', 'is_primary_formatted', 'is_primary')
+                ->sortable()
+                ->makeBooleanFilter('is_primary', 'Yes', 'No'),
         ];
     }
 
@@ -188,6 +197,7 @@ final class TenantTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
+    /*
     public function actions(): array
     {
         return [
@@ -195,14 +205,13 @@ final class TenantTable extends PowerGridComponent
             ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
             ->route('tenant.show', ['tenant' => 'id']),
             
-            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('tenant.destroy', ['tenant' => 'id'])
                ->method('delete')
-               */
-        ];
-    }
+            ];
+        }
+    */
 
     /*
     |--------------------------------------------------------------------------
