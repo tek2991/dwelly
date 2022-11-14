@@ -49,7 +49,8 @@ class UploadTenantDocumentModal extends ModalComponent
             'document_type_id' => $this->document_type_id,
             'file_name' => $file_name,
             'file_path' => $file_path,
-            'tenant_id' => $this->selected_tenant_id,
+            'documentable_type' => 'App\Models\Tenant',
+            'documentable_id' => $this->selected_tenant_id,
         ]);
 
         $this->emit('pg:eventRefresh-default');

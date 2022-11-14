@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Document extends Model
 {
     protected $fillable = [
+        'documentable_type',
+        'documentable_id',
         'document_type_id',
         'file_path',
     ];

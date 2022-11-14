@@ -39,10 +39,10 @@
                 </div>
                 {{-- Tenant --}}
                 <div class="flex flex-col mb-4">
-                    <label class="mb-2 text-md font-bold text-gray-700 dark:text-gray-200" for="tenant_id">
+                    <label class="mb-2 text-md font-bold text-gray-700 dark:text-gray-200" for="selected_tenant_id">
                         Tenant
                     </label>
-                    <select wire:model="tenant_id" id="tenant_id"
+                    <select wire:model="selected_tenant_id" id="selected_tenant_id"
                         class="block w-full px-4 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-blue-500 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
                         required>
                         <option value="">Select Tenant</option>
@@ -52,7 +52,7 @@
                             </option>
                         @endforeach
                     </select>
-                    @error('tenant_id')
+                    @error('selected_tenant_id')
                         <span class="text-xs text-red-500 dark:text-red-400">{{ $message }}</span>
                     @enderror
                 </div>
