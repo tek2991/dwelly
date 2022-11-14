@@ -20,7 +20,7 @@
             <form wire:submit.prevent="saveDocument">
                 {{-- Document Type --}}
                 <div class="flex flex-col mb-4">
-                    <label class="mb-2 text-sm font-bold text-gray-700 dark:text-gray-200" for="document_type_id">
+                    <label class="mb-2 text-md font-bold text-gray-700 dark:text-gray-200" for="document_type_id">
                         Document Type
                     </label>
                     <select wire:model="document_type_id" id="document_type_id"
@@ -34,6 +34,25 @@
                         @endforeach
                     </select>
                     @error('document_type_id')
+                        <span class="text-xs text-red-500 dark:text-red-400">{{ $message }}</span>
+                    @enderror
+                </div>
+                {{-- Tenant --}}
+                <div class="flex flex-col mb-4">
+                    <label class="mb-2 text-md font-bold text-gray-700 dark:text-gray-200" for="tenant_id">
+                        Tenant
+                    </label>
+                    <select wire:model="tenant_id" id="tenant_id"
+                        class="block w-full px-4 py-2 mt-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 focus:border-blue-500 focus:outline-none focus:shadow-outline-blue dark:focus:shadow-outline-gray"
+                        required>
+                        <option value="">Select Tenant</option>
+                        @foreach ($tenants as $tenant)
+                            <option value="{{ $tenant->id }}">
+                                {{ $tenant->user->name }} {{ $tenant->is_primary ? '(Primary)' : '' }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('tenant_id')
                         <span class="text-xs text-red-500 dark:text-red-400">{{ $message }}</span>
                     @enderror
                 </div>

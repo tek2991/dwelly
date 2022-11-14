@@ -17,9 +17,11 @@ class UploadTenantDocumentModal extends ModalComponent
     public Tenant $tenant;
     public Property $property;
     public $documentTypes;
+    public $tenants;
 
     public $document_type_id;
     public $file;
+    public $selected_tenant_id;
 
     public function mount($tenant_id)
     {
@@ -27,6 +29,8 @@ class UploadTenantDocumentModal extends ModalComponent
         $this->tenant = Tenant::find($tenant_id);
         $this->property = Property::find($this->tenant->property_id);
         $this->documentTypes = DocumentType::all();
+
+        $this->tenants = Tenant::where('primary_tenant_id', $this->tenant->primary_tenant_id)->with('user')->get();
     }
 
     public function saveDocument()
@@ -34,16 +38,18 @@ class UploadTenantDocumentModal extends ModalComponent
         $this->validate([
             'file' => 'max:4096', // 4MB Max
             'document_type_id' => 'required|exists:document_types,id',
+            'selected_tenant_id' => 'required|exists:tenants,id',
         ]);
 
         $uid = uniqid();
         $file_name = $this->property->code . '_' . $uid . '.' . $this->file->extension();
         $file_path = $this->file->storeAs('uploads/properties/' . $this->property->code . 'documents/tenant/'. $this->tenant_id, $file_name, 'public');
 
-        $this->tenant->documents()->create([
+        Document::create([
             'document_type_id' => $this->document_type_id,
             'file_name' => $file_name,
             'file_path' => $file_path,
+            'tenant_id' => $this->selected_tenant_id,
         ]);
 
         $this->emit('pg:eventRefresh-default');

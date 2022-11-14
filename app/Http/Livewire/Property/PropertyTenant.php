@@ -81,7 +81,7 @@ class PropertyTenant extends Component
             'moved_in_at' => 'nullable|date',
             'moved_out_at' => 'nullable|date',
             'is_primary' => 'required|boolean',
-            'primary_tenant_id' => 'required_if:is_primary,0|integer|exists:tenants,id',
+            'primary_tenant_id' => 'required_if:is_primary,0',
         ];
     }
 
