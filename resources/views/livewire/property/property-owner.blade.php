@@ -28,7 +28,8 @@
                             @enderror
 
                             @if ($editing === true)
-                                <x-jet-input id="email" class="block mt-1 w-full" type="email" wire:model="email" />
+                                <x-jet-input id="email" class="block mt-1 w-full" type="email"
+                                    wire:model="email" />
                             @else
                                 <x-jet-input id="email" class="block mt-1 w-full" type="email" wire:model="email"
                                     disabled />
@@ -42,10 +43,11 @@
                             @enderror
 
                             @if ($editing === true)
-                                <x-jet-input id="phone_1" class="block mt-1 w-full" type="text" wire:model="phone_1" />
+                                <x-jet-input id="phone_1" class="block mt-1 w-full" type="text"
+                                    wire:model="phone_1" />
                             @else
-                                <x-jet-input id="phone_1" class="block mt-1 w-full" type="text" wire:model="phone_1"
-                                    disabled />
+                                <x-jet-input id="phone_1" class="block mt-1 w-full" type="text"
+                                    wire:model="phone_1" disabled />
                             @endif
                         </div>
                         {{-- Phone_2 --}}
@@ -56,10 +58,11 @@
                             @enderror
 
                             @if ($editing === true)
-                                <x-jet-input id="phone_2" class="block mt-1 w-full" type="text" wire:model="phone_2" />
+                                <x-jet-input id="phone_2" class="block mt-1 w-full" type="text"
+                                    wire:model="phone_2" />
                             @else
-                                <x-jet-input id="phone_2" class="block mt-1 w-full" type="text" wire:model="phone_2"
-                                    disabled />
+                                <x-jet-input id="phone_2" class="block mt-1 w-full" type="text"
+                                    wire:model="phone_2" disabled />
                             @endif
                         </div>
                         {{-- Onboarded_at --}}
@@ -76,6 +79,105 @@
                                 <x-jet-input id="onboarded_at" class="block mt-1 w-full" type="date"
                                     wire:model="onboarded_at" disabled />
                             @endif
+                        </div>
+
+                        <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {{-- Beneficiary_name --}}
+                            <div>
+                                <x-jet-label for="beneficiary_name" :value="__('Beneficiary Name')" />
+                                @error('beneficiary_name')
+                                    <label for="beneficiary_name"
+                                        class="text-xs text-red-700 block">{{ $message }}</label>
+                                @enderror
+
+                                @if ($editing === true)
+                                    <x-jet-input id="beneficiary_name" class="block mt-1 w-full" type="text"
+                                        wire:model="beneficiary_name" />
+                                @else
+                                    <x-jet-input id="beneficiary_name" class="block mt-1 w-full" type="text"
+                                        wire:model="beneficiary_name" disabled />
+                                @endif
+                            </div>
+                            {{-- Bank_name --}}
+                            <div>
+                                <x-jet-label for="bank_name" :value="__('Bank Name')" />
+                                @error('bank_name')
+                                    <label for="bank_name" class="text-xs text-red-700 block">{{ $message }}</label>
+                                @enderror
+
+                                @if ($editing === true)
+                                    <x-jet-input id="bank_name" class="block mt-1 w-full" type="text"
+                                        wire:model="bank_name" />
+                                @else
+                                    <x-jet-input id="bank_name" class="block mt-1 w-full" type="text"
+                                        wire:model="bank_name" disabled />
+                                @endif
+                            </div>
+
+                            {{-- ifsc --}}
+                            <div>
+                                <x-jet-label for="ifsc" :value="__('IFSC')" />
+                                @error('ifsc')
+                                    <label for="ifsc" class="text-xs text-red-700 block">{{ $message }}</label>
+                                @enderror
+
+                                @if ($editing === true)
+                                    <x-jet-input id="ifsc" class="block mt-1 w-full" type="text"
+                                        wire:model="ifsc" />
+                                @else
+                                    <x-jet-input id="ifsc" class="block mt-1 w-full" type="text"
+                                        wire:model="ifsc" disabled />
+                                @endif
+                            </div>
+                            {{-- account_number --}}
+                            <div>
+                                <x-jet-label for="account_number" :value="__('Account Number')" />
+                                @error('account_number')
+                                    <label for="account_number"
+                                        class="text-xs text-red-700 block">{{ $message }}</label>
+                                @enderror
+
+                                @if ($editing === true)
+                                    <x-jet-input id="account_number" class="block mt-1 w-full" type="text"
+                                        wire:model="account_number" />
+                                @else
+                                    <x-jet-input id="account_number" class="block mt-1 w-full" type="text"
+                                        wire:model="account_number" disabled />
+                                @endif
+                            </div>
+
+                            {{-- Electricity_consumer_id_old --}}
+                            <div>
+                                <x-jet-label for="electricity_consumer_id_old" :value="__('Electricity Consumer ID (Old)')" />
+                                @error('electricity_consumer_id_old')
+                                    <label for="electricity_consumer_id_old"
+                                        class="text-xs text-red-700 block">{{ $message }}</label>
+                                @enderror
+
+                                @if ($editing === true)
+                                    <x-jet-input id="electricity_consumer_id_old" class="block mt-1 w-full"
+                                        type="text" wire:model="electricity_consumer_id_old" />
+                                @else
+                                    <x-jet-input id="electricity_consumer_id_old" class="block mt-1 w-full"
+                                        type="text" wire:model="electricity_consumer_id_old" disabled />
+                                @endif
+                            </div>
+                            {{-- Electricity_consumer_id_new --}}
+                            <div>
+                                <x-jet-label for="electricity_consumer_id_new" :value="__('Electricity Consumer ID (New)')" />
+                                @error('electricity_consumer_id_new')
+                                    <label for="electricity_consumer_id_new"
+                                        class="text-xs text-red-700 block">{{ $message }}</label>
+                                @enderror
+
+                                @if ($editing === true)
+                                    <x-jet-input id="electricity_consumer_id_new" class="block mt-1 w-full"
+                                        type="text" wire:model="electricity_consumer_id_new" />
+                                @else
+                                    <x-jet-input id="electricity_consumer_id_new" class="block mt-1 w-full"
+                                        type="text" wire:model="electricity_consumer_id_new" disabled />
+                                @endif
+                            </div>
                         </div>
                     </div>
                     @if ($editing === true)

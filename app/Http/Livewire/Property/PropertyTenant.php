@@ -28,6 +28,11 @@ class PropertyTenant extends Component
     public $is_primary;
     public $primary_tenant_id;
 
+    public $beneficiary_name;
+    public $bank_name;
+    public $ifsc;
+    public $account_number;
+
     public $primary_tenants;
 
     public function mount(Tenant $tenant)
@@ -49,6 +54,11 @@ class PropertyTenant extends Component
 
         $this->is_primary = $this->tenant->is_primary;
         $this->primary_tenant_id = $this->tenant->primary_tenant_id;
+
+        $this->beneficiary_name = $this->tenant->beneficiary_name;
+        $this->bank_name = $this->tenant->bank_name;
+        $this->ifsc = $this->tenant->ifsc;
+        $this->account_number = $this->tenant->account_number;
     }
 
     public function updated($propertyName)
@@ -82,6 +92,11 @@ class PropertyTenant extends Component
             'moved_out_at' => 'nullable|date',
             'is_primary' => 'required|boolean',
             'primary_tenant_id' => 'required_if:is_primary,0',
+
+            'beneficiary_name' => 'nullable|string|max:255',
+            'bank_name' => 'nullable|string|max:255',
+            'ifsc' => 'nullable|string|max:255',
+            'account_number' => 'nullable|string|max:255',
         ];
     }
 
@@ -100,6 +115,11 @@ class PropertyTenant extends Component
             'onboarded_at' => $this->onboarded_at,
             'moved_in_at' => $this->moved_in_at,
             'moved_out_at' => $this->moved_out_at,
+            
+            'beneficiary_name' => $this->beneficiary_name,
+            'bank_name' => $this->bank_name,
+            'ifsc' => $this->ifsc,
+            'account_number' => $this->account_number,
         ]);
 
         if ($this->is_primary && !$this->tenant->is_primary) {
@@ -119,6 +139,11 @@ class PropertyTenant extends Component
             // Update the current tenant to be the primary tenant
             $this->tenant->update([
                 'is_primary' => true,
+            ]);
+        }else{
+            $this->tenant->update([
+                'is_primary' => $this->is_primary,
+                'primary_tenant_id' => $this->primary_tenant_id,
             ]);
         }
 

@@ -112,6 +112,44 @@
                         @endif
                     </div>
                     <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {{-- Beneficiary_name --}}
+                        <div>
+                            <x-jet-label for="beneficiary_name" :value="__('Beneficiary Name')" />
+                            @error('beneficiary_name')
+                                <label for="beneficiary_name" class="text-xs text-red-700 block">{{ $message }}</label>
+                            @enderror
+                            <x-jet-input id="beneficiary_name" class="block mt-1 w-full" type="text" name="beneficiary_name"
+                                wire:model="beneficiary_name" required />
+                        </div>
+                        {{-- Bank_name --}}
+                        <div>
+                            <x-jet-label for="bank_name" :value="__('Bank Name')" />
+                            @error('bank_name')
+                                <label for="bank_name" class="text-xs text-red-700 block">{{ $message }}</label>
+                            @enderror
+                            <x-jet-input id="bank_name" class="block mt-1 w-full" type="text" name="bank_name"
+                                wire:model="bank_name" required />
+                        </div>
+                        {{-- ifsc --}}
+                        <div>
+                            <x-jet-label for="ifsc" :value="__('IFSC')" />
+                            @error('ifsc')
+                                <label for="ifsc" class="text-xs text-red-700 block">{{ $message }}</label>
+                            @enderror
+                            <x-jet-input id="ifsc" class="block mt-1 w-full" type="text" name="ifsc" wire:model="ifsc"
+                                required />
+                        </div>
+                        {{-- account_number --}}
+                        <div>
+                            <x-jet-label for="account_number" :value="__('Account Number')" />
+                            @error('account_number')
+                                <label for="account_number" class="text-xs text-red-700 block">{{ $message }}</label>
+                            @enderror
+                            <x-jet-input id="account_number" class="block mt-1 w-full" type="text" name="account_number"
+                                wire:model="account_number" required />
+                        </div>
+                    </div>
+                    <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
                         {{-- Password --}}
                         <div class="col-start-1 col-end-2">
                             <x-jet-label for="password" :value="__('Password')" />

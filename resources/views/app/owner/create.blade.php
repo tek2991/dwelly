@@ -51,6 +51,51 @@
                                 :value="old('onboarded_at')" required />
                         </div>
                         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {{-- Beneficiary name --}}
+                            <div>
+                                <x-jet-label for="beneficiary_name" :value="__('Beneficiary Name')" />
+                                <x-jet-input id="beneficiary_name" class="block mt-1 w-full" type="text"
+                                    name="beneficiary_name" :value="old('beneficiary_name')" required />
+                            </div>
+                            {{-- Bank name --}}
+                            <div>
+                                <x-jet-label for="bank_name" :value="__('Bank Name')" />
+                                <x-jet-input id="bank_name" class="block mt-1 w-full" type="text" name="bank_name"
+                                    :value="old('bank_name')" required />
+                            </div>
+                            {{-- Bank IFSC --}}
+                            <div>
+                                <x-jet-label for="ifsc" :value="__('Bank IFSC')" />
+                                <x-jet-input id="ifsc" class="block mt-1 w-full" type="text" name="ifsc"
+                                    :value="old('ifsc')" required />
+                            </div>
+                            {{-- Account number --}}
+                            <div>
+                                <x-jet-label for="account_number" :value="__('Account Number')" />
+                                <x-jet-input id="account_number" class="block mt-1 w-full" type="text"
+                                    name="account_number" :value="old('account_number')" required />
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {{-- Electricity consumer id old --}}
+                            <div>
+                                <x-jet-label for="electricity_consumer_id_old" :value="__('Electricity Consumer ID Old')"
+                                    class="text-gray-600" />
+                                <x-jet-input id="electricity_consumer_id_old" class="block mt-1 w-full" type="text"
+                                    name="electricity_consumer_id_old" :value="old('electricity_consumer_id_old')" />
+                            </div>
+                            {{-- Electricity consumer id new --}}
+                            <div>
+                                <x-jet-label for="electricity_consumer_id_new" :value="__('Electricity Consumer ID New')"
+                                    class="text-gray-600" />
+                                <x-jet-input id="electricity_consumer_id_new" class="block mt-1 w-full" type="text"
+                                    name="electricity_consumer_id_new" :value="old('electricity_consumer_id_new')" />
+                            </div>
+                        </div>
+
+
+                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- Password --}}
                             <div class="col-start-1 col-end-2">
                                 <x-jet-label for="password" :value="__('Password')" />

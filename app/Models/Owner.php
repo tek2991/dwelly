@@ -11,6 +11,14 @@ class Owner extends Model
         'property_id',
         'onboarded_at',
         'outboarded_at',
+
+        'beneficiary_name',
+        'bank_name',
+        'ifsc',
+        'account_number',
+
+        'electricity_consumer_id_old',
+        'electricity_consumer_id_new',
     ];
 
     protected $dates = [

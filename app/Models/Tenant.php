@@ -14,6 +14,11 @@ class Tenant extends Model
         'moved_out_at',
         'is_primary',
         'primary_tenant_id',
+
+        'beneficiary_name',
+        'bank_name',
+        'ifsc',
+        'account_number',
     ];
 
     protected $dates = [
