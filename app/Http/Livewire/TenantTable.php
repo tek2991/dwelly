@@ -168,9 +168,9 @@ final class TenantTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('PHONE 2', 'phone_2')
-                ->searchable()
-                ->sortable(),
+            // Column::make('PHONE 2', 'phone_2')
+            //     ->searchable()
+            //     ->sortable(),
 
             Column::make('MOVED IN', 'moved_in_at_formatted')
                 ->makeInputDatePicker(),

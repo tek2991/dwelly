@@ -142,9 +142,9 @@ final class OwnerTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('PHONE 2', 'phone_2')
-                ->searchable()
-                ->sortable(),
+            // Column::make('PHONE 2', 'phone_2')
+            //     ->searchable()
+            //     ->sortable(),
 
             Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
                 ->sortable()
