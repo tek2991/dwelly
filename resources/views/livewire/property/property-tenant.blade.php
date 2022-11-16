@@ -66,21 +66,6 @@
                                     wire:model="phone_2" disabled />
                             @endif
                         </div>
-                        {{-- Onboarded_at --}}
-                        <div>
-                            <x-jet-label for="onboarded_at" :value="__('Onboarded')" />
-                            @error('onboarded_at')
-                                <label for="onboarded_at" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
-
-                            @if ($editing === true)
-                                <x-jet-input id="onboarded_at" class="block mt-1 w-full" type="date"
-                                    wire:model="onboarded_at" />
-                            @else
-                                <x-jet-input id="onboarded_at" class="block mt-1 w-full" type="date"
-                                    wire:model="onboarded_at" disabled />
-                            @endif
-                        </div>
                         {{-- Moved_in_at --}}
                         <div>
                             <x-jet-label for="moved_in_at" :value="__('Moved In')" />

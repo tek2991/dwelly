@@ -115,7 +115,6 @@ final class TenantTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('user_id')
             ->addColumn('property_id')
-            ->addColumn('onboarded_at_formatted', fn (Tenant $model) => $model->onboarded_at ? Carbon::parse($model->onboarded_at)->format('d/m/Y') : 'N/A')
             ->addColumn('moved_in_at_formatted', fn (Tenant $model) => $model->moved_in_at ? Carbon::parse($model->moved_in_at)->format('d/m/Y') : 'N/A')
             ->addColumn('moved_out_at_formatted', fn (Tenant $model) => $model->moved_out_at ? Carbon::parse($model->moved_out_at)->format('d/m/Y') : 'N/A')
             ->addColumn('created_at_formatted', fn (Tenant $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
@@ -173,8 +172,10 @@ final class TenantTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::make('ONBOARDED AT', 'onboarded_at_formatted', 'onboarded_at')
-                ->sortable()
+            Column::make('MOVED IN', 'moved_in_at_formatted')
+                ->makeInputDatePicker(),
+
+            Column::make('MOVED OUT', 'moved_out_at_formatted')
                 ->makeInputDatePicker(),
 
             Column::make('PRIMARY', 'is_primary_formatted', 'is_primary')

@@ -20,7 +20,6 @@ class PropertyTenant extends Component
     public $email;
     public $phone_1;
     public $phone_2;
-    public $onboarded_at;
     public $moved_in_at;
     public $moved_out_at;
     // public $password;
@@ -87,7 +86,6 @@ class PropertyTenant extends Component
             'email' => 'required|string|max:255|email|unique:users,email,' . $this->user->id,
             'phone_1' => 'required|string|max:25',
             'phone_2' => 'nullable|string|max:25',
-            'onboarded_at' => 'required|date',
             'moved_in_at' => 'nullable|date',
             'moved_out_at' => 'nullable|date',
             'is_primary' => 'required|boolean',
@@ -112,7 +110,6 @@ class PropertyTenant extends Component
         ]);
 
         $this->tenant->update([
-            'onboarded_at' => $this->onboarded_at,
             'moved_in_at' => $this->moved_in_at,
             'moved_out_at' => $this->moved_out_at,
             

@@ -9,7 +9,6 @@ class Tenant extends Model
     protected $fillable = [
         'user_id',
         'property_id',
-        'onboarded_at',
         'moved_in_at',
         'moved_out_at',
         'is_primary',
@@ -22,7 +21,6 @@ class Tenant extends Model
     ];
 
     protected $dates = [
-        'onboarded_at',
         'moved_in_at',
         'moved_out_at',
     ];
@@ -50,5 +48,22 @@ class Tenant extends Model
     public function documents()
     {
         return $this->morphMany(Document::class, 'documentable')->with('documentType');
+    }
+
+    public function audits()
+    {
+        return $this->hasMany(Audit::class);
+    }
+
+    public function hasMoveInAudit()
+    {
+        $moveInTypeId = AuditType::where('name', 'Move In')->first()->id;
+        return $this->audits()->where('audit_type_id', $moveInTypeId)->exists();
+    }
+
+    public function hasMoveOutAudit()
+    {
+        $moveOutTypeId = AuditType::where('name', 'Move Out')->first()->id;
+        return $this->audits()->where('audit_type_id', $moveOutTypeId)->exists();
     }
 }

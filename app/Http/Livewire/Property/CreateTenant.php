@@ -19,7 +19,6 @@ class CreateTenant extends Component
     public $email;
     public $phone_1;
     public $phone_2;
-    public $onboarded_at;
     public $moved_in_at;
     public $moved_out_at;
     public $password;
@@ -49,7 +48,6 @@ class CreateTenant extends Component
             'email' => 'required|string|max:255|email|unique:users,email',
             'phone_1' => 'required|string|max:25',
             'phone_2' => 'nullable|string|max:25',
-            'onboarded_at' => 'required|date',
             'moved_in_at' => 'nullable|date',
             'moved_out_at' => 'nullable|date',
             'password' => 'required|string|min:8|confirmed',
@@ -85,7 +83,6 @@ class CreateTenant extends Component
         $tenant = Tenant::create([
             'property_id' => $this->property->id,
             'user_id' => $user->id,
-            'onboarded_at' => $this->onboarded_at,
             'moved_in_at' => $this->moved_in_at,
             'moved_out_at' => $this->moved_out_at,
             'is_primary' => $this->is_primary,

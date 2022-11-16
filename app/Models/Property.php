@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Audit;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -225,6 +226,17 @@ class Property extends Model
     {
         $owners = $this->owners()->get();
         return $owners->first();
+    }
+
+    public function audits()
+    {
+        return $this->hasMany(Audit::class);
+    }
+
+    public function hasPropertyOnboardingAudit()
+    {
+        $propertyOnboardingTypeId = AuditType::where('name', 'Property Onboarding')->first()->id;
+        return $this->audits()->where('audit_type_id', $propertyOnboardingTypeId)->exists();
     }
 
     /**

@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             BhkSeeder::class,
             RoleSeeder::class,
             DocumentTypeSeeder::class,
+            AuditTypeSeeder::class,
         ]);
     }
 }
