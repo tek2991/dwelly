@@ -47,7 +47,6 @@ class PropertyTenant extends Component
         $this->phone_1 = $this->user->phone_1;
         $this->phone_2 = $this->user->phone_2;
 
-        $this->onboarded_at = $this->tenant->onboarded_at->format('Y-m-d');
         $this->moved_in_at = $this->tenant->moved_in_at ? $this->tenant->moved_in_at->format('Y-m-d') : null;
         $this->moved_out_at = $this->tenant->moved_out_at ? $this->tenant->moved_out_at->format('Y-m-d') : null;
 
