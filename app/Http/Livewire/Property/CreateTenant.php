@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateTenant extends Component
 {
-    public $editing = false;
-    public $updated = false;
-
     public Property $property;
 
     public $name;

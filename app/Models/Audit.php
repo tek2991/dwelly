@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Audit extends Model
 {
     protected $fillable = [
+        'audit_date',
         'audit_type_id',
         'property_id',
         'created_by',

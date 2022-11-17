@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\ContactController;
@@ -88,5 +89,10 @@ Route::middleware([
             'index', 'show', 'store'
         ]);
         Route::get('tenant/create/{property}', [TenantController::class, 'create'])->name('tenant.create');
+
+        // Audit Routes
+        Route::resource('audit', AuditController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
+        ]);
     });
 });
