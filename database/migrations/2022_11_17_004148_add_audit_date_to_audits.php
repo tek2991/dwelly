@@ -14,7 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::table('audits', function (Blueprint $table) {
-            $table->date('audit_date')->after('id');
+            // Check if db is sqlite
+            if (DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME) === 'sqlite') {
+                $table->date('audit_date')->nullable()->after('id');
+            } else {
+                $table->date('audit_date')->after('id');
+            }
         });
     }
 

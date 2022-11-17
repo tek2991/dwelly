@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('audit_type_id')->constrained();
             $table->foreignId('property_id')->constrained();
             $table->foreignId('created_by')->constrained('users');
-            $table->foreignId('updated_by')->constrained('users');
-            $table->foreignId('tenant_id')->constrained();
+            $table->foreignId('updated_by')->nullable()->constrained('users');
+            $table->foreignId('tenant_id')->nullable()->constrained();
             $table->boolean('completed')->default(false);
             $table->timestamps();
         });
