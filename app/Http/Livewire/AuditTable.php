@@ -50,7 +50,8 @@ final class AuditTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Audit::query();
+        return Audit::query()
+            ->with('property', 'auditType', 'tenant.user', 'createdBy');
     }
 
     /*
@@ -68,7 +69,12 @@ final class AuditTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'property' => ['code'],
+            'auditType' => ['name'],
+            'tenant.user' => ['name'],
+            'createdBy' => ['name'],
+        ];
     }
 
     /*
@@ -87,11 +93,30 @@ final class AuditTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('audit_type_id')
+            ->addColumn('audit_type_name', function (Audit $audit) {
+                return e($audit->auditType->name);
+            })
             ->addColumn('property_id')
+            ->addColumn('property_code', function (Audit $audit) {
+                $link = route('property.show', $audit->property_id);
+                return "<a href='{$link}' class='text-blue-700 hover:underline'>{$audit->property->code}</a>";
+            })
             ->addColumn('created_by')
+            ->addColumn('created_by_name', function (Audit $audit) {
+                return e($audit->createdBy->name);
+            })
             ->addColumn('updated_by')
             ->addColumn('tenant_id')
+            ->addColumn('tenant_name', function (Audit $audit) {
+                return e($audit->tenant ? $audit->tenant->user->name : 'NA');
+            })
+            ->addColumn('audit_date', function (Audit $audit) {
+                return e(Carbon::parse($audit->audit_date)->format('d/m/Y'));
+            })
             ->addColumn('completed')
+            ->addColumn('completed_label', function (Audit $audit) {
+                return e($audit->completed ? 'Yes' : 'No');
+            })
             ->addColumn('created_at_formatted', fn (Audit $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (Audit $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -113,37 +138,27 @@ final class AuditTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            Column::make('AUDIT TYPE', 'audit_type_name', 'audit_type_id')
+                ->sortable()
+                ->searchable(),
 
-            Column::make('AUDIT TYPE ID', 'audit_type_id')
-                ->makeInputRange(),
+            Column::make('PROPERTY', 'property_code', 'property_id')
+                ->sortable()
+                ->searchable(),
 
-            Column::make('PROPERTY ID', 'property_id')
-                ->makeInputRange(),
+            Column::make('CREATED BY', 'created_by_name', 'created_by')
+                ->searchable(),
 
-            Column::make('CREATED BY', 'created_by')
-                ->makeInputRange(),
+            Column::make('TENANT (Pri)', 'tenant_name', 'tenant_id')
+                ->searchable(),
 
-            Column::make('UPDATED BY', 'updated_by')
-                ->makeInputRange(),
-
-            Column::make('TENANT ID', 'tenant_id')
-                ->makeInputRange(),
-
-            Column::make('COMPLETED', 'completed')
-                ->toggleable(),
+            Column::make('COMPLETED', 'completed_label', 'completed')
+                ->makeBooleanFilter('completed', 'Completed', 'Not Completed'),
 
             Column::make('CREATED AT', 'created_at_formatted', 'created_at')
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
-
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
-
         ]
 ;
     }
@@ -162,21 +177,22 @@ final class AuditTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('audit.edit', ['audit' => 'id']),
-
+        return [
+            Button::make('show', 'Show')
+            ->class('bg-indigo-500 cursor-pointer text-white px-2 py-1.5 m-1 rounded text-sm')
+            ->route('audit.show', ['audit' => 'id'])
+            ->target(''),
+            
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('audit.destroy', ['audit' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------

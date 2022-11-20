@@ -24,7 +24,7 @@ class AuditController extends Controller
      */
     public function create()
     {
-        //
+        return view('app.audit.create');
     }
 
     /**

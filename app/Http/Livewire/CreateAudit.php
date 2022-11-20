@@ -11,8 +11,8 @@ use Illuminate\Validation\Rule;
 
 class CreateAudit extends Component
 {
-    public $auditTypes;
     public $properties;
+    public $auditTypes;
     public $tenants;
 
     public $audit_date;
@@ -26,9 +26,11 @@ class CreateAudit extends Component
     public $move_out_audit_type_id;
     public $operational_audit_type_id;
 
-    public $disable_submit = false;
+    public $disable_submit = true;
     public $err = null;
     public $edit_btn = false;
+
+    public $existing_audit = null;
 
     public function mount()
     {
@@ -47,9 +49,9 @@ class CreateAudit extends Component
     public function rules()
     {
         return [
-            'audit_date' => 'required|date',
             'property_id' => 'required|exists:properties,id',
             'audit_type_id' => 'required|exists:audit_types,id',
+            'audit_date' => 'required|date',
             'tenant_id' => [
                 Rule::excludeIf(function () {
                     return $this->audit_type_id == $this->onboarding_audit_type_id
@@ -60,60 +62,52 @@ class CreateAudit extends Component
         ];
     }
 
+    public function disable($audit)
+    {   
+        $audit_type = $this->auditTypes->where('id', $this->audit_type_id)->first();
+        $this->disable_submit = true;
+        $this->err = "* {$audit_type->name} audit has already been created for this property/tenant.";
+        $this->edit_btn = true;
+        $this->existing_audit = $audit;
+    }
+
+    public function enable()
+    {
+        $this->disable_submit = false;
+        $this->err = null;
+        $this->edit_btn = false;
+    }
+
     public function updated($propertyName)
     {
-        
+        // If change in property_id reset all other fields
         if ($propertyName == 'property_id') {
             $this->tenants = Tenant::where('property_id', $this->property_id)->with('user')->get();
             $this->tenant_id = null;
+            $this->audit_date = null;
+            $this->audit_type_id = null;
+            $this->tenant_id = null;
+            $this->disable_submit = false;
+            $this->err = null;
         }
 
-        $this->validateOnly($propertyName);
+        // If audit_type_id is onboarding or deboarding check if audit already exists
+        if ($this->audit_type_id == $this->onboarding_audit_type_id || $this->audit_type_id == $this->deboarding_audit_type_id) {
+            $audit = Audit::where('property_id', $this->property_id)
+                ->where('audit_type_id', $this->audit_type_id)
+                ->first();
 
-        // If change in audit type
-        if ($propertyName == 'audit_type_id') {
-            // Check if the audit type is onboarding or deboarding
-            if ($this->audit_type_id == $this->onboarding_audit_type_id || $this->audit_type_id == $this->deboarding_audit_type_id) {
-                $this->tenant_id = null;
-
-                // Check if audit already exists for the property
-                $audit = Audit::where('property_id', $this->property_id)
-                    ->where('audit_type_id', $this->audit_type_id)
-                    ->first();
-
-                if ($audit) {
-                    $this->disable_submit = true;
-                    $this->edit_btn = true;
-                    $this->err = $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' audit already exists for this property';
-                } else {
-                    $this->disable_submit = false;
-                    $this->err = null;
-                }
-            }
+            $audit ? $this->disable($audit) : $this->enable();
         }
 
-        // If cahnge in tenant id or audit type
-        if ($propertyName == 'tenant_id' || $propertyName == 'audit_type_id') {
-            // Check if the audit type is move in or move out
-            if ($this->audit_type_id == $this->move_in_audit_type_id || $this->audit_type_id == $this->move_out_audit_type_id) {
-                // If tenant id and audit type is not null
-                if ($this->tenant_id && $this->audit_type_id) {
-                    // Check if audit already exists for the tenant
-                    $audit = Audit::where('tenant_id', $this->tenant_id)
-                        ->where('audit_type_id', $this->audit_type_id)
-                        ->where('property_id', $this->property_id)
-                        ->first();
+        // If audit_type_id is move in or move out check if audit already exists
+        if ($this->audit_type_id == $this->move_in_audit_type_id || $this->audit_type_id == $this->move_out_audit_type_id) {
+            $audit = Audit::where('property_id', $this->property_id)
+                ->where('audit_type_id', $this->audit_type_id)
+                ->where('tenant_id', $this->tenant_id)
+                ->first();
 
-                    if ($audit) {
-                        $this->disable_submit = true;
-                        $this->edit_btn = true;
-                        $this->err = $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' audit already exists for this tenant';
-                    } else {
-                        $this->disable_submit = false;
-                        $this->err = null;
-                    }
-                }
-            }
+            $audit ? $this->disable($audit) : $this->enable();
         }
     }
 
@@ -135,7 +129,7 @@ class CreateAudit extends Component
             'completed' => false,
         ]);
 
-        return redirect()->route('audits.show', $audit);
+        return redirect()->route('audit.show', $audit);
     }
 
 
