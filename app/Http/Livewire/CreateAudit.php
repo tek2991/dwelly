@@ -3,10 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Audit;
+use App\Models\AuditChecklist;
 use App\Models\Tenant;
 use Livewire\Component;
 use App\Models\Property;
 use App\Models\AuditType;
+use App\Models\Furniture;
 use Illuminate\Validation\Rule;
 
 class CreateAudit extends Component
@@ -128,6 +130,24 @@ class CreateAudit extends Component
             'created_by' => auth()->user()->id,
             'completed' => false,
         ]);
+
+        if($audit->audit_type_id != $this->operational_audit_type_id) {
+            $all_furnitures = Furniture::all();
+            $property_furnitures = Property::find($this->property_id)->furnitures;
+
+            foreach ($all_furnitures as $furniture) {
+                $property_has_furniture = $property_furnitures->contains($furniture->id);
+                $furniture_qty = $property_has_furniture ? $property_furnitures->where('id', $furniture->id)->first()->pivot->quantity : 0;
+                
+                // Create Audit Checklist
+                AuditChecklist::create([
+                    'audit_id' => $audit->id,
+                    'checklistable_id' => $furniture->id,
+                    'checklistable_type' => "App\Models\Furniture",
+                    'total' => $furniture_qty,
+                ]);
+            }
+        }
 
         return redirect()->route('audit.show', $audit);
     }

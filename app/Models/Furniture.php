@@ -19,4 +19,9 @@ class Furniture extends Model
     {
         return $this->belongsToMany(Property::class)->withPivot('quantity', 'description');
     }
+
+    public function auditChecklists()
+    {
+        return $this->morphMany(AuditChecklist::class, 'checklistable');
+    }
 }

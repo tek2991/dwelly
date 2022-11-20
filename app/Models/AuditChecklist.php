@@ -12,6 +12,7 @@ class AuditChecklist extends Model
         'checklistable_type',
         'good',
         'bad',
+        'total',
     ];
 
     protected $casts = [

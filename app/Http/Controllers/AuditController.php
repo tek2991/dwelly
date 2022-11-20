@@ -46,7 +46,7 @@ class AuditController extends Controller
      */
     public function show(Audit $audit)
     {
-        //
+        return view('app.audit.show', compact('audit'));
     }
 
     /**
