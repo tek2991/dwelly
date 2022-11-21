@@ -65,7 +65,7 @@ class CreateAudit extends Component
     }
 
     public function disable($audit)
-    {   
+    {
         $audit_type = $this->auditTypes->where('id', $this->audit_type_id)->first();
         $this->disable_submit = true;
         $this->err = "* {$audit_type->name} audit has already been created for this property/tenant.";
@@ -131,14 +131,14 @@ class CreateAudit extends Component
             'completed' => false,
         ]);
 
-        if($audit->audit_type_id != $this->operational_audit_type_id) {
+        if ($audit->audit_type_id != $this->operational_audit_type_id) {
             $all_furnitures = Furniture::all();
             $property_furnitures = Property::find($this->property_id)->furnitures;
 
             foreach ($all_furnitures as $furniture) {
                 $property_has_furniture = $property_furnitures->contains($furniture->id);
                 $furniture_qty = $property_has_furniture ? $property_furnitures->where('id', $furniture->id)->first()->pivot->quantity : 0;
-                
+
                 // Create Audit Checklist
                 AuditChecklist::create([
                     'audit_id' => $audit->id,
@@ -147,6 +147,10 @@ class CreateAudit extends Component
                     'total' => $furniture_qty,
                 ]);
             }
+
+            $audit->update([
+                'description' => $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y'),
+            ]);
         }
 
         return redirect()->route('audit.show', $audit);

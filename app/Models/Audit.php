@@ -14,6 +14,7 @@ class Audit extends Model
         'updated_by',
         'tenant_id',
         'completed',
+        'description',
     ];
 
     protected $casts = [
