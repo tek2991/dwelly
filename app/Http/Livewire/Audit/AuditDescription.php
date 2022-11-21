@@ -16,6 +16,7 @@ class AuditDescription extends Component
     public $editable = false;
     public $editing = false;
     public $updated = false;
+
     public $onboarding_audit_type_id;
     public $deboarding_audit_type_id;
     public $move_in_audit_type_id;
@@ -50,7 +51,14 @@ class AuditDescription extends Component
 
     public function update()
     {
-        $this->editing = true;
+        $this->validate();
+
+        $this->audit->update([
+            'description' => $this->audit->description,
+        ]);
+
+        $this->editing = false;
+        $this->updated = true;
     }
 
     public function cancel()
