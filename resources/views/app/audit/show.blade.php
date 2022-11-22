@@ -6,4 +6,6 @@
     </x-slot>
 
     <livewire:audit.audit-description :audit="$audit" />
+
+    <livewire:audit.audit-check-lists :audit="$audit" />
 </x-app-layout>
