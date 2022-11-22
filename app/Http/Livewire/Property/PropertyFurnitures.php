@@ -30,7 +30,8 @@ class PropertyFurnitures extends Component
                 'quantity' => $this->property->Furnitures->contains($furniture->id) ? $property->furnitures->find($furniture->id)->pivot->quantity : 0,
             ];
 
-            $this->furnitures[] = $item;
+            // Add the item to the furnitures array with the furniture id as the key
+            $this->furnitures[$furniture->id] = $item;
         }
     }
     

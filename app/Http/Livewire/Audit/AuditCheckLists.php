@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Audit;
 
 use App\Models\Audit;
+use App\Models\AuditChecklist;
 use Livewire\Component;
 use App\Models\AuditType;
 
@@ -29,6 +30,17 @@ class AuditCheckLists extends Component
         $this->audit = $audit;
         $this->auditTypes = AuditType::all();
         $this->audit_checklists = $audit->auditChecklists;
+
+        foreach ($this->audit_checklists as $auditChecklist) {
+            $item = [
+                'id' => $auditChecklist->id,
+                'good' => $auditChecklist->good,
+                'bad' => $auditChecklist->bad,
+            ];
+
+            $this->checklist[$auditChecklist->id] = $item;
+        }
+
         $audit_types = $this->auditTypes->pluck('id', 'name')->toArray();
 
         $this->onboarding_audit_type_id = $audit_types['Property Onboarding'];
@@ -52,6 +64,25 @@ class AuditCheckLists extends Component
         } else {
             $this->err = 'You cannot edit this audit';
         }
+    }
+
+    public function update()
+    {
+        $this->validate([
+            'checklist.*.id' => 'required|exists:audit_checklists,id',
+            'checklist.*.good' => 'required',
+            'checklist.*.bad' => 'required',
+        ]);
+
+        foreach ($this->checklist as $checklist) {
+            AuditChecklist::find($checklist['id'])->update([
+                'good' => $checklist['good'],
+                'bad' => $checklist['bad'],
+            ]);
+        }
+
+        $this->editing = false;
+        $this->updated = true;
     }
 
     public function render()
