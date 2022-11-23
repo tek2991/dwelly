@@ -14,7 +14,7 @@ class UploadAuditImageModal extends ModalComponent
     use WithFileUploads;
 
     public Audit $audit;
-    public $uploads = [];
+    public $image;
 
     public function mount($audit_id)
     {
@@ -24,23 +24,21 @@ class UploadAuditImageModal extends ModalComponent
     public function saveImages()
     {
         $this->validate([
-            'uploads.*' => 'image|max:2048', // 2MB Max
+            'image' => 'image|max:2048', // 2MB Max
         ]);
 
-        foreach ($this->uploads as $image) {
-            $uid = uniqid();
-            $image_name = $this->aduit->id . '_' . $uid . '.' . $image->extension();
-            $property_code = $this->audit->property->code;
-            $audit_type_name = Str::slug($this->audit->auditType->name);
-            $audit_date = $this->audit->audit_date;
-            $image_path = $image->storeAs('uploads/properties/' . $property_code . '/audits/' . $audit_type_name . '/' . $audit_date . '/' . $image_name, 'public');
+        $uid = uniqid();
+        $image_name = $this->audit->id . '_' . $uid . '.' . $this->image->extension();
+        $property_code = $this->audit->property->code;
+        $audit_type_name = Str::slug($this->audit->auditType->name);
+        $audit_date = $this->audit->audit_date;
+        $image_path = $this->image->storeAs('uploads/properties/' . $property_code . '/audits/' . $audit_type_name . '/' . $audit_date, $image_name, 'public');
 
-            AuditMedia::create([
-                'audit_id' => $this->audit->id,
-                'media_path' => $image_path,
-                'media_type' => 'image',
-            ]);
-        }
+        AuditMedia::create([
+            'audit_id' => $this->audit->id,
+            'media_path' => $image_path,
+            'media_type' => 'image',
+        ]);
 
         $this->emit('refreshAuditMedias');
         $this->closeModal();

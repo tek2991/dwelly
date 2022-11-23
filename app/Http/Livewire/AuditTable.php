@@ -13,6 +13,8 @@ final class AuditTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public $property_id;
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -44,14 +46,19 @@ final class AuditTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Audit>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Audit>
+     */
     public function datasource(): Builder
     {
-        return Audit::query()
-            ->with('property', 'auditType', 'tenant.user', 'createdBy');
+        $query = Audit::query();
+
+        if ($this->property_id) {
+            $query->where('property_id', $this->property_id);
+        }
+
+        return $query->with('property', 'auditType', 'tenant.user', 'createdBy');
     }
 
     /*
@@ -130,7 +137,7 @@ final class AuditTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -159,8 +166,7 @@ final class AuditTable extends PowerGridComponent
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
-        ]
-;
+        ];
     }
 
     /*
@@ -171,7 +177,7 @@ final class AuditTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Audit Action Buttons.
      *
      * @return array<int, Button>
@@ -181,10 +187,10 @@ final class AuditTable extends PowerGridComponent
     {
         return [
             Button::make('show', 'Show')
-            ->class('bg-indigo-500 cursor-pointer text-white px-2 py-1.5 m-1 rounded text-sm')
-            ->route('audit.show', ['audit' => 'id'])
-            ->target(''),
-            
+                ->class('bg-indigo-500 cursor-pointer text-white px-2 py-1.5 m-1 rounded text-sm')
+                ->route('audit.show', ['audit' => 'id'])
+                ->target(''),
+
             /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
@@ -202,7 +208,7 @@ final class AuditTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Audit Action Rules.
      *
      * @return array<int, RuleActions>

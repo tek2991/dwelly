@@ -19,13 +19,20 @@
         <div wire:ignore class="mt-4">
             <form wire:submit.prevent="saveImages">
                 {{-- File pond  --}}
-                <x-filepond multiple wire:model="uploads" allowImagePreview allowFileTypeValidation
+                <x-filepond wire:model="image" allowImagePreview allowFileTypeValidation
                     imagePreviewMaxHeight="200" allowFileTypeValidation
                     acceptedFileTypes="['image/png', 'image/jpg', 'image/jpeg']" allowFileSizeValidation
                     maxFileSize="4mb" allowImageResize />
-                @error('upload')
+                @error('image')
                     <p class="text-red-500 text-xs">{{ $message }}</p>
                 @enderror
+                <div class="my-4">
+                    <x-jet-label for="remarks" value="{{ __('Remarks') }}" />
+                    <x-jet-input id="remarks" class="block mt-1 w-full" type="text" wire:model="remarks" />
+                    @error('remarks')
+                        <p class="text-red-500 text-xs">{{ $message }}</p>
+                    @enderror
+                </div>
                 <div class="flex justify-center">
                     <button type="submit"
                         class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">Upload</button>

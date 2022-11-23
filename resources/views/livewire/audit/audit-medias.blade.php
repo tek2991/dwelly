@@ -9,15 +9,12 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach ($images as $image)
-                    <div class="relative">
-                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="property Image"
-                            class="w-full h-56 rounded-sm object-cover block">
-                        {{-- Remarks --}}
-                        <div class="absolute top-0 right-0 bg-white rounded-sm p-2">
-                            <p>
-                                <span class="font-bold">Remarks:</span>
-                                <span>{{ $image->remarks }}</span>
-                            </p>
+                    <div
+                        class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                        <img class="rounded-t-lg w-full h-56 object-cover block"
+                            src="{{ asset('storage/' . $image->media_path) }}" alt="Audit Image" />
+                        <div class="p-2">
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $image->remarks }}</p>
                         </div>
                     </div>
                 @endforeach

@@ -43,7 +43,15 @@ class AuditMedias extends Component
         $this->editable = $this->audit->completed === false && $this->audit->audit_type_id !== $this->operational_audit_type_id;
     }
 
+    // listeners
+    protected $listeners = ['refreshAuditMedias' => 'refresh'];
 
+    public function refresh()
+    {
+        $this->audit_medias = $this->audit->auditMedias;
+        $this->images = $this->audit_medias->where('media_type', 'image');
+        $this->videos = $this->audit_medias->where('media_type', 'video');
+    }
 
     public function render()
     {
