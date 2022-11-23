@@ -9,12 +9,12 @@ use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
-class UploadAuditImageModal extends ModalComponent
+class UploadAuditVideoModal extends ModalComponent
 {
     use WithFileUploads;
 
     public Audit $audit;
-    public $image;
+    public $video;
     public $remarks;
 
     public function mount($audit_id)
@@ -22,24 +22,24 @@ class UploadAuditImageModal extends ModalComponent
         $this->audit = Audit::find($audit_id);
     }
 
-    public function saveImages()
+    public function savevideos()
     {
         $this->validate([
-            'image' => 'image|max:2048', // 2MB Max
+            'video' => 'mimes:mp4,mov,ogg,qt|max:131072', // 128MB Max
             'remarks' => 'nullable|string|max:2550',
         ]);
 
         $uid = uniqid();
-        $image_name = $this->audit->id . '_' . $uid . '.' . $this->image->extension();
+        $video_name = $this->audit->id . '_' . $uid . '.' . $this->video->extension();
         $property_code = $this->audit->property->code;
         $audit_type_name = Str::slug($this->audit->auditType->name);
         $audit_date = $this->audit->audit_date;
-        $image_path = $this->image->storeAs('uploads/properties/' . $property_code . '/audits/' . $audit_type_name . '/' . $audit_date, $image_name, 'public');
+        $video_path = $this->video->storeAs('uploads/properties/' . $property_code . '/audits/' . $audit_type_name . '/' . $audit_date, $video_name, 'public');
 
         AuditMedia::create([
             'audit_id' => $this->audit->id,
-            'media_path' => $image_path,
-            'media_type' => 'image',
+            'media_path' => $video_path,
+            'media_type' => 'video',
             'remarks' => $this->remarks,
         ]);
 
@@ -49,6 +49,6 @@ class UploadAuditImageModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.audit.upload-audit-image-modal');
+        return view('livewire.audit.upload-audit-video-modal');
     }
 }
