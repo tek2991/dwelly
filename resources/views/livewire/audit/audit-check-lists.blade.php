@@ -15,31 +15,31 @@
                 @foreach ($audit_checklists as $item)
                     <div class="bg-white shadow-md rounded-lg p-4">
                         <div class="flex justify-between">
-                            <h3 class="text-gray-700 font-semibold text-lg w-full">{{ $item->checklistable->name }}</h3>
-                            <h3 class="text-gray-700 font-semibold text-md text-right w-full">Total: {{ $item->total }}
+                            <h3 class="text-gray-700 font-semibold text-lg">{{ $item->checklistable->name }}</h3>
+                            <h3 class="text-gray-700 font-semibold text-md text-right">Total: {{ $item->total }}
                             </h3>
                         </div>
-                        <div class="flex items center justify-between mt-3">
+                        <div class="md:flex justify-between mt-3">
                             @if ($editing)
                                 <div>
                                     <x-jet-label for="good-{{ $item->id }}" :value="__('Good')" />
-                                    <x-jet-input id="good-{{ $item->id }}" class="block mt-1" type="number"
+                                    <x-jet-input id="good-{{ $item->id }}" class="mt-1 w-full" type="number"
                                         wire:model="checklist.{{ $item->id }}.good" />
                                 </div>
                                 <div>
                                     <x-jet-label for="bad-{{ $item->id }}" :value="__('Bad')" />
-                                    <x-jet-input id="bad-{{ $item->id }}" class="block mt-1" type="number"
+                                    <x-jet-input id="bad-{{ $item->id }}" class="mt-1 w-full" type="number"
                                         wire:model="checklist.{{ $item->id }}.bad" />
                                 </div>
                             @else
                                 <div>
                                     <x-jet-label for="good-{{ $item->id }}" :value="__('Good')" />
-                                    <x-jet-input id="good-{{ $item->id }}" class="block mt-1" type="number"
+                                    <x-jet-input id="good-{{ $item->id }}" class="mt-1 w-full" type="number"
                                         disabled wire:model="checklist.{{ $item->id }}.good" />
                                 </div>
                                 <div>
                                     <x-jet-label for="bad-{{ $item->id }}" :value="__('Bad')" />
-                                    <x-jet-input id="bad-{{ $item->id }}" class="block mt-1" type="number"
+                                    <x-jet-input id="bad-{{ $item->id }}" class="mt-1 w-full" type="number"
                                         disabled wire:model="checklist.{{ $item->id }}.bad" />
                                 </div>
                             @endif
