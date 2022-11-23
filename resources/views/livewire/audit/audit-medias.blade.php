@@ -11,8 +11,10 @@
                 @foreach ($images as $image)
                     <div
                         class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-                        <img class="rounded-t-lg w-full h-56 object-cover block"
-                            src="{{ asset('storage/' . $image->media_path) }}" alt="Audit Image" />
+                        <a href="{{ asset('storage/' . $image->media_path) }}" data-lightbox="audit-img">
+                            <img class="rounded-t-lg w-full h-56 object-cover block"
+                                src="{{ asset('storage/' . $image->media_path) }}" alt="Audit Image" />
+                        </a>
                         <div class="p-2">
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $image->remarks }}</p>
                         </div>

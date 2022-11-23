@@ -1,4 +1,8 @@
 {
+  "node_modules/lightbox2/dist/images/loading.gif": {
+    "file": "assets/loading.225aa88b.gif",
+    "src": "node_modules/lightbox2/dist/images/loading.gif"
+  },
   "public/resources/fonts/GraphikRegular.otf": {
     "file": "assets/GraphikRegular.8e758310.otf",
     "src": "public/resources/fonts/GraphikRegular.otf"
@@ -15,17 +19,13 @@
     "file": "assets/GraphikMedium.ebd6d324.otf",
     "src": "public/resources/fonts/GraphikMedium.otf"
   },
-  "public/resources/fonts/GraphikBold.otf": {
-    "file": "assets/GraphikBold.75c911d1.otf",
-    "src": "public/resources/fonts/GraphikBold.otf"
-  },
-  "node_modules/lightbox2/dist/images/loading.gif": {
-    "file": "assets/loading.225aa88b.gif",
-    "src": "node_modules/lightbox2/dist/images/loading.gif"
-  },
   "public/resources/fonts/ADELIA.otf": {
     "file": "assets/ADELIA.912949fb.otf",
     "src": "public/resources/fonts/ADELIA.otf"
+  },
+  "public/resources/fonts/GraphikBold.otf": {
+    "file": "assets/GraphikBold.75c911d1.otf",
+    "src": "public/resources/fonts/GraphikBold.otf"
   },
   "public/resources/fonts/SecularOneRegular.ttf": {
     "file": "assets/SecularOneRegular.489bea3a.ttf",
@@ -36,7 +36,7 @@
     "src": "public/resources/fonts/GloriaHallelujahRegular.ttf"
   },
   "resources/js/app.js": {
-    "file": "assets/app.de534434.js",
+    "file": "assets/app.f61814a4.js",
     "src": "resources/js/app.js",
     "isEntry": true
   },
@@ -46,7 +46,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app.1f290bb9.css",
+    "file": "assets/app.10da72a8.css",
     "src": "resources/css/app.css",
     "isEntry": true
   }

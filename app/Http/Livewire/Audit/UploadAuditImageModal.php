@@ -25,6 +25,7 @@ class UploadAuditImageModal extends ModalComponent
     {
         $this->validate([
             'image' => 'image|max:2048', // 2MB Max
+            'remarks' => 'nullable|string|max:2550',
         ]);
 
         $uid = uniqid();
@@ -38,6 +39,7 @@ class UploadAuditImageModal extends ModalComponent
             'audit_id' => $this->audit->id,
             'media_path' => $image_path,
             'media_type' => 'image',
+            'remarks' => $this->remarks,
         ]);
 
         $this->emit('refreshAuditMedias');
