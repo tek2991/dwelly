@@ -68,6 +68,11 @@ class AuditCheckLists extends Component
 
     public function update()
     {
+        if($this->editable === false) {
+            $this->err = 'This audit is not editable.';
+            return;
+        }
+        
         $this->validate([
             'checklist.*.id' => 'required|exists:audit_checklists,id',
             'checklist.*.good' => 'required',

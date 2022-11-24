@@ -24,6 +24,11 @@ class UploadAuditVideoModal extends ModalComponent
 
     public function savevideos()
     {
+        if($this->editable === false) {
+            $this->err = 'This audit is not editable.';
+            return;
+        }
+        
         $this->validate([
             'video' => 'mimes:mp4,mov,ogg,qt|max:131072', // 128MB Max
             'remarks' => 'nullable|string|max:2550',

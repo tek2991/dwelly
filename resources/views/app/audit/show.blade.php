@@ -10,4 +10,6 @@
     <livewire:audit.audit-check-lists :audit="$audit" />
 
     <livewire:audit.audit-medias :audit="$audit" />
+
+    <livewire:audit.audit-completion :audit="$audit" />
 </x-app-layout>

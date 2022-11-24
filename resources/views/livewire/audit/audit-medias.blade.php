@@ -4,9 +4,13 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <div class="flex justify-between mb-6">
                     <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Images</h2>
-                    <x-jet-button
-                        onclick="Livewire.emit('openModal', 'audit.upload-audit-image-modal', {{ json_encode(['audit_id' => $audit->id]) }})"
-                        class="cursor-pointer">Upload Image</x-jet-button>
+                    @if ($editable)
+                        <x-jet-button
+                            onclick="Livewire.emit('openModal', 'audit.upload-audit-image-modal', {{ json_encode(['audit_id' => $audit->id]) }})"
+                            class="cursor-pointer">Upload Image</x-jet-button>
+                    @else
+                        <x-jet-button class="cursor-pointer" disabled>Upload Image</x-jet-button>
+                    @endif
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @foreach ($images as $image)
@@ -25,15 +29,19 @@
             </div>
         </div>
     </div>
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <div class="flex justify-between mb-6">
                     <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Videos</h2>
-                    <x-jet-button
-                        onclick="Livewire.emit('openModal', 'audit.upload-audit-video-modal', {{ json_encode(['audit_id' => $audit->id]) }})"
-                        class="cursor-pointer">Upload Video</x-jet-button>
+                    @if ($editable)
+                        <x-jet-button
+                            onclick="Livewire.emit('openModal', 'audit.upload-audit-video-modal', {{ json_encode(['audit_id' => $audit->id]) }})"
+                            class="cursor-pointer">Upload Video</x-jet-button>
+                    @else
+                        <x-jet-button class="cursor-pointer" disabled>Upload Video</x-jet-button>
+                    @endif
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @foreach ($videos as $video)

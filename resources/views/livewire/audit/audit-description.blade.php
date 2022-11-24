@@ -41,6 +41,12 @@
                     <x-jet-input id="created_at" class="block mt-1 w-full" type="text" disabled
                         value="{{ $audit->created_at }}" />
                 </div>
+                {{-- Completed at --}}
+                <div>
+                    <x-jet-label for="completed_at" :value="__('Completed At')" />
+                    <x-jet-input id="completed_at" class="block mt-1 w-full" type="text" disabled
+                        value="{{ $audit->completed ? $audit->updated_at : 'NA' }}" />
+                </div>
                 {{-- Description --}}
                 <div class="md:col-span-3">
                     <x-jet-label for="description" :value="__('Description')" />

@@ -24,6 +24,11 @@ class UploadAuditImageModal extends ModalComponent
 
     public function saveImages()
     {
+        if($this->editable === false) {
+            $this->err = 'This audit is not editable.';
+            return;
+        }
+        
         $this->validate([
             'image' => 'image|max:2048', // 2MB Max
             'remarks' => 'nullable|string|max:2550',
