@@ -40,17 +40,25 @@ class AuditMedias extends Component
         $this->move_out_audit_type_id = $audit_types['Move Out'];
         $this->operational_audit_type_id = $audit_types['Operational'];
 
-        $this->editable = $this->audit->completed === false && $this->audit->audit_type_id !== $this->operational_audit_type_id;
+        $this->editable = $this->audit->completed === false;
     }
 
     // listeners
-    protected $listeners = ['refreshAuditMedias' => 'refresh'];
+    protected $listeners = [
+        'refreshAuditMedias' => 'refresh',
+        'refreshAuditCompletion' => 'disable',
+    ];
 
     public function refresh()
     {
         $this->audit_medias = $this->audit->auditMedias;
         $this->images = $this->audit_medias->where('media_type', 'image');
         $this->videos = $this->audit_medias->where('media_type', 'video');
+    }
+
+    public function disable()
+    {
+        $this->editable = false;
     }
 
     public function render()

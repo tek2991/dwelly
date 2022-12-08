@@ -71,9 +71,20 @@ class AuditDescription extends Component
         if ($this->editable) {
             $this->editing = true;
             $this->updated = false;
-        }else{
+        } else {
             $this->err = 'You cannot edit this audit';
         }
+    }
+
+    // listeners
+    protected $listeners = [
+        'refreshAuditCompletion' => 'disable',
+    ];
+
+
+    public function disable()
+    {
+        $this->editable = false;
     }
 
     public function render()

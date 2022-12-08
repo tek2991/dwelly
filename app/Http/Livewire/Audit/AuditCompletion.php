@@ -61,6 +61,7 @@ class AuditCompletion extends Component
         $this->audit->save();
 
         $this->emit('refreshAuditCompletion');
+        $this->editable = false;
     }
 
     public function render()

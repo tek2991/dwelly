@@ -16,19 +16,21 @@ class UploadAuditVideoModal extends ModalComponent
     public Audit $audit;
     public $video;
     public $remarks;
+    public $editable = false;
 
     public function mount($audit_id)
     {
         $this->audit = Audit::find($audit_id);
+        $this->editable = $this->audit->completed === false;
     }
 
     public function savevideos()
     {
-        if($this->editable === false) {
+        if ($this->editable === false) {
             $this->err = 'This audit is not editable.';
             return;
         }
-        
+
         $this->validate([
             'video' => 'mimes:mp4,mov,ogg,qt|max:131072', // 128MB Max
             'remarks' => 'nullable|string|max:2550',
@@ -50,6 +52,17 @@ class UploadAuditVideoModal extends ModalComponent
 
         $this->emit('refreshAuditMedias');
         $this->closeModal();
+    }
+
+    // listeners
+    protected $listeners = [
+        'refreshAuditCompletion' => 'disable',
+    ];
+
+
+    public function disable()
+    {
+        $this->editable = false;
     }
 
     public function render()

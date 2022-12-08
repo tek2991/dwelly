@@ -16,19 +16,21 @@ class UploadAuditImageModal extends ModalComponent
     public Audit $audit;
     public $image;
     public $remarks;
+    public $editable = false;
 
     public function mount($audit_id)
     {
         $this->audit = Audit::find($audit_id);
+        $this->editable = $this->audit->completed === false;
     }
 
     public function saveImages()
     {
-        if($this->editable === false) {
+        if ($this->editable === false) {
             $this->err = 'This audit is not editable.';
             return;
         }
-        
+
         $this->validate([
             'image' => 'image|max:2048', // 2MB Max
             'remarks' => 'nullable|string|max:2550',
@@ -50,6 +52,17 @@ class UploadAuditImageModal extends ModalComponent
 
         $this->emit('refreshAuditMedias');
         $this->closeModal();
+    }
+
+    // listeners
+    protected $listeners = [
+        'refreshAuditCompletion' => 'disable',
+    ];
+
+
+    public function disable()
+    {
+        $this->editable = false;
     }
 
     public function render()

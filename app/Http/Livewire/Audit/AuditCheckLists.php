@@ -68,11 +68,11 @@ class AuditCheckLists extends Component
 
     public function update()
     {
-        if($this->editable === false) {
+        if ($this->editable === false) {
             $this->err = 'This audit is not editable.';
             return;
         }
-        
+
         $this->validate([
             'checklist.*.id' => 'required|exists:audit_checklists,id',
             'checklist.*.good' => 'required',
@@ -88,6 +88,17 @@ class AuditCheckLists extends Component
 
         $this->editing = false;
         $this->updated = true;
+    }
+
+    // listeners
+    protected $listeners = [
+        'refreshAuditCompletion' => 'disable',
+    ];
+
+
+    public function disable()
+    {
+        $this->editable = false;
     }
 
     public function render()
