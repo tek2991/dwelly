@@ -52,7 +52,7 @@
                             <x-input-select id="tenant_id" wire:model="tenant_id">
                                 <option value="">Select tenant</option>
                                 @foreach ($tenants as $tenant)
-                                    <option value="{{ $tenant->id }}">{{ $tenant->name }}</option>
+                                    <option value="{{ $tenant->id }}">{{ $tenant->user->name }}</option>
                                 @endforeach
                             </x-input-select>
                         @else

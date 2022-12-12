@@ -38,6 +38,7 @@ class CreateAudit extends Component
     {
         $this->properties = Property::all();
         $this->auditTypes = AuditType::all();
+        $this->tenants = Tenant::where('property_id', $this->property_id)->with('user')->get();
 
         $audit_types = $this->auditTypes->pluck('id', 'name')->toArray();
 
