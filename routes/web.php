@@ -12,6 +12,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\Property\PropertyController;
 use App\Http\Controllers\NearbyEstablishmentController;
+use App\Http\Controllers\Attributes\FurnitureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,10 @@ Route::middleware([
             ]);
             Route::delete('role/{role}/detatch-permission/{permission}', [RoleController::class, 'detatchPermission'])->name('role.detatchPermission');
             Route::put('role/{role}/attach-permission', [RoleController::class, 'attachPermission'])->name('role.attachPermission');
+
+            Route::resource('furniture', FurnitureController::class)->only([
+                'index', 'show', 'create', 'store', 'edit', 'update'
+            ]);
         });
 
         // Property Routes

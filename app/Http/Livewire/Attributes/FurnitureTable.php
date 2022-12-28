@@ -1,19 +1,22 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Attributes;
 
-use App\Models\Audit;
+use App\Models\Furniture;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class AuditTable extends PowerGridComponent
+final class FurnitureTable extends PowerGridComponent
 {
     use ActionButton;
 
-    public $property_id;
+    public string $sortField = 'is_primary';
+    public string $sortDirection = 'desc';
+
+    public string $primary_furniture_id;
 
     /*
     |--------------------------------------------------------------------------
@@ -48,17 +51,18 @@ final class AuditTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Audit>
+     * @return Builder<\App\Models\Furniture>
      */
     public function datasource(): Builder
     {
-        $query = Audit::query();
+        $query = Furniture::query();
 
-        if ($this->property_id) {
-            $query->where('property_id', $this->property_id);
+        if ($this->primary_furniture_id) {
+            // dd($this->primary_furniture_id);
+            $query->where('primary_furniture_id', $this->primary_furniture_id);
         }
 
-        return $query->with('property', 'auditType', 'tenant.user', 'createdBy');
+        return $query;
     }
 
     /*
@@ -76,12 +80,7 @@ final class AuditTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [
-            'property' => ['code'],
-            'auditType' => ['name'],
-            'tenant.user' => ['name'],
-            'createdBy' => ['name'],
-        ];
+        return [];
     }
 
     /*
@@ -99,37 +98,21 @@ final class AuditTable extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('audit_type_id')
-            ->addColumn('audit_type_name', function (Audit $audit) {
-                return e($audit->auditType->name);
+            ->addColumn('name')
+
+            /** Example of custom column using a closure **/
+            ->addColumn('name_lower', function (Furniture $model) {
+                return strtolower(e($model->name));
             })
-            ->addColumn('property_id')
-            ->addColumn('property_code', function (Audit $audit) {
-                // check if audit has a property
-                if (!$audit->property) {
-                    return 'NA';
-                }
-                $link = route('property.show', $audit->property_id);
-                return "<a href='{$link}' class='text-blue-700 hover:underline'>{$audit->property->code}</a>";
-            })
-            ->addColumn('created_by')
-            ->addColumn('created_by_name', function (Audit $audit) {
-                return e($audit->createdBy->name);
-            })
-            ->addColumn('updated_by')
-            ->addColumn('tenant_id')
-            ->addColumn('tenant_name', function (Audit $audit) {
-                return e($audit->tenant ? $audit->tenant->user->name : 'NA');
-            })
-            ->addColumn('audit_date', function (Audit $audit) {
-                return e(Carbon::parse($audit->audit_date)->format('d/m/Y'));
-            })
-            ->addColumn('completed')
-            ->addColumn('completed_label', function (Audit $audit) {
-                return e($audit->completed ? 'Yes' : 'No');
-            })
-            ->addColumn('created_at_formatted', fn (Audit $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Audit $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+
+            ->addColumn('icon_path')
+            ->addColumn('has_icon', fn (Furniture $model) => $model->icon_path ? 'Yes' : 'No')
+            ->addColumn('show')
+            ->addColumn('show_formatted', fn (Furniture $model) => $model->show ? 'Yes' : 'No')
+            ->addColumn('primary', fn (Furniture $model) => $model->is_primary ? '<span class="font-bold text-green-800">Self</span>' : '<span class="font-bold text-red-800">' . $model->primaryFurniture->name . '</span>')
+            ->addColumn('no_of_secondary', fn (Furniture $model) => $model->is_primary ? $model->secondaryFurnitures->count() : 'N/A')
+            ->addColumn('created_at_formatted', fn (Furniture $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+            ->addColumn('updated_at_formatted', fn (Furniture $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -149,27 +132,21 @@ final class AuditTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('AUDIT TYPE', 'audit_type_name', 'audit_type_id')
+            Column::make('NAME', 'name')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('PROPERTY', 'property_code', 'property_id')
-                ->sortable()
-                ->searchable(),
+            Column::make('ICON', 'has_icon')
+                ->sortable(),
 
-            Column::make('CREATED BY', 'created_by_name', 'created_by')
-                ->searchable(),
+            Column::make('SHOW', 'show_formatted', 'show')
+                ->sortable(),
 
-            Column::make('TENANT (Pri)', 'tenant_name', 'tenant_id')
-                ->searchable(),
+            Column::make('PRIMARY', 'primary')
+                ->sortable(),
 
-            Column::make('COMPLETED', 'completed_label', 'completed')
-                ->makeBooleanFilter('completed', 'Completed', 'Not Completed'),
-
-            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+            Column::make('SECONDARY FURNITURES', 'no_of_secondary')
+                ->sortable(),
         ];
     }
 
@@ -182,7 +159,7 @@ final class AuditTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Audit Action Buttons.
+     * PowerGrid Furniture Action Buttons.
      *
      * @return array<int, Button>
      */
@@ -190,15 +167,15 @@ final class AuditTable extends PowerGridComponent
     public function actions(): array
     {
         return [
-            Button::make('show', 'Show')
-                ->class('bg-indigo-500 cursor-pointer text-white px-2 py-1.5 m-1 rounded text-sm')
-                ->route('audit.show', ['audit' => 'id'])
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('furniture.edit', ['furniture' => 'id'])
                 ->target(''),
 
             /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('audit.destroy', ['audit' => 'id'])
+               ->route('furniture.destroy', ['furniture' => 'id'])
                ->method('delete')
                */
         ];
@@ -213,7 +190,7 @@ final class AuditTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Audit Action Rules.
+     * PowerGrid Furniture Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -225,9 +202,9 @@ final class AuditTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($audit) => $audit->id === 1)
+                ->when(fn($furniture) => $furniture->id === 1)
                 ->hide(),
         ];
     }
-    */
+    */  
 }

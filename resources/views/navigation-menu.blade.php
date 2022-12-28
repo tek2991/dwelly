@@ -43,8 +43,17 @@
                         <x-nav-dropdown-item :href="route('tenant.index')" :active="request()->routeIs('tenant.*')">
                             {{ __('Tenants') }}
                         </x-nav-dropdown-item>
+                        <x-nav-dropdown-item :href="route('furniture.index')" :active="request()->routeIs('furniture.*')">
+                            {{ __('Furnitures') }}
+                        </x-nav-dropdown-item>
+                    </x-nav-dropdown-wrapper>
+                    {{-- Audits --}}
+                    <x-nav-dropdown-button data-dropdown-toggle="audit_management_dropdownNavbar">
+                        {{ __('Property Audits') }}
+                    </x-nav-dropdown-button>
+                    <x-nav-dropdown-wrapper id="audit_management_dropdownNavbar">
                         <x-nav-dropdown-item :href="route('audit.index')" :active="request()->routeIs('audit.*')">
-                            {{ __('Audits') }}
+                            {{ __('All Audits') }}
                         </x-nav-dropdown-item>
                     </x-nav-dropdown-wrapper>
                     {{-- Contact Management --}}

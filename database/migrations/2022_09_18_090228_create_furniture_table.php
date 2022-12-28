@@ -13,11 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('furniture', function (Blueprint $table) {
+        Schema::create('furnitures', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('icon_path')->nullable()->comment('Path to the icon of the furniture in storage/app/uploads/icons');
             $table->boolean('show')->default(false)->comment('Whether to show the furniture in the frontend');
+            $table->boolean('is_primary')->default(True);
+            $table->foreignId('primary_furniture_id')->nullable()->constrained('furnitures');
             $table->timestamps();
         });
     }

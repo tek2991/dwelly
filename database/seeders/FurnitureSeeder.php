@@ -41,13 +41,53 @@ class FurnitureSeeder extends Seeder
             ['name' => 'Chair', 'icon_path' => null, 'show' => false],
         ];
 
+        $secondary_furnitures = [
+            [
+                'primary' => 'Sofa',
+                'secondary' => [
+                    'Single Seater Sofa', 'Two Seater Sofa', 'Three Seater Sofa', 'Four Seater Sofa', 'Five Seater Sofa', 'Coffee Table'
+                ]
+            ],
+            [
+                'primary' => 'Bed',
+                'secondary' => [
+                    'Mattress', 'Bed Sheet', 'Pillow', 'Blanket', 'Quilt', 'Bedside Table'
+                ]
+            ],
+            [
+                'primary' => 'Dining Set',
+                'secondary' => [
+                    'Dining Table', 'Dining Chair', 'Dining Stool'
+                ]
+            ],
+        ];
+
         // Insert the furnitures into the database
         foreach ($furnitures as $f) {
-            \App\Models\Furniture::create([
-                'name' => $f['name'],
-                'icon_path' => $f['icon_path'],
-                'show' => $f['show'],
-            ]);
+            \App\Models\Furniture::updateOrCreate(
+                ['name' => $f['name']],
+                [
+                    'icon_path' => $f['icon_path'],
+                    'show' => $f['show'],
+                    'is_primary' => true,
+                ]
+            );
+        }
+
+        // Insert the secondary furnitures into the database
+        foreach ($secondary_furnitures as $sf) {
+            $primary_furniture = \App\Models\Furniture::where('name', $sf['primary'])->first();
+            foreach ($sf['secondary'] as $s) {
+                \App\Models\Furniture::updateOrCreate(
+                    ['name' => $s],
+                    [
+                        'icon_path' => null,
+                        'show' => false,
+                        'is_primary' => false,
+                        'primary_furniture_id' => $primary_furniture->id,
+                    ]
+                );
+            }
         }
     }
 }

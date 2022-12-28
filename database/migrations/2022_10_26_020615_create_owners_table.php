@@ -19,6 +19,14 @@ return new class extends Migration
             $table->foreignId('property_id')->constrained();
             $table->dateTime('onboarded_at');
             $table->dateTime('outboarded_at')->nullable();
+            $table->string('electricity_consumer_id_old')->nullable();
+            $table->string('electricity_consumer_id_new')->nullable();
+
+            $table->string('beneficiary_name')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('ifsc')->nullable();
+            $table->string('account_number')->nullable();
+            
             $table->timestamps();
         });
     }
