@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Furniture extends Model
 {
-    protected $table = 'furnitures';
+    protected $table = 'furniture';
     protected $fillable = [
         'name',
         'icon_path',

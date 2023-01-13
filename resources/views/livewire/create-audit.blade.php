@@ -5,19 +5,6 @@
             <form method="POST" wire:submit.prevent="store">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {{-- Property --}}
-                    <div>
-                        <x-jet-label for="property_id" :value="__('Property')" />
-                        @error('property')
-                            <label for="property_id" class="text-xs text-red-700 block">{{ $message }}</label>
-                        @enderror
-                        <x-input-select id="property_id" wire:model="property_id">
-                            <option value="">Select property</option>
-                            @foreach ($properties as $property)
-                                <option value="{{ $property->id }}">{{ $property->code }}</option>
-                            @endforeach
-                        </x-input-select>
-                    </div>
                     {{-- Audit type --}}
                     <div>
                         <x-jet-label for="audit_type_id" :value="__('Audit type')" />
@@ -38,6 +25,19 @@
                             <label for="audit_date" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-jet-input id="audit_date" class="block mt-1 w-full" type="date" wire:model="audit_date" />
+                    </div>
+                    {{-- Property --}}
+                    <div>
+                        <x-jet-label for="property_id" :value="__('Property')" />
+                        @error('property_id')
+                            <label for="property_id" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input-select id="property_id" wire:model="property_id">
+                            <option value="">Select property</option>
+                            @foreach ($properties as $property)
+                                <option value="{{ $property->id }}">{{ $property->code }}</option>
+                            @endforeach
+                        </x-input-select>
                     </div>
                     {{-- Tenant --}}
                     <div>

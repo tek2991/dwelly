@@ -17,9 +17,9 @@ class CreateAudit extends Component
     public $auditTypes;
     public $tenants;
 
+    public $audit_type_id;
     public $audit_date;
     public $property_id;
-    public $audit_type_id;
     public $tenant_id;
 
     public $onboarding_audit_type_id;
@@ -36,9 +36,8 @@ class CreateAudit extends Component
 
     public function mount()
     {
-        $this->properties = Property::all();
         $this->auditTypes = AuditType::all();
-        $this->tenants = Tenant::where('property_id', $this->property_id)->with('user')->get();
+        $this->properties = Property::all();
 
         $audit_types = $this->auditTypes->pluck('id', 'name')->toArray();
 
@@ -52,9 +51,17 @@ class CreateAudit extends Component
     public function rules()
     {
         return [
-            'property_id' => 'required|exists:properties,id',
             'audit_type_id' => 'required|exists:audit_types,id',
             'audit_date' => 'required|date',
+            'property_id' => [
+                'nullable',
+                Rule::requiredIf(function () {
+                    return $this->audit_type_id == $this->move_in_audit_type_id
+                        || $this->audit_type_id == $this->move_out_audit_type_id
+                        || $this->audit_type_id == $this->deboarding_audit_type_id;
+                }),
+                'exists:properties,id',
+            ],
             'tenant_id' => [
                 Rule::excludeIf(function () {
                     return $this->audit_type_id == $this->onboarding_audit_type_id
@@ -83,19 +90,25 @@ class CreateAudit extends Component
 
     public function updated($propertyName)
     {
-        // If change in property_id reset all other fields
-        if ($propertyName == 'property_id') {
-            $this->tenants = Tenant::where('property_id', $this->property_id)->with('user')->get();
-            $this->tenant_id = null;
+        // If change in audit_type_id reset all other fields
+        if ($propertyName == 'audit_type_id') {
             $this->audit_date = null;
-            $this->audit_type_id = null;
+            $this->property_id = null;
             $this->tenant_id = null;
             $this->disable_submit = false;
             $this->err = null;
         }
 
+        // If change in property_id reset tenant_id and tenants
+        if ($propertyName == 'property_id') {
+            $this->tenant_id = null;
+            $this->tenants = Tenant::where('property_id', $this->property_id)->get();
+            $this->disable_submit = false;
+            $this->err = null;
+        }
+
         // If audit_type_id is onboarding or deboarding check if audit already exists
-        if ($this->audit_type_id == $this->onboarding_audit_type_id || $this->audit_type_id == $this->deboarding_audit_type_id) {
+        if (($this->audit_type_id == $this->onboarding_audit_type_id || $this->audit_type_id == $this->deboarding_audit_type_id) && $this->property_id) {
             $audit = Audit::where('property_id', $this->property_id)
                 ->where('audit_type_id', $this->audit_type_id)
                 ->first();
@@ -121,38 +134,20 @@ class CreateAudit extends Component
             return;
         }
 
+        $this->property_id = $this->property_id == "" ? null : $this->property_id;
+        $this->tenant_id = $this->tenant_id == "" ? null : $this->tenant_id;
+
         $this->validate();
 
         $audit = Audit::create([
+            'audit_type_id' => $this->audit_type_id,
             'audit_date' => $this->audit_date,
             'property_id' => $this->property_id,
-            'audit_type_id' => $this->audit_type_id,
             'tenant_id' => $this->tenant_id,
             'created_by' => auth()->user()->id,
             'completed' => false,
+            'description' => $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y'),
         ]);
-
-        if ($audit->audit_type_id != $this->operational_audit_type_id) {
-            $all_furnitures = Furniture::all();
-            $property_furnitures = Property::find($this->property_id)->furnitures;
-
-            foreach ($all_furnitures as $furniture) {
-                $property_has_furniture = $property_furnitures->contains($furniture->id);
-                $furniture_qty = $property_has_furniture ? $property_furnitures->where('id', $furniture->id)->first()->pivot->quantity : 0;
-
-                // Create Audit Checklist
-                AuditChecklist::create([
-                    'audit_id' => $audit->id,
-                    'checklistable_id' => $furniture->id,
-                    'checklistable_type' => "App\Models\Furniture",
-                    'total' => $furniture_qty,
-                ]);
-            }
-
-            $audit->update([
-                'description' => $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y'),
-            ]);
-        }
 
         return redirect()->route('audit.show', $audit);
     }
