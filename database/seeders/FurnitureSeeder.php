@@ -14,7 +14,6 @@ class FurnitureSeeder extends Seeder
      */
     public function run()
     {
-        // Default furniture array with the furniture name and the icon name in the storage/app/uploads/icons folder and if it should be shown in the frontend
         $furnitures = [
             ['name' => 'Fan', 'icon_path' => 'uploads/icons/fan.svg', 'show' => true],
             ['name' => 'Light', 'icon_path' => 'uploads/icons/light.svg', 'show' => true],
@@ -62,25 +61,21 @@ class FurnitureSeeder extends Seeder
             ],
         ];
 
-        // Insert the furnitures into the database
-        foreach ($furnitures as $f) {
+
+        foreach ($furnitures as $furniture) {
             \App\Models\Furniture::updateOrCreate(
-                ['name' => $f['name']],
-                [
-                    'icon_path' => $f['icon_path'],
-                    'show' => $f['show'],
-                    'is_primary' => true,
-                ]
+                ['name' => $furniture['name']],
+                $furniture
             );
         }
 
-        // Insert the secondary furnitures into the database
-        foreach ($secondary_furnitures as $sf) {
-            $primary_furniture = \App\Models\Furniture::where('name', $sf['primary'])->first();
-            foreach ($sf['secondary'] as $s) {
+        foreach ($secondary_furnitures as $secondary_furniture) {
+            $primary_furniture = \App\Models\Furniture::where('name', $secondary_furniture['primary'])->first();
+            foreach ($secondary_furniture['secondary'] as $secondary) {
                 \App\Models\Furniture::updateOrCreate(
-                    ['name' => $s],
+                    ['name' => $secondary],
                     [
+                        'name' => $secondary,
                         'icon_path' => null,
                         'show' => false,
                         'is_primary' => false,
