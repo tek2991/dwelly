@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RentOutController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\PublicPageController;
+use App\Http\Controllers\AuditChecklistController;
 use App\Http\Controllers\Property\PropertyController;
 use App\Http\Controllers\NearbyEstablishmentController;
 use App\Http\Controllers\Attributes\FurnitureController;
@@ -97,6 +98,11 @@ Route::middleware([
 
         // Audit Routes
         Route::resource('audit', AuditController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
+        ]);
+
+        // Audit Checklists Routes
+        Route::resource('auditChecklist', AuditChecklistController::class)->only([
             'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
     });

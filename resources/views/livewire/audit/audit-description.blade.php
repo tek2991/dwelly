@@ -15,7 +15,7 @@
                 <div>
                     <x-jet-label for="code" :value="__('Property Code')" />
                     <x-jet-input id="code" class="block mt-1 w-full" type="text" disabled
-                        value="{{ $audit->property->code }}" />
+                        value="{{ $audit->property ? $audit->property->code : 'NA' }}" />
                 </div>
                 {{-- Audit Type --}}
                 <div>

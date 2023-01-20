@@ -34,4 +34,9 @@ class Room extends Model
     {
         return $this->belongsToMany(Property::class)->withPivot('quantity');
     }
+
+    public function auditChecklists()
+    {
+        return $this->morphToMany(AuditChecklist::class, 'checklistable');
+    }
 }

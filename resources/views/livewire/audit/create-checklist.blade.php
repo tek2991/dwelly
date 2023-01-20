@@ -1,21 +1,20 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-            <h2 class="text-xl font-regular pt-2 pb-4">Audit details</h2>
+            <h2 class="text-xl font-regular pt-2 pb-4">Add Checklist</h2>
             <form method="POST" wire:submit.prevent="store">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {{-- Audit type --}}
                     <div>
-                        <x-jet-label for="audit_type_id" :value="__('Audit type')" />
-                        @error('audit_type')
-                            <label for="audit_type_id" class="text-xs text-red-700 block">{{ $message }}</label>
+                        <x-jet-label for="item_type" :value="__('Item type')" />
+                        @error('item_type')
+                            <label for="item_type" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input-select id="audit_type_id" wire:model="audit_type_id">
+                        <x-input-select id="item_type" wire:model="item_type">
                             <option value="">Select audit type</option>
-                            @foreach ($auditTypes as $auditType)
-                                <option value="{{ $auditType->id }}">{{ $auditType->name }}</option>
-                            @endforeach
+                            <option value="1">Rooms</option>
+                            <option value="2">Furnitures</option>
                         </x-input-select>
                     </div>
                     {{-- Audit date --}}
@@ -46,9 +45,9 @@
                             <label for="tenant_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         @if ($property_id &&
-                            $audit_type_id &&
-                            $audit_type_id != $onboarding_audit_type_id &&
-                            $audit_type_id != $deboarding_audit_type_id)
+                            $item_type &&
+                            $item_type != $onboarding_item_type &&
+                            $item_type != $deboarding_item_type)
                             <x-input-select id="tenant_id" wire:model="tenant_id">
                                 <option value="">Select tenant</option>
                                 @foreach ($tenants as $tenant)

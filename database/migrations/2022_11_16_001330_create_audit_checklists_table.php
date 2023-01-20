@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('audit_id')->constrained();
             $table->morphs('checklistable');
             $table->boolean('is_primary')->default(false);
-            $table->foreignId('primary_checklist_id')->nullable()->constrained('audit_checklists');
+            $table->foreignId('primary_audit_checklist_id')->nullable();
             $table->timestamps();
         });
     }

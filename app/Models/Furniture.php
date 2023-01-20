@@ -27,7 +27,7 @@ class Furniture extends Model
 
     public function auditChecklists()
     {
-        return $this->morphMany(AuditChecklist::class, 'checklistable');
+        return $this->morphToMany(AuditChecklist::class, 'checklistable');
     }
 
     public function primaryFurniture()

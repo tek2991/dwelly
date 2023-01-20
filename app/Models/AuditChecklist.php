@@ -10,14 +10,8 @@ class AuditChecklist extends Model
         'audit_id',
         'checklistable_id',
         'checklistable_type',
-        'good',
-        'bad',
-        'total',
-    ];
-
-    protected $casts = [
-        'good' => 'integer',
-        'bad' => 'integer',
+        'is_primary',
+        'primary_audit_checklist_id',
     ];
 
     public function audit()
@@ -28,5 +22,25 @@ class AuditChecklist extends Model
     public function checklistable()
     {
         return $this->morphTo();
+    }
+
+    public function furniture()
+    {
+        return $this->morphedByMany(Furniture::class, 'checklistable');
+    }
+
+    public function room()
+    {
+        return $this->morphedByMany(Room::class, 'checklistable');
+    }
+
+    public function primaryAuditChecklist()
+    {
+        return $this->belongsTo(AuditChecklist::class, 'primary_audit_checklist_id');
+    }
+
+    public function secondaryAuditChecklists()
+    {
+        return $this->hasMany(AuditChecklist::class, 'primary_audit_checklist_id');
     }
 }
