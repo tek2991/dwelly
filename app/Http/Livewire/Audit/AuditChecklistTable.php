@@ -46,14 +46,15 @@ final class AuditChecklistTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\AuditChecklist>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\AuditChecklist>
+     */
     public function datasource(): Builder
     {
         return AuditChecklist::query()
-            ->where('audit_id', $this->audit->id);
+            ->where('audit_id', $this->audit->id)
+            ->with('audit', 'checklistable', 'primaryAuditChecklist', 'secondaryAuditChecklists');
     }
 
     /*
@@ -88,18 +89,29 @@ final class AuditChecklistTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            ->addColumn('id')
-            ->addColumn('audit_id')
             ->addColumn('checklistable_id')
             ->addColumn('checklistable_type')
+            ->addColumn('checklistable_type_formatted', function (AuditChecklist $model) {
+                // Letters after the last backslash
+                $type = substr(strrchr($model->checklistable_type, '\\'), 1);
+                return e($type);
+            })
 
-           /** Example of custom column using a closure **/
+            ->addColumn('checklistable_type_name', fn (AuditChecklist $model) => e($model->checklistable->name))
+
+            /** Example of custom column using a closure **/
             ->addColumn('checklistable_type_lower', function (AuditChecklist $model) {
                 return strtolower(e($model->checklistable_type));
             })
 
             ->addColumn('is_primary')
+            ->addColumn('is_primary_formatted', fn (AuditChecklist $model) => $model->is_primary ? 'Yes' : 'No')
+            ->addColumn('remarks', function (AuditChecklist $model) {
+                // Truncate remarks to 20 characters
+                return e(substr($model->remarks, 0, 20));
+            })
             ->addColumn('primary_audit_checklist_id')
+            ->addColumn('secondary_audit_checklists', fn (AuditChecklist $model) => $model->secondaryAuditChecklists->count())
             ->addColumn('created_at_formatted', fn (AuditChecklist $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (AuditChecklist $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -113,7 +125,7 @@ final class AuditChecklistTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -121,38 +133,24 @@ final class AuditChecklistTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            Column::make('TYPE', 'checklistable_type_formatted', 'checklistable_type')
+                ->sortable(),
 
-            Column::make('AUDIT ID', 'audit_id')
-                ->makeInputRange(),
+            Column::make('NAME', 'checklistable_type_name', 'checklistable_type'),
 
-            Column::make('CHECKLISTABLE ID', 'checklistable_id')
-                ->makeInputRange(),
+            Column::make('IS PRIMARY', 'is_primary_formatted', 'is_primary')
+                ->makeBooleanFilter(),
 
-            Column::make('CHECKLISTABLE TYPE', 'checklistable_type')
-                ->sortable()
-                ->searchable()
-                ->makeInputText(),
+            Column::make('SECONDARY ITEMS', 'secondary_audit_checklists'),
 
-            Column::make('IS PRIMARY', 'is_primary')
-                ->toggleable(),
-
-            Column::make('PRIMARY AUDIT CHECKLIST ID', 'primary_audit_checklist_id')
-                ->makeInputRange(),
-
-            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+            Column::make('REMARKS', 'remarks'),
 
             Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
 
-        ]
-;
+        ];
     }
 
     /*
@@ -163,27 +161,27 @@ final class AuditChecklistTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid AuditChecklist Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('audit-checklist.edit', ['audit-checklist' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-2.5 py-1 m-1 rounded text-sm')
+                ->route('auditChecklist.edit', ['auditChecklist' => 'id']),
 
+            /*
            Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('audit-checklist.destroy', ['audit-checklist' => 'id'])
-               ->method('delete')
+           ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+           ->route('audit-checklist.destroy', ['audit-checklist' => 'id'])
+           ->method('delete')
+           */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -193,7 +191,7 @@ final class AuditChecklistTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid AuditChecklist Action Rules.
      *
      * @return array<int, RuleActions>

@@ -12,6 +12,7 @@ class AuditChecklist extends Model
         'checklistable_type',
         'is_primary',
         'primary_audit_checklist_id',
+        'remarks',
     ];
 
     public function audit()
