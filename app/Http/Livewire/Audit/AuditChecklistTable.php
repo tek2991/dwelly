@@ -172,7 +172,7 @@ final class AuditChecklistTable extends PowerGridComponent
         return [
             Button::make('edit', 'Edit')
                 ->class('bg-indigo-500 cursor-pointer text-white px-2.5 py-1 m-1 rounded text-sm')
-                ->route('auditChecklist.edit', ['auditChecklist' => 'id']),
+                ->route('auditChecklist.show', ['auditChecklist' => 'id']),
 
             /*
            Button::make('destroy', 'Delete')

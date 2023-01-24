@@ -48,7 +48,8 @@ class AuditChecklistController extends Controller
      */
     public function show(AuditChecklist $auditChecklist)
     {
-        //
+        $audit = Audit::find($auditChecklist->audit_id);
+        return view('app.audit.checklist.show', compact('auditChecklist', 'audit'));
     }
 
     /**

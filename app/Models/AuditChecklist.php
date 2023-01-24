@@ -44,4 +44,9 @@ class AuditChecklist extends Model
     {
         return $this->hasMany(AuditChecklist::class, 'primary_audit_checklist_id');
     }
+
+    public function uploads()
+    {
+        return $this->morphMany(Upload::class, 'uploadable');
+    }
 }
