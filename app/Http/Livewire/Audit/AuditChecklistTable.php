@@ -15,6 +15,8 @@ final class AuditChecklistTable extends PowerGridComponent
 
     public $audit;
 
+    public $primary_audit_checklist_id;
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -52,9 +54,17 @@ final class AuditChecklistTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return AuditChecklist::query()
-            ->where('audit_id', $this->audit->id)
-            ->with('audit', 'checklistable', 'primaryAuditChecklist', 'secondaryAuditChecklists');
+        $query = AuditChecklist::query();
+
+        if($this->audit) {
+            $query->where('audit_id', $this->audit->id);
+        }
+
+        if ($this->primary_audit_checklist_id) {
+            $query->where('primary_audit_checklist_id', $this->primary_audit_checklist_id);
+        }
+
+        return $query->with('audit', 'checklistable', 'primaryAuditChecklist', 'secondaryAuditChecklists');
     }
 
     /*
@@ -105,6 +115,7 @@ final class AuditChecklistTable extends PowerGridComponent
             })
 
             ->addColumn('is_primary')
+            ->addColumn('primary', fn (AuditChecklist $model) => $model->is_primary ? '<span class="font-bold text-green-800">Self</span>' : '<span class="font-bold text-red-800">' . $model->primaryAuditChecklist->checklistable->name . '</span>')
             ->addColumn('is_primary_formatted', fn (AuditChecklist $model) => $model->is_primary ? 'Yes' : 'No')
             ->addColumn('remarks', function (AuditChecklist $model) {
                 // Truncate remarks to 20 characters
@@ -138,8 +149,8 @@ final class AuditChecklistTable extends PowerGridComponent
 
             Column::make('NAME', 'checklistable_type_name', 'checklistable_type'),
 
-            Column::make('IS PRIMARY', 'is_primary_formatted', 'is_primary')
-                ->makeBooleanFilter(),
+            Column::make('PRIMARY', 'primary')
+                ->sortable(),
 
             Column::make('SECONDARY ITEMS', 'secondary_audit_checklists'),
 
@@ -172,7 +183,8 @@ final class AuditChecklistTable extends PowerGridComponent
         return [
             Button::make('edit', 'Edit')
                 ->class('bg-indigo-500 cursor-pointer text-white px-2.5 py-1 m-1 rounded text-sm')
-                ->route('auditChecklist.show', ['auditChecklist' => 'id']),
+                ->route('auditChecklist.show', ['auditChecklist' => 'id'])
+                ->target(''),
 
             /*
            Button::make('destroy', 'Delete')

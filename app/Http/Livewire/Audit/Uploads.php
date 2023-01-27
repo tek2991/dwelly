@@ -11,6 +11,14 @@ class Uploads extends Component
     public $auditChecklist;
     public $uploads;
 
+    // listeners
+    protected $listeners = ['refreshAuditUploads' => 'refresh'];
+
+    public function refresh()
+    {
+        $this->uploads = $this->auditChecklist->uploads;
+    }
+
     public function mount($checklist_id)
     {
         $this->checklist_id = $checklist_id;

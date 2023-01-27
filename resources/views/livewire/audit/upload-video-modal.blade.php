@@ -8,16 +8,20 @@
         </svg>
     </button>
     <div class="p-6 text-center">
-        <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400"> Upload Audit Videos </h3>
-        <div class="flex justify-between">
-            <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> {{ $audit->property->code }} </h3>
-            <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900">
+        <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400"> Upload Audit Video </h3>
+        <div class="grid grid-cols-3">
+            <h3 class="my-2 font-normal text-left text-gray-700 dark:text-gray-900">
                 {{ $audit->auditType->name }}
             </h3>
-            <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> {{ $audit->audit_date }} </h3>
+            @if ($property != null)
+                <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> {{ $audit->property->code }} </h3>
+                @else
+                <h3 class="my-2 font-normal text-gray-700 dark:text-gray-900"> New Property </h3>
+            @endif
+            <h3 class="my-2 font-normal text-right text-gray-700 dark:text-gray-900"> {{ $audit->audit_date }} </h3>
         </div>
         <div wire:ignore class="mt-4">
-            <form wire:submit.prevent="savevideos">
+            <form wire:submit.prevent="saveVideo">
                 {{-- File pond  --}}
                 <x-filepond wire:model="video" allowFileTypeValidation
                     acceptedFileTypes="['video/mp4', 'video/avi', 'video/mov']"

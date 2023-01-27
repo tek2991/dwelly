@@ -23,6 +23,7 @@ class CreateChecklist extends Component
     ];
 
     public $audit_id;
+    public $primary_audit_checklist_id;
     public $rooms;
     public $primary_furnitures;
 
@@ -35,11 +36,26 @@ class CreateChecklist extends Component
     public $primary_furniture_id;
     public $remarks;
 
-    public function mount($audit_id)
+    public $secondary_furnitures;
+
+    public function mount($audit_id, $primary_audit_checklist_id)
     {
         $this->audit_id = $audit_id;
+        $this->primary_audit_checklist_id = $primary_audit_checklist_id;
         $this->rooms = Room::all();
         $this->primary_furnitures = Furniture::where('is_primary', true)->withCount('secondaryFurnitures')->get();
+
+        if ($primary_audit_checklist_id) {
+            $primary_audit_checklist = AuditChecklist::find($primary_audit_checklist_id);
+
+            $this->item_type_id = $primary_audit_checklist->checklistable_type == 'App\Models\Furniture' ? 1 : 2;
+            $this->room_id = $primary_audit_checklist->checklistable_type == 'App\Models\Room' ? $primary_audit_checklist->checklistable_id : null;
+            $this->primary_furniture_id = $primary_audit_checklist->checklistable_type == 'App\Models\Furniture' ? $primary_audit_checklist->checklistable_id : null;
+
+            if ($this->item_type_id == 1) {
+                $this->secondary_furnitures = Furniture::where('is_primary', false)->where('primary_furniture_id', $this->primary_furniture_id)->get();
+            }
+        }
     }
 
     public function rules()

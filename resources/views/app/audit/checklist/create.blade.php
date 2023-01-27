@@ -14,6 +14,6 @@
             </x-button-link>
         </div>
     </x-slot>
-    @livewire('audit.create-checklist', ['audit_id' => $audit->id])
+    @livewire('audit.create-checklist', ['audit_id' => $audit->id, 'primary_audit_checklist_id' => $primary_audit_checklist_id])
 
 </x-app-layout>

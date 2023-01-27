@@ -8,7 +8,7 @@
         </svg>
     </button>
     <div class="p-6 text-center">
-        <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400"> Upload Audit Images </h3>
+        <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400"> Upload Audit Image </h3>
         <div class="grid grid-cols-3">
             <h3 class="my-2 font-normal text-left text-gray-700 dark:text-gray-900">
                 {{ $audit->auditType->name }}

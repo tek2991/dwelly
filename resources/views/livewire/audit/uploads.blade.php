@@ -1,7 +1,7 @@
-<div class="py-12">
+<div class="py-6">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-            <div class="flex justify-between mb-6">
+            <div class="flex justify-between pt-2 pb-4">
                 <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Uploads</h2>
                 <div>
                     <x-jet-button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover"
@@ -19,11 +19,16 @@
                                     onclick="Livewire.emit('openModal', 'audit.upload-image-modal', {{ json_encode(['checklist_id' => $checklist_id]) }})"
                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Image</a>
                             </li>
+                            <li>
+                                <a href="#"
+                                    onclick="Livewire.emit('openModal', 'audit.upload-video-modal', {{ json_encode(['checklist_id' => $checklist_id]) }})"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Video</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {{-- {{ $uploads }} --}}
                 @forelse ($uploads as $upload)
                     <div class="relative">
@@ -32,10 +37,13 @@
                                 <img src="{{ asset('storage/' . $upload->file_path) }}" alt="property upload"
                                     class="w-full h-56 rounded-sm object-cover block ease-in-out duration-300">
                             </a>
-                        @elseif ($upload->type == 'video')
-                            <video src="{{ asset('storage/' . $upload->file_path) }}" alt="property upload"
+                        @elseif ($upload->file_type == 'video')
+                            <video src="{{ asset('storage/' . $upload->file_path) }}" controls alt="property upload"
                                 class="w-full h-56 rounded-sm object-cover block ease-in-out duration-300"></video>
                         @endif
+                        <p class="bg-gray-200 rounded-b-md p-2 text-gray-800 text-sm">
+                            {{ $upload->remarks != null ? $upload->remarks : 'No remarks' }}
+                        </p>
                     </div>
                 @empty
                     <div class="">

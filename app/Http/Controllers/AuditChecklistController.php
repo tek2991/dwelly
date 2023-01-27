@@ -26,7 +26,8 @@ class AuditChecklistController extends Controller
     public function create()
     {
         $audit = Audit::find(request()->audit);
-        return view('app.audit.checklist.create', compact('audit'));
+        $primary_audit_checklist_id = request()->primary_audit_checklist_id ?? null;
+        return view('app.audit.checklist.create', compact('audit', 'primary_audit_checklist_id'));
     }
 
     /**
