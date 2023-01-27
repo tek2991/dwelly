@@ -63,6 +63,15 @@ class CreateChecklist extends Component
         return [
             'item_type_id' => 'required|in:1,2',
             'primary_furniture_id' => 'nullable|required_if:item_type_id,1|exists:furniture,id',
+            'secondary_furniture_id' => [
+                'nullable',
+                Rule::requiredIf(function () {
+                    return $this->item_type_id == 1 && $this->primary_furniture_id && $this->primary_audit_checklist_id;
+                }),
+                Rule::exists('furniture', 'id')->where(function ($query) {
+                    $query->where('primary_furniture_id', $this->primary_furniture_id);
+                })
+            ],
             'room_id' => 'nullable|required_if:item_type_id,2|exists:rooms,id',
             'remarks' => 'nullable|string|max:255',
         ];
