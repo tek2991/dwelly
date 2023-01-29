@@ -37,6 +37,7 @@ class CreateChecklist extends Component
     public $remarks;
 
     public $secondary_furnitures;
+    public $secondary_furniture_id;
 
     public function mount($audit_id, $primary_audit_checklist_id)
     {
@@ -93,9 +94,10 @@ class CreateChecklist extends Component
 
         AuditChecklist::create([
             'audit_id' => $this->audit_id,
-            'checklistable_id' => $this->item_type_id == 1 ? $this->primary_furniture_id : $this->room_id,
+            'checklistable_id' => $this->item_type_id == 1 ? $this->secondary_furniture_id : $this->room_id,
             'checklistable_type' => $this->item_types_model[$this->item_type_id],
-            'is_primary' => true,
+            'is_primary' => false,
+            'primary_audit_checklist_id' => $this->primary_audit_checklist_id,
             'remarks' => $this->remarks,
         ]);
 

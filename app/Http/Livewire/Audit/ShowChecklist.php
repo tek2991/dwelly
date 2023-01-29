@@ -8,7 +8,7 @@ use Livewire\Component;
 use App\Models\Furniture;
 use Illuminate\Validation\Rule;
 
-class PrimaryChecklist extends Component
+class ShowChecklist extends Component
 {
     public $editing = false;
     public $saved = false;
@@ -39,6 +39,9 @@ class PrimaryChecklist extends Component
     public $primary_furniture_id;
     public $remarks;
 
+    public $secondary_furniture_id;
+    public $secondary_furnitures;
+
     public function mount($checklist_id)
     {
         $this->checklist_id = $checklist_id;
@@ -47,8 +50,18 @@ class PrimaryChecklist extends Component
         $this->primary_furnitures = Furniture::where('is_primary', true)->withCount('secondaryFurnitures')->get();
 
         $this->item_type_id = $this->checklist->checklistable_type == 'App\Models\Furniture' ? 1 : 2;
-        $this->room_id = $this->checklist->checklistable_type == 'App\Models\Room' ? $this->checklist->checklistable_id : null;
-        $this->primary_furniture_id = $this->checklist->checklistable_type == 'App\Models\Furniture' ? $this->checklist->checklistable_id : null;
+
+        if ($this->item_type_id == 1) {
+            if ($this->checklist->is_primary) {
+                $this->primary_furniture_id = $this->checklist->checklistable_id;
+            } else {
+                $this->primary_furniture_id = $this->checklist->checklistable->primaryFurniture->id;
+                $this->secondary_furniture_id = $this->checklist->checklistable_id;
+                $this->secondary_furnitures = Furniture::where('primary_furniture_id', $this->primary_furniture_id)->get();
+            }
+        }else{
+            $this->room_id = $this->checklist->checklistable_id;
+        }
         $this->remarks = $this->checklist->remarks;
     }
 
@@ -99,6 +112,6 @@ class PrimaryChecklist extends Component
 
     public function render()
     {
-        return view('livewire.audit.primary-checklist');
+        return view('livewire.audit.show-checklist');
     }
 }
