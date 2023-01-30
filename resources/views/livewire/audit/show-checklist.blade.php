@@ -9,7 +9,7 @@
                     @error('item_type_id')
                         <label for="item_type_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
-                    <x-input-select id="item_type_id" wire:model="item_type_id" :disabled="$secondary_furniture_id">
+                    <x-input-select id="item_type_id" wire:model="item_type_id" :disabled="$secondary_furniture_id || $hasSecondary">
                         <option value="">Select audit type</option>
                         @foreach ($item_types as $id => $item_type)
                             <option value="{{ $id }}">{{ $item_type }}</option>
@@ -24,7 +24,7 @@
                         @error('room_id')
                             <label for="room_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input-select id="room_id" wire:model="room_id" :disabled="$secondary_furniture_id">
+                        <x-input-select id="room_id" wire:model="room_id" :disabled="$secondary_furniture_id || $hasSecondary">
                             <option value="">Select room</option>
                             @foreach ($rooms as $room)
                                 <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -43,7 +43,7 @@
                         @error('room_id')
                             <label for="room_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input-select id="primary_furniture_id" wire:model="primary_furniture_id" :disabled="$secondary_furniture_id">
+                        <x-input-select id="primary_furniture_id" wire:model="primary_furniture_id" :disabled="$secondary_furniture_id || $hasSecondary">
                             <option value="">Select primary furniture</option>
                             @foreach ($primary_furnitures as $primary_furniture)
                                 <option value="{{ $primary_furniture->id }}">{{ $primary_furniture->name }}</option>

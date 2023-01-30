@@ -42,6 +42,8 @@ class ShowChecklist extends Component
     public $secondary_furniture_id;
     public $secondary_furnitures;
 
+    public $hasSecondary;
+
     public function mount($checklist_id)
     {
         $this->checklist_id = $checklist_id;
@@ -63,6 +65,8 @@ class ShowChecklist extends Component
             $this->room_id = $this->checklist->checklistable_id;
         }
         $this->remarks = $this->checklist->remarks;
+
+        $this->hasSecondary = $this->checklist->is_primary ? $this->checklist->secondaryAuditChecklists->count() > 0 : false;
     }
 
     public function rules()

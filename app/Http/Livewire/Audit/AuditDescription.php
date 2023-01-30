@@ -8,7 +8,7 @@ use App\Models\AuditType;
 
 class AuditDescription extends Component
 {
-    public $audit = null;
+    public $audit;
     public $auditTypes;
 
     public $description;
