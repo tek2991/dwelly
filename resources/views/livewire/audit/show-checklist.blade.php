@@ -94,9 +94,15 @@
                             {{ __('Saved.') }}
                         </div>
                     @endif
-                    <x-jet-button wire:click="edit" class="ml-4">
-                        {{ __('Edit') }}
-                    </x-jet-button>
+                    @if ($editable)
+                        <x-jet-button wire:click="edit" class="ml-4">
+                            {{ __('Edit') }}
+                        </x-jet-button>
+                    @else
+                        <x-jet-button class="ml-4" disabled>
+                            {{ __('Audit Completed') }}
+                        </x-jet-button>
+                    @endif
                 </div>
             @endif
         </div>

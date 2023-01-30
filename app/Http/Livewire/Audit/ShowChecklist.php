@@ -12,6 +12,7 @@ class ShowChecklist extends Component
 {
     public $editing = false;
     public $saved = false;
+    public $editable = false;
 
     // Item types object
     public $item_types = [
@@ -67,6 +68,8 @@ class ShowChecklist extends Component
         $this->remarks = $this->checklist->remarks;
 
         $this->hasSecondary = $this->checklist->is_primary ? $this->checklist->secondaryAuditChecklists->count() > 0 : false;
+
+        $this->editable = $this->checklist->audit->completed ? false : true;
     }
 
     public function rules()

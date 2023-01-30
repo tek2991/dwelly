@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Audit;
 
-use App\Models\AuditChecklist;
 use App\Models\Room;
+use App\Models\Audit;
 use Livewire\Component;
 use App\Models\Furniture;
+use App\Models\AuditChecklist;
 use Illuminate\Validation\Rule;
 
 class CreateChecklist extends Component
@@ -91,6 +92,13 @@ class CreateChecklist extends Component
     public function store()
     {
         $this->validate();
+
+        if (
+            Audit::find($this->audit_id)->completed
+        ) {
+            // Stop
+            return;
+        }
 
         AuditChecklist::create([
             'audit_id' => $this->audit_id,
