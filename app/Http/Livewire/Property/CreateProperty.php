@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Property;
 
 use App\Models\Bhk;
+use App\Models\Audit;
 use Livewire\Component;
 use App\Models\Flooring;
 use App\Models\Locality;
@@ -12,6 +13,8 @@ use App\Models\PropertyType;
 
 class CreateProperty extends Component
 {
+    public $audit_id;
+
     public $propertyTypes;
     public $bhks;
     public $floorings;
@@ -41,13 +44,17 @@ class CreateProperty extends Component
     public $is_promoted;
     public $available_from;
 
-    public function mount()
+    public function mount($audit_id)
     {
+        $this->audit_id = $audit_id;
         $this->propertyTypes = PropertyType::all();
         $this->bhks = Bhk::all();
         $this->floorings = Flooring::all();
         $this->furnishings = Furnishing::all();
         $this->localities = Locality::all();
+
+        // Set default values
+        $this->available_from = now()->format('Y-m-d');
     }
 
     protected function rules()
@@ -74,6 +81,8 @@ class CreateProperty extends Component
             'booking_amount' => 'required|integer',
             'is_promoted' => 'required|boolean',
             'available_from' => 'required|date',
+
+            'audit_id' => 'nullable|integer|exists:audits,id'
         ];
     }
 
@@ -91,6 +100,8 @@ class CreateProperty extends Component
     public function store()
     {
         $this->validate();
+
+        $user = auth()->user();
 
         $property = Property::create([
             'code' => $this->code,
@@ -114,10 +125,18 @@ class CreateProperty extends Component
             'bookingAmount' => $this->booking_amount,
             'is_promoted' => $this->is_promoted,
             'available_from' => $this->available_from,
+            'created_by' => $user->id,
         ]);
 
+        // Attach audit to property
+        if($this->audit_id) {
+            Audit::find($this->audit_id)->update([
+                'property_id' => $property->id
+            ]);
+        }
+
         // Redirect to edit page
-        return redirect()->route('property.edit', $property);
+        return redirect()->route('property.show', $property);
     }
 
     public function render()

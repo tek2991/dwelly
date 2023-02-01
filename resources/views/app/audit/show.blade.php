@@ -27,9 +27,10 @@
             </div>
         </div>
     </div>
+    
+    <livewire:audit.assign-audit :audit="$audit" />
 
     <livewire:audit.complete-audit :audit="$audit" />
 
-    <livewire:audit.assign-audit :audit="$audit" />
 
 </x-app-layout>

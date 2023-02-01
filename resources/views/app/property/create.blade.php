@@ -6,5 +6,5 @@
     </x-slot>
 
     {{-- Create Property --}}
-    @livewire('property.create-property')
+    @livewire('property.create-property' , ['audit_id' => $audit_id])
 </x-app-layout>

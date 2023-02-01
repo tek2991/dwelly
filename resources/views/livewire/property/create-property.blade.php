@@ -2,6 +2,12 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
             <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Property Details</h2>
+            @if ($audit_id)
+                <p class="text-sm font-semibold text-gray-600 mb-4">Audit ID: {{ $audit_id }}</p>
+                @error('audit_id')
+                    <label for="code" class="text-xs text-red-700 block">{{ $message }}</label>
+                @enderror
+            @endif
             <form wire:submit.prevent="store">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {{-- Property code --}}
@@ -19,6 +25,7 @@
                             <label for="is_available" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="is_available" wire:model="is_available">
+                            <option value="" selected>Select</option>
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </x-input-select>
@@ -26,10 +33,11 @@
                     {{-- Bhk --}}
                     <div>
                         <x-jet-label for="bhk_id" :value="__('BHK')" />
-                        @error('bhk')
+                        @error('bhk_id')
                             <label for="bhk_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="bhk_id" wire:model="bhk_id">
+                            <option value="" selected>Select</option>
                             @foreach ($bhks as $bhk)
                                 <option value="{{ $bhk->id }}">{{ $bhk->name }}</option>
                             @endforeach
@@ -39,10 +47,11 @@
                     {{-- Property Type --}}
                     <div>
                         <x-jet-label for="property_type_id" :value="__('Property Type')" />
-                        @error('property_type')
+                        @error('property_type_id')
                             <label for="property_type_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="property_type_id" wire:model="property_type_id">
+                            <option value="" selected>Select</option>
                             @foreach ($propertyTypes as $propertyType)
                                 <option value="{{ $propertyType->id }}">{{ $propertyType->name }}</option>
                             @endforeach
@@ -64,10 +73,11 @@
                     {{-- Flooring --}}
                     <div>
                         <x-jet-label for="flooring_id" :value="__('Flooring')" />
-                        @error('flooring')
+                        @error('flooring_id')
                             <label for="flooring_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="flooring_id" wire:model="flooring_id">
+                            <option value="" selected>Select</option>
                             @foreach ($floorings as $flooring)
                                 <option value="{{ $flooring->id }}">{{ $flooring->name }}</option>
                             @endforeach
@@ -78,10 +88,11 @@
                     {{-- Furnishing --}}
                     <div>
                         <x-jet-label for="furnishing_id" :value="__('Furnishing')" />
-                        @error('furnishing')
+                        @error('furnishing_id')
                             <label for="furnishing_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="furnishing_id" wire:model="furnishing_id">
+                            <option value="" selected>Select</option>
                             @foreach ($furnishings as $furnishing)
                                 <option value="{{ $furnishing->id }}">{{ $furnishing->name }}</option>
                             @endforeach
@@ -96,8 +107,7 @@
                         @error('floors')
                             <label for="floors" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="floors" class="block mt-1 w-full" type="text"
-                            wire:model="floors" />
+                        <x-jet-input id="floors" class="block mt-1 w-full" type="text" wire:model="floors" />
                     </div>
 
 
@@ -118,8 +128,7 @@
                         @error('address')
                             <label for="address" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-textarea id="address" class="block mt-1 w-full" type="text"
-                            wire:model="address" />
+                        <x-textarea id="address" class="block mt-1 w-full" type="text" wire:model="address" />
                     </div>
 
 
@@ -140,18 +149,18 @@
                         @error('landmark')
                             <label for="landmark" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="landmark" class="block mt-1 w-full" type="text"
-                            wire:model="landmark" />
+                        <x-jet-input id="landmark" class="block mt-1 w-full" type="text" wire:model="landmark" />
                     </div>
 
 
                     {{-- Locality --}}
                     <div>
                         <x-jet-label for="locality_id" :value="__('Locality')" />
-                        @error('locality')
+                        @error('locality_id')
                             <label for="locality_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="locality_id" wire:model="locality_id">
+                            <option value="" selected>Select</option>
                             @foreach ($localities as $locality)
                                 <option value="{{ $locality->id }}">{{ $locality->name }}</option>
                             @endforeach
@@ -165,8 +174,7 @@
                         @error('latitude')
                             <label for="latitude" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
-                            wire:model="latitude" />
+                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text" wire:model="latitude" />
                     </div>
 
 
@@ -194,8 +202,7 @@
                         @error('rent')
                             <label for="rent" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="rent" class="block mt-1 w-full" type="text"
-                            wire:model="rent" />
+                        <x-jet-input id="rent" class="block mt-1 w-full" type="text" wire:model="rent" />
                     </div>
 
 
@@ -239,6 +246,7 @@
                             <label for="is_promoted" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         <x-input-select id="is_promoted" wire:model="is_promoted">
+                            <option value="" selected>Select</option>
                             <option value="0">No</option>
                             <option value="1">Yes</option>
                         </x-input-select>
@@ -251,7 +259,7 @@
                         @error('available_from')
                             <label for="available_from" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="available_from" class="block mt-1 w-full" type="date"
+                        <x-jet-input id="available_from" class="block mt-1 w-full" type="date" required
                             wire:model="available_from" />
                     </div>
                 </div>

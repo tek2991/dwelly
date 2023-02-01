@@ -23,9 +23,10 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('app.property.create');
+        $audit_id = $request->query('audit_id') ?? null;
+        return view('app.property.create', compact('audit_id'));
     }
 
     /**
