@@ -25,7 +25,7 @@
                 </div>
                 @if ($assign_or_create == 2)
                     <div>
-                        <x-jet-label for="property_id" :value="__('Secondary Furniture')" />
+                        <x-jet-label for="property_id" :value="__('Property')" />
                         @error('property_id')
                             <label for="property_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
