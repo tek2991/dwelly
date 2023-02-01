@@ -8,7 +8,10 @@ class AssignAudit extends Component
 {
     public $audit;
     public $properties;
-    public $editable;
+
+    public $editable = false;
+    public $editing = false;
+    public $updated = false;
 
     public $assign_or_create = 1;
     public $property_id;
@@ -19,10 +22,10 @@ class AssignAudit extends Component
     {
         $this->audit = $audit;
         $this->properties = \App\Models\Property::all();
-        
+
         $this->property_id = $this->audit->property_id ?? null;
         $this->assign_or_create = $this->property_id ? 2 : 1;
-        
+
         $this->editable = $this->audit->completed === false;
     }
 
@@ -38,7 +41,7 @@ class AssignAudit extends Component
     {
         $this->validate();
 
-        if($this->assign_or_create === 1) {
+        if ($this->assign_or_create === 1) {
             $this->audit->update([
                 'property_id' => null,
             ]);
@@ -49,9 +52,25 @@ class AssignAudit extends Component
             $this->audit->update([
                 'property_id' => $this->property_id,
             ]);
+            $this->updated = true;
+            $this->editing = false;
         }
     }
 
+    public function cancel()
+    {
+        $this->editing = false;
+    }
+
+    public function edit()
+    {
+        if ($this->editable) {
+            $this->editing = true;
+            $this->updated = false;
+        } else {
+            $this->err = 'You cannot edit this audit';
+        }
+    }
 
     public function render()
     {
