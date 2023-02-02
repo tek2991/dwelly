@@ -48,12 +48,12 @@ class PropertyRooms extends Component
     public function update()
     {
         // Remove all the Rooms from the property
-        $this->property->Rooms()->detach();
+        $this->property->rooms()->detach();
 
         // Loop through the Rooms and add them with the quantity
         foreach ($this->rooms as $room) {
             if ($room['quantity']) {
-                $this->property->Rooms()->attach($room['id'], ['quantity' => $room['quantity']]);
+                $this->property->rooms()->attach($room['id'], ['quantity' => $room['quantity']]);
             }
         }
 

@@ -129,10 +129,38 @@ class CreateProperty extends Component
         ]);
 
         // Attach audit to property
-        if($this->audit_id) {
-            Audit::find($this->audit_id)->update([
+        if ($this->audit_id) {
+            $audit = Audit::find($this->audit_id);
+            $audit->update([
                 'property_id' => $property->id
             ]);
+
+            $checklists = $audit->checklists()->where('is_primary', true)->get();
+
+            $model_relation_names = [
+               'App\Models\Furniture' => 'furniture',
+                'App\Models\Room' => 'rooms',
+            ];
+
+            foreach ($checklists as $checklist) {
+                $relation = $model_relation_names[$checklist->checklistable_type];
+                $quantity = 1;
+
+                // Check if the property has the checklistable
+                if ($property->$relation()->where('id', $checklist->checklistable_id)->exists()) {
+                    $quantity = $property->$relation()->where('id', $checklist->checklistable_id)->first()->pivot->quantity + 1;
+
+                    // Update the quantity
+                    $property->$relation()->updateExistingPivot($checklist->checklistable_id, [
+                        'quantity' => $quantity
+                    ]);
+                }else{
+                    // Attach the checklistable to the property
+                    $property->$relation()->attach($checklist->checklistable_id, [
+                        'quantity' => $quantity
+                    ]);
+                }
+            }
         }
 
         // Redirect to edit page

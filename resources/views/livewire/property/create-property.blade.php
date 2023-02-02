@@ -1,13 +1,20 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-            <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Property Details</h2>
-            @if ($audit_id)
-                <p class="text-sm font-semibold text-gray-600 mb-4">Audit ID: {{ $audit_id }}</p>
-                @error('audit_id')
-                    <label for="code" class="text-xs text-red-700 block">{{ $message }}</label>
-                @enderror
-            @endif
+            <div class="flex items-baseline">
+                <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Property Details</h2>
+                @if ($audit_id)
+                    <span class="text-xs ml-auto text-gray-500">
+                        <a href="{{ route('audit.show', $audit_id) }}" target="_blank"
+                            class="text-blue-500 hover:text-blue-700 hover:underline">
+                            View Audit
+                        </a>
+                    </span>
+                @endif
+            </div>
+            @error('audit_id')
+                <label for="code" class="text-xs text-red-700 block">{{ $message }}</label>
+            @enderror
             <form wire:submit.prevent="store">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {{-- Property code --}}
@@ -174,7 +181,8 @@
                         @error('latitude')
                             <label for="latitude" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text" wire:model="latitude" />
+                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
+                            wire:model="latitude" />
                     </div>
 
 
