@@ -41,7 +41,8 @@ class AssignAudit extends Component
     {
         $this->validate();
 
-        if ($this->assign_or_create === 1) {
+        
+        if ($this->assign_or_create == 1) {
             $this->audit->update([
                 'property_id' => null,
             ]);

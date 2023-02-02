@@ -13,6 +13,7 @@ use App\Models\PropertyType;
 
 class CreateProperty extends Component
 {
+    public $err;
     public $audit_id;
 
     public $propertyTypes;
@@ -99,9 +100,19 @@ class CreateProperty extends Component
 
     public function store()
     {
-        $this->validate();
-
+        
         $user = auth()->user();
+        
+        if($this->audit_id) {
+            $audit = Audit::find($this->audit_id);
+            if($audit->property_id) {
+                // throw validation error
+                $this->err = 'Property already exists for this audit';
+                return;
+            }
+        }
+
+        $this->validate();
 
         $property = Property::create([
             'code' => $this->code,
@@ -135,10 +146,10 @@ class CreateProperty extends Component
                 'property_id' => $property->id
             ]);
 
-            $checklists = $audit->checklists()->where('is_primary', true)->get();
+            $checklists = $audit->auditChecklists()->where('is_primary', true)->get();
 
             $model_relation_names = [
-               'App\Models\Furniture' => 'furniture',
+               'App\Models\Furniture' => 'furnitures',
                 'App\Models\Room' => 'rooms',
             ];
 

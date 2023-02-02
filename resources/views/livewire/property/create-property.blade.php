@@ -12,6 +12,13 @@
                     </span>
                 @endif
             </div>
+            @if ($err)
+                <div class="my-3">
+                    <label class="text-sm font-semibold text-red-700 block">
+                        {{ $err }}!
+                    </label>
+                </div>
+            @endif
             @error('audit_id')
                 <label for="code" class="text-xs text-red-700 block">{{ $message }}</label>
             @enderror
