@@ -29,10 +29,20 @@ class CompleteAudit extends Component
     {
         $this->validate();
 
+        if($this->audit->completed) {
+            $this->err = 'Audit already completed.';
+            return;
+        }
+
         $auditChecklists_completed = $this->audit->auditChecklists->pluck('completed')->all();
 
         if (in_array(false, $auditChecklists_completed)) {
             $this->err = 'Please complete all checklist items before completing the audit.';
+            return;
+        }
+
+        if(!$this->audit->property_id) {
+            $this->err = 'Please assign a property to the audit before completing it.';
             return;
         }
 

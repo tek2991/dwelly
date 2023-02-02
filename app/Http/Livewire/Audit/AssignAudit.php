@@ -26,7 +26,7 @@ class AssignAudit extends Component
         $this->property_id = $this->audit->property_id ?? null;
         $this->assign_or_create = $this->property_id ? 2 : 1;
 
-        $this->editable = $this->audit->completed === false;
+        $this->editable = $this->audit->completed == false && !$this->audit->property_id;
     }
 
     public function rules()

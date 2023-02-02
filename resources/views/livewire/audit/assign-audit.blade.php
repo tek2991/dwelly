@@ -63,7 +63,7 @@
                             </x-jet-button>
                         @else
                             <x-jet-button class="ml-4" disabled>
-                                {{ __('Audit Completed') }}
+                                {{ __('Saved') }}
                             </x-jet-button>
                         @endif
                     </div>
