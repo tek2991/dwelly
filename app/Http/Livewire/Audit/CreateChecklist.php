@@ -35,6 +35,7 @@ class CreateChecklist extends Component
     public $item_type_id;
     public $room_id;
     public $primary_furniture_id;
+    public $name;
     public $remarks;
 
     public $secondary_furnitures;
@@ -75,6 +76,7 @@ class CreateChecklist extends Component
                 })
             ],
             'room_id' => 'nullable|required_if:item_type_id,2|exists:rooms,id',
+            'name' => 'nullable|string|max:255',
             'remarks' => 'nullable|string|max:255',
         ];
     }
@@ -100,17 +102,31 @@ class CreateChecklist extends Component
             return;
         }
 
-        AuditChecklist::create([
+        $checklistable_id = null;
+        $is_primary = true;
+
+        if($this->item_type_id == 1) {
+            $checklistable_id = $this->primary_audit_checklist_id ? $this->secondary_furniture_id : $this->primary_furniture_id;
+        } else {
+            $checklistable_id = $this->room_id;
+        }
+
+        if ($this->primary_audit_checklist_id) {
+            $is_primary = false;
+        }
+
+        $checklist = AuditChecklist::create([
             'audit_id' => $this->audit_id,
-            'checklistable_id' => $this->item_type_id == 1 ? $this->secondary_furniture_id : $this->room_id,
+            'checklistable_id' => $checklistable_id,
             'checklistable_type' => $this->item_types_model[$this->item_type_id],
-            'is_primary' => false,
+            'is_primary' => $is_primary,
             'primary_audit_checklist_id' => $this->primary_audit_checklist_id,
+            'name' => $this->name,
             'remarks' => $this->remarks,
         ]);
 
-        // redirect to audit page
-        return redirect()->route('audit.show', $this->audit_id);
+        // redirect to checklist show
+        return redirect()->route('auditChecklist.show', [$checklist->id]);
     }
 
     public function render()

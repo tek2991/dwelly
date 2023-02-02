@@ -38,6 +38,7 @@ class ShowChecklist extends Component
     public $item_type_id;
     public $room_id;
     public $primary_furniture_id;
+    public $name;
     public $remarks;
 
     public $secondary_furniture_id;
@@ -62,14 +63,17 @@ class ShowChecklist extends Component
                 $this->secondary_furniture_id = $this->checklist->checklistable_id;
                 $this->secondary_furnitures = Furniture::where('primary_furniture_id', $this->primary_furniture_id)->get();
             }
-        }else{
+        } else {
             $this->room_id = $this->checklist->checklistable_id;
         }
+
+        $this->name = $this->checklist->name;
+
         $this->remarks = $this->checklist->remarks;
 
         $this->hasSecondary = $this->checklist->is_primary ? $this->checklist->secondaryAuditChecklists->count() > 0 : false;
 
-        $this->editable = $this->checklist->audit->completed ? false : true;
+        $this->editable = $this->checklist->audit->completed == false && $this->checklist->completed == false;
     }
 
     public function rules()
@@ -78,6 +82,7 @@ class ShowChecklist extends Component
             'item_type_id' => 'required|in:1,2',
             'primary_furniture_id' => 'nullable|required_if:item_type_id,1|exists:furniture,id',
             'room_id' => 'nullable|required_if:item_type_id,2|exists:rooms,id',
+            'name' => 'required|string|max:255',
             'remarks' => 'nullable|string|max:255',
         ];
     }
@@ -110,11 +115,23 @@ class ShowChecklist extends Component
         $this->checklist->update([
             'checklistable_type' => $this->item_types_model[$this->item_type_id],
             'checklistable_id' => $this->item_type_id == 1 ? $this->primary_furniture_id : $this->room_id,
+            'name' => $this->name,
             'remarks' => $this->remarks,
         ]);
 
         $this->editing = false;
         $this->saved = true;
+    }
+
+    // listeners
+    protected $listeners = [
+        'refreshAuditChecklistCompletion' => 'disable',
+    ];
+
+
+    public function disable()
+    {
+        $this->editable = false;
     }
 
     public function render()

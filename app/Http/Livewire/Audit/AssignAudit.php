@@ -72,6 +72,17 @@ class AssignAudit extends Component
         }
     }
 
+    // listeners
+    protected $listeners = [
+        'refreshAuditCompletion' => 'disable',
+    ];
+
+
+    public function disable()
+    {
+        $this->editable = false;
+    }
+
     public function render()
     {
         return view('livewire.audit.assign-audit');

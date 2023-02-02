@@ -19,6 +19,9 @@ return new class extends Migration
             $table->morphs('checklistable');
             $table->boolean('is_primary')->default(false);
             $table->foreignId('primary_audit_checklist_id')->nullable();
+            $table->string('name')->nullable();
+            $table->text('remarks')->nullable();
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }

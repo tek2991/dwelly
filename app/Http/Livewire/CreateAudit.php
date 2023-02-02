@@ -149,6 +149,47 @@ class CreateAudit extends Component
             'description' => $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y'),
         ]);
 
+        if($this->property_id){
+            $property = Property::find($this->property_id);
+
+            $property_rooms = $property->rooms;
+            $property_furnitures = $property->furnitures()->where('is_primary', true)->get();
+
+            // Create checklist items for rooms
+            foreach ($property_rooms as $room) {
+                $no_of_rooms = $room->pivot->quantity;
+
+                for ($i = 0; $i < $no_of_rooms; $i++) {
+                    AuditChecklist::create([
+                        'audit_id' => $audit->id,
+                        'checklistable_id' => $room->id,
+                        'checklistable_type' => 'App\Models\Room',
+                        'is_primary' => true,
+                        'primary_audit_checklist_id' => null,
+                        'name' => $room->name . ' ' . ($i + 1),
+                        'remarks' => 'N/A',
+                    ]);
+                }
+            }
+
+            // Create checklist items for furnitures
+            foreach ($property_furnitures as $furniture) {
+                $no_of_furnitures = $furniture->pivot->quantity;
+
+                for ($i = 0; $i < $no_of_furnitures; $i++) {
+                    AuditChecklist::create([
+                        'audit_id' => $audit->id,
+                        'checklistable_id' => $furniture->id,
+                        'checklistable_type' => 'App\Models\Furniture',
+                        'is_primary' => true,
+                        'primary_audit_checklist_id' => null,
+                        'name' => $furniture->name . ' ' . ($i + 1),
+                        'remarks' => 'N/A',
+                    ]);
+                }
+            }
+        }
+
         return redirect()->route('audit.show', $audit);
     }
 

@@ -70,6 +70,17 @@
                         </div>
                     @endif
 
+                    {{-- Name --}}
+                    <div class="md:col-span-3 md:grid md:grid-cols-3">
+                        <div>
+                            <x-jet-label for="name" :value="__('Name')" />
+                            @error('name')
+                                <label for="name" class="text-xs text-red-700 block">{{ $message }}</label>
+                            @enderror
+                            <x-jet-input id="name" class="block mt-1 w-full" type="text" wire:model="name" />
+                        </div>
+                    </div>
+
                     {{-- Remarks --}}
                     <div class="md:col-span-3">
                         <x-jet-label for="remarks" :value="__('Remarks')" />

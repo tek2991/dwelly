@@ -4,7 +4,7 @@
             <div class="flex justify-between pt-2 pb-4">
                 <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Uploads</h2>
                 <div>
-                    @if (!$auditChecklist->audit->completed)
+                    @if ($editable)
                         <x-jet-button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover"
                             data-dropdown-trigger="hover" type="button">Upload<svg class="w-4 h-4 ml-2" aria-hidden="true"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24"

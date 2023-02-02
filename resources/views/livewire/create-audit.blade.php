@@ -42,7 +42,7 @@
                     {{-- Tenant --}}
                     <div>
                         <x-jet-label for="tenant_id" :value="__('Tenant')" />
-                        @error('tenant')
+                        @error('tenant_id')
                             <label for="tenant_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
                         @if ($property_id &&

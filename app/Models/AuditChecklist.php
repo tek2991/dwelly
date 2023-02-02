@@ -13,6 +13,13 @@ class AuditChecklist extends Model
         'is_primary',
         'primary_audit_checklist_id',
         'remarks',
+        'name',
+        'completed',
+    ];
+
+    protected $casts = [
+        'is_primary' => 'boolean',
+        'completed' => 'boolean',
     ];
 
     public function audit()
