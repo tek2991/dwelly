@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             DocumentTypeSeeder::class,
             AuditTypeSeeder::class,
+            OnboardingStepSeeder::class,
         ]);
     }
 }
