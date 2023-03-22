@@ -8,17 +8,25 @@ class Onboarding extends Model
 {
     protected $fillable = [
         'property_id',
-        'onboarding_step_id',
+        'property',
+        'owner',
+        'amenities',
+        'rooms',
+        'furnitures',
         'completed',
+    ];
+
+    protected $casts = [
+        'property' => 'boolean',
+        'owner' => 'boolean',
+        'amenities' => 'boolean',
+        'rooms' => 'boolean',
+        'furnitures' => 'boolean',
+        'completed' => 'boolean',
     ];
 
     public function property()
     {
         return $this->belongsTo(Property::class);
-    }
-
-    public function onboardingStep()
-    {
-        return $this->belongsTo(OnboardingStep::class);
     }
 }

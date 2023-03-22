@@ -239,6 +239,11 @@ class Property extends Model
         return $this->audits()->where('audit_type_id', $propertyOnboardingTypeId)->exists();
     }
 
+    public function onboarding()
+    {
+        return $this->hasOne(Onboarding::class);
+    }
+
     /**
      * Set ammenities attributes indexable by Scout.
      *

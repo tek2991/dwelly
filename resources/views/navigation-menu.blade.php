@@ -46,6 +46,9 @@
                         <x-nav-dropdown-item :href="route('furniture.index')" :active="request()->routeIs('furniture.*')">
                             {{ __('Furnitures') }}
                         </x-nav-dropdown-item>
+                        <x-nav-dropdown-item :href="route('onboarding.index')" :active="request()->routeIs('onboarding.*')">
+                            {{ __('Onboarding') }}
+                        </x-nav-dropdown-item>
                     </x-nav-dropdown-wrapper>
                     {{-- Audits --}}
                     <x-nav-dropdown-button data-dropdown-toggle="audit_management_dropdownNavbar">

@@ -16,7 +16,11 @@ return new class extends Migration
         Schema::create('onboardings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('property_id')->constrained();
-            $table->foreignId('onboarding_step_id')->constrained();
+            $table->boolean('property')->default(false);
+            $table->boolean('owner')->default(false);
+            $table->boolean('amenities')->default(false);
+            $table->boolean('rooms')->default(false);
+            $table->boolean('furnitures')->default(false);
             $table->boolean('completed')->default(false);
             $table->timestamps();
         });

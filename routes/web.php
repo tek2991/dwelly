@@ -13,6 +13,7 @@ use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\AuditChecklistController;
 use App\Http\Controllers\Property\PropertyController;
 use App\Http\Controllers\NearbyEstablishmentController;
+use App\Http\Controllers\Property\OnboardingController;
 use App\Http\Controllers\Attributes\FurnitureController;
 
 /*
@@ -68,6 +69,11 @@ Route::middleware([
 
         // Property Routes
         Route::resource('property', PropertyController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
+        ]);
+
+        // Onboarding Routes
+        Route::resource('onboarding', OnboardingController::class)->only([
             'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
 

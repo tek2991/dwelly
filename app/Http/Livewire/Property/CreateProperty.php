@@ -9,12 +9,14 @@ use App\Models\Flooring;
 use App\Models\Locality;
 use App\Models\Property;
 use App\Models\Furnishing;
+use App\Models\Onboarding;
 use App\Models\PropertyType;
 
 class CreateProperty extends Component
 {
     public $err;
-    public $audit_id;
+    // public $audit_id;
+    public $onboarding_id;
 
     public $propertyTypes;
     public $bhks;
@@ -45,9 +47,9 @@ class CreateProperty extends Component
     public $is_promoted;
     public $available_from;
 
-    public function mount($audit_id)
+    public function mount($audit_id = null, $property_id = null)
     {
-        $this->audit_id = $audit_id;
+        // $this->audit_id = $audit_id;
         $this->propertyTypes = PropertyType::all();
         $this->bhks = Bhk::all();
         $this->floorings = Flooring::all();
@@ -56,6 +58,38 @@ class CreateProperty extends Component
 
         // Set default values
         $this->available_from = now()->format('Y-m-d');
+
+        // If property_id is passed, check if property exists and set values
+        if ($property_id) {
+            $property = Property::find($property_id);
+            if ($property) {
+                $this->code = $property->code;
+                $this->is_available = $property->is_available;
+                $this->bhk_id = $property->bhk_id;
+                $this->property_type_id = $property->property_type_id;
+                $this->floor_space = $property->floor_space;
+                $this->flooring_id = $property->flooring_id;
+                $this->furnishing_id = $property->furnishing_id;
+                $this->floors = $property->floors;
+                $this->total_floors = $property->total_floors;
+                $this->address = $property->address;
+                $this->building_name = $property->building_name;
+                $this->landmark = $property->landmark;
+                $this->locality_id = $property->locality_id;
+                $this->latitude = $property->latitude;
+                $this->longitude = $property->longitude;
+                $this->google_maps_link = 'https://www.google.com/maps/search/?api=1&query=' . $property->latitude . ',' . $property->longitude;
+                $this->rent = $property->rent;
+                $this->security_deposit = $property->security_deposit;
+                $this->society_fee = $property->society_fee;
+                $this->booking_amount = $property->booking_amount;
+                $this->is_promoted = $property->is_promoted;
+                $this->available_from = $property->available_from->format('Y-m-d');
+
+                // Load onboarding
+                $this->onboarding_id = $property->onboarding->id;
+            }
+        }
     }
 
     protected function rules()
@@ -97,23 +131,36 @@ class CreateProperty extends Component
         $this->validateOnly($propertyName);
     }
 
+    public function update(){
+        $property = Property::find($this->property_id);
+        $property->update([
+            'code' => $this->code,
+            'is_available' => $this->is_available,
+            'bhk_id' => $this->bhk_id,
+            'property_type_id' => $this->property_type_id,
+            'floor_space' => $this->floor_space,
+            'flooring_id' => $this->flooring_id,
+            'furnishing_id' => $this->furnishing_id,
+            'floors' => $this->floors,
+            'total_floors' => $this->total_floors,
+            'address' => $this->address,
+            'building_name' => $this->building_name,
+            'landmark' => $this->landmark,
+            'locality_id' => $this->locality_id,
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
+            'rent' => $this->rent,
+            'security_deposit' => $this->security_deposit,
+            'society_fee' => $this->society_fee,
+            'booking_amount' => $this->booking_amount,
+            'is_promoted' => $this->is_promoted,
+            'available_from' => $this->available_from,
+        ]);
+    }
 
-    public function store()
-    {
-        
+    public function create(){
         $user = auth()->user();
         
-        if($this->audit_id) {
-            $audit = Audit::find($this->audit_id);
-            if($audit->property_id) {
-                // throw validation error
-                $this->err = 'Property already exists for this audit';
-                return;
-            }
-        }
-
-        $this->validate();
-
         $property = Property::create([
             'code' => $this->code,
             'is_available' => $this->is_available,
@@ -139,43 +186,103 @@ class CreateProperty extends Component
             'created_by' => $user->id,
         ]);
 
-        // Attach audit to property
-        if ($this->audit_id) {
-            $audit = Audit::find($this->audit_id);
-            $audit->update([
-                'property_id' => $property->id
-            ]);
+        // Create onboarding
+        $onboarding = Onboarding::create([
+            'property_id' => $property->id,
+            'onboarding_step_id' => 1,
+            'property' => true,
+        ]);
 
-            $checklists = $audit->auditChecklists()->where('is_primary', true)->get();
+        $this->onboarding_id = $onboarding->id;
+    }
 
-            $model_relation_names = [
-               'App\Models\Furniture' => 'furnitures',
-                'App\Models\Room' => 'rooms',
-            ];
 
-            foreach ($checklists as $checklist) {
-                $relation = $model_relation_names[$checklist->checklistable_type];
-                $quantity = 1;
+    public function save()
+    {
+        
+        $user = auth()->user();
+        
+        // if($this->audit_id) {
+        //     $audit = Audit::find($this->audit_id);
+        //     if($audit->property_id) {
+        //         // throw validation error
+        //         $this->err = 'Property already exists for this audit';
+        //         return;
+        //     }
+        // }
 
-                // Check if the property has the checklistable
-                if ($property->$relation()->where('id', $checklist->checklistable_id)->exists()) {
-                    $quantity = $property->$relation()->where('id', $checklist->checklistable_id)->first()->pivot->quantity + 1;
+        $this->validate();
 
-                    // Update the quantity
-                    $property->$relation()->updateExistingPivot($checklist->checklistable_id, [
-                        'quantity' => $quantity
-                    ]);
-                }else{
-                    // Attach the checklistable to the property
-                    $property->$relation()->attach($checklist->checklistable_id, [
-                        'quantity' => $quantity
-                    ]);
-                }
-            }
+        if($this->property_id) {
+            $this->update();
+        } else {
+            $this->create();
         }
 
-        // Redirect to edit page
-        return redirect()->route('property.show', $property);
+
+
+        // $property = Property::create([
+        //     'code' => $this->code,
+        //     'is_available' => $this->is_available,
+        //     'bhk_id' => $this->bhk_id,
+        //     'property_type_id' => $this->property_type_id,
+        //     'floor_space' => $this->floor_space,
+        //     'flooring_id' => $this->flooring_id,
+        //     'furnishing_id' => $this->furnishing_id,
+        //     'floors' => $this->floors,
+        //     'total_floors' => $this->total_floors,
+        //     'address' => $this->address,
+        //     'building_name' => $this->building_name,
+        //     'landmark' => $this->landmark,
+        //     'locality_id' => $this->locality_id,
+        //     'latitude' => $this->latitude,
+        //     'longitude' => $this->longitude,
+        //     'rent' => $this->rent,
+        //     'securityDeposit' => $this->security_deposit,
+        //     'societyFee' => $this->society_fee,
+        //     'bookingAmount' => $this->booking_amount,
+        //     'is_promoted' => $this->is_promoted,
+        //     'available_from' => $this->available_from,
+        //     'created_by' => $user->id,
+        // ]);
+
+        // Attach audit to property
+        // if ($this->audit_id) {
+        //     $audit = Audit::find($this->audit_id);
+        //     $audit->update([
+        //         'property_id' => $property->id
+        //     ]);
+
+        //     $checklists = $audit->auditChecklists()->where('is_primary', true)->get();
+
+        //     $model_relation_names = [
+        //        'App\Models\Furniture' => 'furnitures',
+        //         'App\Models\Room' => 'rooms',
+        //     ];
+
+        //     foreach ($checklists as $checklist) {
+        //         $relation = $model_relation_names[$checklist->checklistable_type];
+        //         $quantity = 1;
+
+        //         // Check if the property has the checklistable
+        //         if ($property->$relation()->where('id', $checklist->checklistable_id)->exists()) {
+        //             $quantity = $property->$relation()->where('id', $checklist->checklistable_id)->first()->pivot->quantity + 1;
+
+        //             // Update the quantity
+        //             $property->$relation()->updateExistingPivot($checklist->checklistable_id, [
+        //                 'quantity' => $quantity
+        //             ]);
+        //         }else{
+        //             // Attach the checklistable to the property
+        //             $property->$relation()->attach($checklist->checklistable_id, [
+        //                 'quantity' => $quantity
+        //             ]);
+        //         }
+        //     }
+        // }
+
+        // Redirect to onboarding
+        return redirect()->route('onboarding.show', $this->onboarding_id);
     }
 
     public function render()
