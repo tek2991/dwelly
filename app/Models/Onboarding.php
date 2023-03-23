@@ -8,25 +8,25 @@ class Onboarding extends Model
 {
     protected $fillable = [
         'property_id',
-        'property',
-        'owner',
-        'amenities',
-        'rooms',
-        'furnitures',
+        'property_data',
+        'owner_data',
+        'amenities_data',
+        'rooms_data',
+        'furnitures_data',
         'completed',
     ];
 
     protected $casts = [
-        'property' => 'boolean',
-        'owner' => 'boolean',
-        'amenities' => 'boolean',
-        'rooms' => 'boolean',
-        'furnitures' => 'boolean',
+        'property_data' => 'boolean',
+        'owner_data' => 'boolean',
+        'amenities_data' => 'boolean',
+        'rooms_data' => 'boolean',
+        'furnitures_data' => 'boolean',
         'completed' => 'boolean',
     ];
 
     public function property()
     {
-        return $this->belongsTo(Property::class);
+        return $this->belongsTo(Property::class, 'property_id', 'id');
     }
 }

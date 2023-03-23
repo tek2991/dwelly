@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Property;
 
 use App\Http\Controllers\Controller;
 use App\Models\Onboarding;
+use App\Models\Property;
 use Illuminate\Http\Request;
 
 class OnboardingController extends Controller
@@ -16,6 +17,16 @@ class OnboardingController extends Controller
     public function index()
     {
         return view('app.onboarding.index');
+    }
+
+    public function property(Property $property)
+    {
+        return view('app.onboarding.property', compact('property'));
+    }
+
+    public function owner(Property $property)
+    {
+        return view('app.onboarding.owner', compact('property'));
     }
 
     /**
@@ -47,7 +58,7 @@ class OnboardingController extends Controller
      */
     public function show(Onboarding $onboarding)
     {
-        //
+        return view('app.onboarding.show', compact('onboarding'));
     }
 
     /**

@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('onboardings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('property_id')->constrained();
-            $table->boolean('property')->default(false);
-            $table->boolean('owner')->default(false);
-            $table->boolean('amenities')->default(false);
-            $table->boolean('rooms')->default(false);
-            $table->boolean('furnitures')->default(false);
-            $table->boolean('completed')->default(false);
+            $table->boolean('property_data')->default(false);
+            $table->boolean('owner_data')->default(false);
+            $table->boolean('amenities_data')->default(false);
+            $table->boolean('rooms_data')->default(false);
+            $table->boolean('furnitures_data')->default(false);
+            $table->boolean('completed_data')->default(false);
             $table->timestamps();
         });
     }

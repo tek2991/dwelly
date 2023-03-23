@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Property;
+namespace App\Http\Livewire\Onboarding;
 
 use App\Models\Bhk;
 use App\Models\Audit;
@@ -12,11 +12,12 @@ use App\Models\Furnishing;
 use App\Models\Onboarding;
 use App\Models\PropertyType;
 
-class CreateProperty extends Component
+class PropertyDetail extends Component
 {
     public $err;
     // public $audit_id;
     public $onboarding_id;
+    public $property_id;
 
     public $propertyTypes;
     public $bhks;
@@ -47,8 +48,10 @@ class CreateProperty extends Component
     public $is_promoted;
     public $available_from;
 
-    public function mount($audit_id = null, $property_id = null)
-    {
+    public function mount(
+        // $audit_id = null,
+        $property_id = null
+    ) {
         // $this->audit_id = $audit_id;
         $this->propertyTypes = PropertyType::all();
         $this->bhks = Bhk::all();
@@ -63,6 +66,8 @@ class CreateProperty extends Component
         if ($property_id) {
             $property = Property::find($property_id);
             if ($property) {
+                $this->property_id = $property->id;
+
                 $this->code = $property->code;
                 $this->is_available = $property->is_available;
                 $this->bhk_id = $property->bhk_id;
@@ -95,7 +100,21 @@ class CreateProperty extends Component
     protected function rules()
     {
         return [
-            'code' => 'required|string|max:255|unique:properties,code',
+            'code' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if ($this->property_id) {
+                        $property = Property::where('code', $value)->where('id', '!=', $this->property_id)->first();
+                    } else {
+                        $property = Property::where('code', $value)->first();
+                    }
+                    if ($property) {
+                        $fail('The code has already been taken.');
+                    }
+                },
+            ],
             'is_available' => 'required|boolean',
             'bhk_id' => 'required|integer',
             'property_type_id' => 'required|integer',
@@ -117,7 +136,7 @@ class CreateProperty extends Component
             'is_promoted' => 'required|boolean',
             'available_from' => 'required|date',
 
-            'audit_id' => 'nullable|integer|exists:audits,id'
+            // 'audit_id' => 'nullable|integer|exists:audits,id'
         ];
     }
 
@@ -131,7 +150,8 @@ class CreateProperty extends Component
         $this->validateOnly($propertyName);
     }
 
-    public function update(){
+    public function update()
+    {
         $property = Property::find($this->property_id);
         $property->update([
             'code' => $this->code,
@@ -158,9 +178,10 @@ class CreateProperty extends Component
         ]);
     }
 
-    public function create(){
+    public function create()
+    {
         $user = auth()->user();
-        
+
         $property = Property::create([
             'code' => $this->code,
             'is_available' => $this->is_available,
@@ -190,7 +211,7 @@ class CreateProperty extends Component
         $onboarding = Onboarding::create([
             'property_id' => $property->id,
             'onboarding_step_id' => 1,
-            'property' => true,
+            'property_data' => true,
         ]);
 
         $this->onboarding_id = $onboarding->id;
@@ -199,9 +220,9 @@ class CreateProperty extends Component
 
     public function save()
     {
-        
+
         $user = auth()->user();
-        
+
         // if($this->audit_id) {
         //     $audit = Audit::find($this->audit_id);
         //     if($audit->property_id) {
@@ -213,7 +234,7 @@ class CreateProperty extends Component
 
         $this->validate();
 
-        if($this->property_id) {
+        if ($this->property_id) {
             $this->update();
         } else {
             $this->create();
@@ -287,6 +308,6 @@ class CreateProperty extends Component
 
     public function render()
     {
-        return view('livewire.property.create-property');
+        return view('livewire.onboarding.property-detail');
     }
 }

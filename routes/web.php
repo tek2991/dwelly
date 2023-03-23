@@ -77,6 +77,9 @@ Route::middleware([
             'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
 
+        Route::get('onboarding/property/{property}', [OnboardingController::class, 'property'])->name('onboarding.property');
+        Route::get('onboarding/owner/{property}', [OnboardingController::class, 'owner'])->name('onboarding.owner');
+
         // Contact Routes
         Route::resource('contactForm', ContactController::class)->only([
             'index', 'show'

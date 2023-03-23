@@ -19,9 +19,9 @@
                     </label>
                 </div>
             @endif
-            @error('audit_id')
+            {{-- @error('audit_id')
                 <label for="code" class="text-xs text-red-700 block">{{ $message }}</label>
-            @enderror
+            @enderror --}}
             <form wire:submit.prevent="save">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {{-- Property code --}}
@@ -79,7 +79,7 @@
                         @error('floor_space')
                             <label for="floor_space" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="floor_space" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="floor_space" class="block mt-1 w-full" type="number"
                             wire:model="floor_space" />
                     </div>
 
@@ -121,7 +121,7 @@
                         @error('floors')
                             <label for="floors" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="floors" class="block mt-1 w-full" type="text" wire:model="floors" />
+                        <x-jet-input id="floors" class="block mt-1 w-full" type="number" wire:model="floors" />
                     </div>
 
 
@@ -131,7 +131,7 @@
                         @error('total_floors')
                             <label for="total_floors" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="total_floors" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="total_floors" class="block mt-1 w-full" type="number"
                             wire:model="total_floors" />
                     </div>
 
@@ -188,7 +188,7 @@
                         @error('latitude')
                             <label for="latitude" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="latitude" class="block mt-1 w-full" type="number"
                             wire:model="latitude" />
                     </div>
 
@@ -199,7 +199,7 @@
                         @error('longitude')
                             <label for="longitude" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="longitude" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="longitude" class="block mt-1 w-full" type="number"
                             wire:model="longitude" />
                     </div>
 
@@ -217,7 +217,7 @@
                         @error('rent')
                             <label for="rent" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="rent" class="block mt-1 w-full" type="text" wire:model="rent" />
+                        <x-jet-input id="rent" class="block mt-1 w-full" type="number" wire:model="rent" />
                     </div>
 
 
@@ -227,7 +227,7 @@
                         @error('security_deposit')
                             <label for="security_deposit" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="security_deposit" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="security_deposit" class="block mt-1 w-full" type="number"
                             wire:model="security_deposit" />
                     </div>
 
@@ -238,7 +238,7 @@
                         @error('society_fee')
                             <label for="society_fee" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="society_fee" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="society_fee" class="block mt-1 w-full" type="number"
                             wire:model="society_fee" />
                     </div>
 
@@ -249,7 +249,7 @@
                         @error('booking_amount')
                             <label for="booking_amount" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="booking_amount" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="booking_amount" class="block mt-1 w-full" type="number"
                             wire:model="booking_amount" />
                     </div>
 
