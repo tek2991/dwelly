@@ -77,10 +77,18 @@ Route::middleware([
             'index', 'show'
         ]);
 
+        // Onboarding Property Routes
         Route::get('onboarding/property/create', [OnboardingController::class, 'propertyCreate'])->name('onboarding.property.create');
         Route::get('onboarding/property/{property}/update', [OnboardingController::class, 'propertyUpdate'])->name('onboarding.property.update');
+        // Onboarding Property Routes
         Route::get('onboarding/owner/{property}/create', [OnboardingController::class, 'ownerCreate'])->name('onboarding.owner.create');
         Route::get('onboarding/owner/{property}/update', [OnboardingController::class, 'ownerUpdate'])->name('onboarding.owner.update');
+        // Onboarding Amenities Routes
+        Route::get('onboarding/amenities/{property}/update', [OnboardingController::class, 'amenitiesUpdate'])->name('onboarding.amenities.update');
+        // Onboarding Rooms Routes
+        Route::get('onboarding/rooms/{property}/update', [OnboardingController::class, 'roomsUpdate'])->name('onboarding.rooms.update');
+        // Onboarding Furnitures Routes
+        Route::get('onboarding/furnitures/{property}/update', [OnboardingController::class, 'furnituresUpdate'])->name('onboarding.furnitures.update');
 
         // Contact Routes
         Route::resource('contactForm', ContactController::class)->only([

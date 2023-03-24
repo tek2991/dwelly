@@ -37,6 +37,21 @@ class OnboardingController extends Controller
         return view('app.onboarding.owner-update', compact('property'));
     }
 
+    public function amenitiesUpdate(Property $property)
+    {
+        return view('app.onboarding.amenities-update', compact('property'));
+    }
+
+    public function roomsUpdate(Property $property)
+    {
+        return view('app.onboarding.rooms-update', compact('property'));
+    }
+
+    public function furnituresUpdate(Property $property)
+    {
+        return view('app.onboarding.furnitures-update', compact('property'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

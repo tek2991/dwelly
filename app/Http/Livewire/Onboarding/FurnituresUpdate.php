@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Http\Livewire\Property;
+namespace App\Http\Livewire\Onboarding;
 
 use Livewire\Component;
-use App\Models\Property;
 use App\Models\Furniture;
 
-class PropertyFurnitures extends Component
+class FurnituresUpdate extends Component
 {
-    public $editing = false;
-    public $updated = false;
     public $allFurnitures;
 
     public $furnitures = [];
 
-    public Property $property;
+    public $property;
+    public $onboarding_id;
 
-    public function mount(Property $property)
+    public function mount($property)
     {
         $this->property = $property;
+        $this->onboarding_id = $property->onboarding->id;
+
         $this->allFurnitures = Furniture::where('is_primary', true)->get();
 
         // Loop through all the Furnitures and check if the property has them
@@ -34,17 +34,6 @@ class PropertyFurnitures extends Component
             $this->furnitures[$furniture->id] = $item;
         }
     }
-    
-    public function edit()
-    {
-        $this->editing = true;
-        $this->updated = false;
-    }
-        
-    public function cancel()
-    {
-        $this->editing = false;
-    }
 
     public function update()
     {
@@ -57,13 +46,21 @@ class PropertyFurnitures extends Component
                 $this->property->Furnitures()->attach($furniture['id'], ['quantity' => $furniture['quantity']]);
             }
         }
+    }
 
-        $this->editing = false;
-        $this->updated = true;
+    public function save()
+    {
+        $this->update();
+
+        $this->property->onboarding->update([
+            'furnitures_data' => true,
+        ]);
+
+        return redirect()->route('onboarding.show', $this->onboarding_id);
     }
 
     public function render()
     {
-        return view('livewire.property.property-furnitures');
+        return view('livewire.onboarding.furnitures-update');
     }
 }
