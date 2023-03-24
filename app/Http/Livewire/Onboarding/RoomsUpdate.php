@@ -2,14 +2,15 @@
 
 namespace App\Http\Livewire\Onboarding;
 
+use App\Models\Room;
 use Livewire\Component;
 use App\Models\Furniture;
 
 class RoomsUpdate extends Component
 {
-    public $allFurnitures;
+    public $allRooms;
 
-    public $furnitures = [];
+    public $rooms = [];
 
     public $property;
     public $onboarding_id;
@@ -18,32 +19,31 @@ class RoomsUpdate extends Component
     {
         $this->property = $property;
         $this->onboarding_id = $property->onboarding->id;
-        $this->allFurnitures = Furniture::all();
+        $this->allRooms = Room::all();
 
-        // Loop through all the Furnitures and check if the property has them
-        foreach ($this->allFurnitures as $furniture) {
+        // Loop through all the Rooms and check if the property has them
+        foreach ($this->allRooms as $room) {
             // Create an item object
             $item = [
-                'id' => $furniture->id,
-                'name' => $furniture->name,
-                'quantity' => $this->property->Furnitures->contains($furniture->id) ? $property->furnitures->find($furniture->id)->pivot->quantity : 0,
+                'id' => $room->id,
+                'name' => $room->name,
+                'quantity' => $this->property->Rooms->contains($room->id) ? $property->rooms->find($room->id)->pivot->quantity : 0,
             ];
 
-            // Add the item to the furnitures array with the furniture id as the key
-            $this->furnitures[$furniture->id] = $item;
+            $this->rooms[] = $item;
         }
     }
-    
+
 
     public function update()
     {
-        // Remove all the Furnitures from the property
-        $this->property->Furnitures()->detach();
+        // Remove all the Rooms from the property
+        $this->property->rooms()->detach();
 
-        // Loop through the Furnitures and add them with the quantity
-        foreach ($this->furnitures as $furniture) {
-            if ($furniture['quantity']) {
-                $this->property->Furnitures()->attach($furniture['id'], ['quantity' => $furniture['quantity']]);
+        // Loop through the Rooms and add them with the quantity
+        foreach ($this->rooms as $room) {
+            if ($room['quantity']) {
+                $this->property->rooms()->attach($room['id'], ['quantity' => $room['quantity']]);
             }
         }
     }
