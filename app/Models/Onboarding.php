@@ -13,6 +13,7 @@ class Onboarding extends Model
         'amenities_data',
         'rooms_data',
         'furnitures_data',
+        'audit_id',
         'completed',
     ];
 
@@ -28,5 +29,28 @@ class Onboarding extends Model
     public function property()
     {
         return $this->belongsTo(Property::class, 'property_id', 'id');
+    }
+
+    public function audit()
+    {
+        return $this->belongsTo(Audit::class, 'audit_id', 'id');
+    }
+
+    public function auditCompleted()
+    {
+        if ($this->audit()->exists()) {
+            return $this->audit->completed;
+        }
+        return false;
+    }
+
+    public function canStartAudit()
+    {
+        return $this->property_data && $this->owner_data && $this->amenities_data && $this->rooms_data && $this->furnitures_data;
+    }
+
+    public function canBeCompleted()
+    {
+        return $this->canStartAudit() && $this->auditCompleted();
     }
 }
