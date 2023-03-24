@@ -19,14 +19,22 @@ class OnboardingController extends Controller
         return view('app.onboarding.index');
     }
 
-    public function property(Property $property)
+    public function propertyCreate()
     {
-        return view('app.onboarding.property', compact('property'));
+        return view('app.onboarding.property-create');
+    }
+    public function propertyUpdate(Property $property)
+    {
+        return view('app.onboarding.property-update', compact('property'));
     }
 
-    public function owner(Property $property)
+    public function ownerCreate(Property $property)
     {
-        return view('app.onboarding.owner', compact('property'));
+        return view('app.onboarding.owner-create', compact('property'));
+    }
+    public function ownerUpdate(Property $property)
+    {
+        return view('app.onboarding.owner-update', compact('property'));
     }
 
     /**
@@ -36,7 +44,7 @@ class OnboardingController extends Controller
      */
     public function create()
     {
-        return view('app.onboarding.create');
+        //
     }
 
     /**

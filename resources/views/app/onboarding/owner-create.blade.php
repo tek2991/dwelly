@@ -5,5 +5,5 @@
         </h2>
     </x-slot>
 
-    @livewire('onboarding.owner-detail' , ['property_id' => $property->id])
+    @livewire('onboarding.owner-create' , ['property' => $property])
 </x-app-layout>

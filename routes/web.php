@@ -41,7 +41,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
-])->group(function () { 
+])->group(function () {
     Route::get('/dashboard', function () {
         return view('app.dashboard');
     })->name('dashboard');
@@ -74,11 +74,13 @@ Route::middleware([
 
         // Onboarding Routes
         Route::resource('onboarding', OnboardingController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update'
+            'index', 'show'
         ]);
 
-        Route::get('onboarding/property/{property}', [OnboardingController::class, 'property'])->name('onboarding.property');
-        Route::get('onboarding/owner/{property}', [OnboardingController::class, 'owner'])->name('onboarding.owner');
+        Route::get('onboarding/property/create', [OnboardingController::class, 'propertyCreate'])->name('onboarding.property.create');
+        Route::get('onboarding/property/{property}/update', [OnboardingController::class, 'propertyUpdate'])->name('onboarding.property.update');
+        Route::get('onboarding/owner/{property}/create', [OnboardingController::class, 'ownerCreate'])->name('onboarding.owner.create');
+        Route::get('onboarding/owner/{property}/update', [OnboardingController::class, 'ownerUpdate'])->name('onboarding.owner.update');
 
         // Contact Routes
         Route::resource('contactForm', ContactController::class)->only([

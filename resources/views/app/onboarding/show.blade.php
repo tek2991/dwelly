@@ -19,7 +19,7 @@
                             Editing Locked!
                         @else
                             @if ($onboarding->property_data)
-                                <x-button-link href="{{ route('onboarding.property', $onboarding->property) }}">
+                                <x-button-link href="{{ route('onboarding.property.update', $onboarding->property) }}">
                                     {{ __('Edit') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@
                                     </svg>
                                 </x-button-link>
                             @else
-                                <x-button-link href="{{ route('onboarding.property', $onboarding->property) }}">
+                                <x-button-link href="{{ route('onboarding.property.create') }}">
                                     {{ __('Create') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -53,7 +53,7 @@
                             Editing Locked!
                         @else
                             @if ($onboarding->owner_data)
-                                <x-button-link href="{{ route('onboarding.owner', $onboarding->property) }}">
+                                <x-button-link href="{{ route('onboarding.owner.update', $onboarding->property) }}">
                                     {{ __('Edit') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +62,7 @@
                                     </svg>
                                 </x-button-link>
                             @else
-                                <x-button-link href="{{ route('onboarding.owner', $onboarding->property) }}">
+                                <x-button-link href="{{ route('onboarding.owner.create', $onboarding->property) }}">
                                     {{ __('Create') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
