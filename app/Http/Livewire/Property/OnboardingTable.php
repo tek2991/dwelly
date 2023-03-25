@@ -87,12 +87,24 @@ final class OnboardingTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('property_id')
-            ->addColumn('property')
-            ->addColumn('owner')
-            ->addColumn('amenities')
-            ->addColumn('rooms')
-            ->addColumn('furnitures')
+            ->addColumn('property_code', function (Onboarding $model) {
+                $link = route('property.show', $model->property_id);
+                return "<a href='{$link}' class='text-blue-600 hover:underline' >{$model->property->code}</a>";
+            })
+            ->addColumn('property_data')
+            ->addColumn('property_data_formatted', fn (Onboarding $model) => $model->property_data ? 'Completed' : 'Pending')
+            ->addColumn('owner_data')
+            ->addColumn('owner_data_formatted', fn (Onboarding $model) => $model->owner_data ? 'Completed' : 'Pending')
+            ->addColumn('amenities_data')
+            ->addColumn('amenities_data_formatted', fn (Onboarding $model) => $model->amenities_data ? 'Completed' : 'Pending')
+            ->addColumn('rooms_data')
+            ->addColumn('rooms_data_formatted', fn (Onboarding $model) => $model->rooms_data ? 'Completed' : 'Pending')
+            ->addColumn('furnitures_data')
+            ->addColumn('furnitures_data_formatted', fn (Onboarding $model) => $model->furnitures_data ? 'Completed' : 'Pending')
+            ->addColumn('audit_id')
+            ->addColumn('audit_formatted', fn (Onboarding $model) => $model->auditCompleted() ? 'Completed' : 'Pending')
             ->addColumn('completed')
+            ->addColumn('completed_formatted', fn (Onboarding $model) => $model->completed ? 'Completed' : 'Pending')
             ->addColumn('created_at_formatted', fn (Onboarding $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (Onboarding $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -114,39 +126,48 @@ final class OnboardingTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            // Column::make('ID', 'id')
+            //     ->makeInputRange(),
 
-            Column::make('PROPERTY ID', 'property_id')
-                ->makeInputRange(),
+            Column::make('PROPERTY CODE', 'property_code')
+                ->sortable(),
 
-            Column::make('PROPERTY', 'property')
-                ->toggleable(),
+            // Column::make('PROPERTY DATA', 'property_data_formatted')
+            //     ->sortable()
+            //     ->makeBooleanFilter(),
 
-            Column::make('OWNER', 'owner')
-                ->toggleable(),
+            // Column::make('OWNER DATA', 'owner_data_formatted')
+            //     ->sortable()
+            //     ->makeBooleanFilter(),
 
-            Column::make('AMENITIES', 'amenities')
-                ->toggleable(),
+            // Column::make('AMENITIES DATA', 'amenities_data_formatted')
+            //     ->sortable()
+            //     ->makeBooleanFilter(),
 
-            Column::make('ROOMS', 'rooms')
-                ->toggleable(),
+            // Column::make('ROOMS DATA', 'rooms_data_formatted')
+            //     ->sortable()
+            //     ->makeBooleanFilter(),
 
-            Column::make('FURNITURES', 'furnitures')
-                ->toggleable(),
+            // Column::make('FURNITURES DATA', 'furnitures_data_formatted')
+            //     ->sortable()
+            //     ->makeBooleanFilter(),
 
-            Column::make('COMPLETED', 'completed')
-                ->toggleable(),
+            // Column::make('AUDIT', 'audit_formatted')
+            //     ->sortable(),
+
+            Column::make('COMPLETED', 'completed_formatted')
+                ->sortable()
+                ->makeBooleanFilter(),
 
             Column::make('CREATED AT', 'created_at_formatted', 'created_at')
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
 
-            Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
+            // Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker(),
 
         ]
 ;
@@ -166,21 +187,22 @@ final class OnboardingTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('onboarding.edit', ['onboarding' => 'id']),
-
+        return [
+            Button::make('show', 'View')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+            ->target('')
+            ->route('onboarding.show', ['onboarding' => 'id']),
+            
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('onboarding.destroy', ['onboarding' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------

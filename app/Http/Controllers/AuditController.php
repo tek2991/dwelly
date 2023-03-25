@@ -44,7 +44,7 @@ class AuditController extends Controller
      * @param  \App\Models\Audit  $audit
      * @return \Illuminate\Http\Response
      */
-    public function show(Audit $audit)
+    public function show(Request $request, Audit $audit)
     {
         return view('app.audit.show', compact('audit'));
     }
