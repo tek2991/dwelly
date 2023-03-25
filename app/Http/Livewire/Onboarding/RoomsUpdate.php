@@ -14,6 +14,7 @@ class RoomsUpdate extends Component
 
     public $property;
     public $onboarding_id;
+    public $disabled;
 
     public function mount($property)
     {
@@ -32,6 +33,8 @@ class RoomsUpdate extends Component
 
             $this->rooms[] = $item;
         }
+
+        $this->disabled = $this->property->onboarding->audit()->exists();
     }
 
 

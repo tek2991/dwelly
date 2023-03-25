@@ -11,6 +11,7 @@ class AmenitiesUpdate extends Component
     public $amenities = [];
     public $property;
     public $onboarding_id;
+    public $disabled;
 
     public function mount($property)
     {
@@ -29,6 +30,8 @@ class AmenitiesUpdate extends Component
 
             $this->amenities[] = $item;
         }
+
+        $this->disabled = $this->property->onboarding->audit()->exists();
     }
 
     public function update()

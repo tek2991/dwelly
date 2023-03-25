@@ -18,6 +18,7 @@ class PropertyUpdate extends Component
     // public $audit_id;
     public $onboarding_id;
     public $property_id;
+    public $disabled;
 
     public $propertyTypes;
     public $bhks;
@@ -85,6 +86,7 @@ class PropertyUpdate extends Component
 
         // Load onboarding
         $this->onboarding_id = $property->onboarding->id;
+        $this->disabled = $property->onboarding->audit()->exists();
     }
 
     protected function rules()

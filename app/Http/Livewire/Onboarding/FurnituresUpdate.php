@@ -13,6 +13,7 @@ class FurnituresUpdate extends Component
 
     public $property;
     public $onboarding_id;
+    public $disabled;
 
     public function mount($property)
     {
@@ -33,6 +34,8 @@ class FurnituresUpdate extends Component
             // Add the item to the furnitures array with the furniture id as the key
             $this->furnitures[$furniture->id] = $item;
         }
+
+        $this->disabled = $this->property->onboarding->audit()->exists();
     }
 
     public function update()

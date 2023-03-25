@@ -11,6 +11,7 @@ class OwnerUpdate extends Component
     public $onboarding_id;
     public $owner;
     public $user;
+    public $disabled;
 
     public $name;
     public $email;
@@ -33,6 +34,7 @@ class OwnerUpdate extends Component
 
         $this->property = $property;
         $this->onboarding_id = $property->onboarding->id;
+        $this->disabled = $property->onboarding->audit()->exists();
 
         $this->user = $this->property->owner();
         $this->owner = Owner::where('user_id', $this->user->id)->where('property_id', $this->property->id)->first();
