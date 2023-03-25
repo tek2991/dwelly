@@ -21,7 +21,7 @@ return new class extends Migration
             $table->boolean('amenities_data')->default(false);
             $table->boolean('rooms_data')->default(false);
             $table->boolean('furnitures_data')->default(false);
-            $table->boolean('completed_data')->default(false);
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }

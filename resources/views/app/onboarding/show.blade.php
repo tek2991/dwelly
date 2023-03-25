@@ -5,10 +5,12 @@
                 {{ __('Property Onboarding') }}
             </h2>
 
-            <x-button-link href="{{ url()->previous() }}">
+            <x-button-link href="{{ route('onboarding.index') }}">
                 {{-- Back arrow svg --}}
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                    </path>
                 </svg>
                 <span>Back</span>
             </x-button-link>
@@ -26,7 +28,9 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->completed)
-                            View
+                            <a href="{{ route('onboarding.property.update', $onboarding->property) }}" class="text-blue-500 hover:underline"> 
+                                View
+                            </a>
                         @else
                             @if ($onboarding->property_data)
                                 <x-button-link href="{{ route('onboarding.property.update', $onboarding->property) }}">
@@ -60,7 +64,9 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->completed)
+                        <a href="{{ route('onboarding.owner.update', $onboarding->property) }}" class="text-blue-500 hover:underline"> 
                             View
+                        </a>
                         @else
                             @if ($onboarding->owner_data)
                                 <x-button-link href="{{ route('onboarding.owner.update', $onboarding->property) }}">
@@ -94,10 +100,13 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->completed)
+                        <a href="{{ route('onboarding.amenities.update', $onboarding->property) }}" class="text-blue-500 hover:underline"> 
                             View
+                        </a>
                         @else
                             @if ($onboarding->amenities_data)
-                                <x-button-link href="{{ route('onboarding.amenities.update', $onboarding->property) }}">
+                                <x-button-link
+                                    href="{{ route('onboarding.amenities.update', $onboarding->property) }}">
                                     {{ __('Edit') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +115,8 @@
                                     </svg>
                                 </x-button-link>
                             @else
-                                <x-button-link href="{{ route('onboarding.amenities.update', $onboarding->property) }}">
+                                <x-button-link
+                                    href="{{ route('onboarding.amenities.update', $onboarding->property) }}">
                                     {{ __('Create') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -128,7 +138,9 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->completed)
+                        <a href="{{ route('onboarding.rooms.update', $onboarding->property) }}" class="text-blue-500 hover:underline"> 
                             View
+                        </a>
                         @else
                             @if ($onboarding->rooms_data)
                                 <x-button-link href="{{ route('onboarding.rooms.update', $onboarding->property) }}">
@@ -142,8 +154,8 @@
                             @else
                                 <x-button-link href="{{ route('onboarding.rooms.update', $onboarding->property) }}">
                                     {{ __('Create') }}
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
@@ -162,22 +174,26 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->completed)
+                        <a href="{{ route('onboarding.furnitures.update', $onboarding->property) }}" class="text-blue-500 hover:underline"> 
                             View
+                        </a>
                         @else
                             @if ($onboarding->furnitures_data)
-                                <x-button-link href="{{ route('onboarding.furnitures.update', $onboarding->property) }}">
+                                <x-button-link
+                                    href="{{ route('onboarding.furnitures.update', $onboarding->property) }}">
                                     {{ __('Edit') }}
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </x-button-link>
                             @else
-                                <x-button-link href="{{ route('onboarding.furnitures.update', $onboarding->property) }}">
+                                <x-button-link
+                                    href="{{ route('onboarding.furnitures.update', $onboarding->property) }}">
                                     {{ __('Create') }}
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
@@ -196,27 +212,54 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->auditCompleted())
+                        <a href="{{ route('audit.show', $onboarding->audit_id) }}" class="text-blue-500 hover:underline"> 
                             View
+                        </a>
                         @else
                             @if ($onboarding->audit()->exists())
                                 <x-button-link href="{{ route('audit.show', $onboarding->audit_id) }}">
                                     {{ __('Continue') }}
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </x-button-link>
                             @else
-                                <button onclick='Livewire.emit("openModal", "onboarding.audit-confirm-modal", {{ json_encode(["property_id" => $onboarding->property->id]) }})' class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                <button
+                                    onclick='Livewire.emit("openModal", "onboarding.audit-confirm-modal", {{ json_encode(['property_id' => $onboarding->property->id]) }})'
+                                    class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
                                     {{ __('Continue') }}
-                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M9 5l7 7-7 7"></path>
                                     </svg>
                                 </button>
                             @endif
+                        @endif
+                    </div>
+                </div>
+
+                {{-- Complete Onboarding --}}
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-semibold">Complete Onboarding</h3>
+                        <p class="text-sm {{ $onboarding->completed ? 'text-green-500' : 'text-orange-700' }}">
+                            {{ $onboarding->completed ? 'Completed' : 'Pending' }}</p>
+                    </div>
+                    <div class="flex justify-end pt-6">
+                        @if (!$onboarding->completed)
+                            <button
+                                onclick='Livewire.emit("openModal", "onboarding.complete-onboarding-modal", {{ json_encode(['property_id' => $onboarding->property->id]) }})'
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+                                {{ __('Continue') }}
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
                         @endif
                     </div>
                 </div>
