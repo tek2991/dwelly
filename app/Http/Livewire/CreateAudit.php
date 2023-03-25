@@ -36,12 +36,12 @@ class CreateAudit extends Component
 
     public function mount()
     {
-        $this->auditTypes = AuditType::all();
+        $this->auditTypes = AuditType::where('name', '!=', 'Property Onboarding')->get(); // Exclude Property Onboarding
         $this->properties = Property::all();
 
         $audit_types = $this->auditTypes->pluck('id', 'name')->toArray();
 
-        $this->onboarding_audit_type_id = $audit_types['Property Onboarding'];
+        $this->onboarding_audit_type_id = AuditType::where('name', 'Property Onboarding')->first()->id; // Get Property Onboarding type id
         $this->deboarding_audit_type_id = $audit_types['Property De-boarding'];
         $this->move_in_audit_type_id = $audit_types['Move In'];
         $this->move_out_audit_type_id = $audit_types['Move Out'];
