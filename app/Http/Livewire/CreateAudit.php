@@ -34,6 +34,8 @@ class CreateAudit extends Component
 
     public $existing_audit = null;
 
+    public $description;
+
     public function mount()
     {
         $this->auditTypes = AuditType::where('name', '!=', 'Property Onboarding')->get(); // Exclude Property Onboarding
@@ -68,6 +70,14 @@ class CreateAudit extends Component
                         || $this->audit_type_id == $this->deboarding_audit_type_id;
                 }),
                 'exists:tenants,id',
+            ],
+            'description' => [
+                'nullable',
+                'string',
+                'max:2550',
+                Rule::requiredIf(function () {
+                    return $this->audit_type_id == $this->operational_audit_type_id;
+                }),
             ]
         ];
     }
@@ -97,6 +107,10 @@ class CreateAudit extends Component
             $this->tenant_id = null;
             $this->disable_submit = false;
             $this->err = null;
+
+            if($this->description == null) {
+                $this->description = $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y');
+            }
         }
 
         // If change in property_id reset tenant_id and tenants
@@ -146,7 +160,7 @@ class CreateAudit extends Component
             'tenant_id' => $this->tenant_id,
             'created_by' => auth()->user()->id,
             'completed' => false,
-            'description' => $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y'),
+            'description' => $this->description,
         ]);
 
         if($this->property_id){

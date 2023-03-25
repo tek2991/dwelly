@@ -61,6 +61,14 @@
                             </x-input-select>
                         @endif
                     </div>
+                    {{-- Description --}}
+                    <div class="md:col-span-3">
+                        <x-jet-label for="description" :value="__('Description')" />
+                        @error('description')
+                            <label for="description" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-jet-input id="description" class="block mt-1 w-full" type="text" wire:model="description" />
+                    </div>
                     {{-- Error Message --}}
                     @if ($err)
                         <div class="col-span-3">
