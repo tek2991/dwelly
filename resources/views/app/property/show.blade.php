@@ -114,7 +114,9 @@
                         <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">Nearby Establishments</h2>
                         <x-jet-button
                             onclick="Livewire.emit('openModal', 'property.attach-nearby-establishment-modal', {{ json_encode(['property_id' => $property->id]) }})"
-                            class="cursor-pointer">Add New</x-jet-button>
+                            class="cursor-pointer">
+                            Add New
+                        </x-jet-button>
                     </div>
                     <livewire:property.property-nearby-establishment-table property_id="{{ $property->id }}" />
                 </div>

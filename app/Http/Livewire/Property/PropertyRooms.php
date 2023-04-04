@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Property;
 use App\Models\Room;
 use Livewire\Component;
 use App\Models\Property;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyRooms extends Component
 {
@@ -36,6 +37,9 @@ class PropertyRooms extends Component
 
     public function edit()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->editing = true;
         $this->updated = false;
     }
@@ -47,6 +51,9 @@ class PropertyRooms extends Component
 
     public function update()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         // Remove all the Rooms from the property
         $this->property->rooms()->detach();
 

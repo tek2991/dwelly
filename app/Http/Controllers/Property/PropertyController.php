@@ -15,6 +15,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Property::class);
         return view('app.property.index');
     }
 
@@ -25,8 +26,8 @@ class PropertyController extends Controller
      */
     public function create(Request $request)
     {
-        $audit_id = $request->query('audit_id') ?? null;
-        return view('app.property.create', compact('audit_id'));
+        // $audit_id = $request->query('audit_id') ?? null;
+        // return view('app.property.create', compact('audit_id'));
     }
 
     /**
@@ -48,6 +49,8 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
+        $this->authorize('view', $property);
+
         $propertyTypes = \App\Models\PropertyType::all();
         $bhks = \App\Models\Bhk::all();
         $floorings = \App\Models\Flooring::all();

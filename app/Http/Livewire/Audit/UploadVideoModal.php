@@ -16,6 +16,7 @@ class UploadVideoModal extends ModalComponent
     public $property;
     public $video;
     public $remarks;
+    public $condition;
 
     public function mount($checklist_id)
     {
@@ -24,12 +25,18 @@ class UploadVideoModal extends ModalComponent
         $this->property = Property::find($this->auditChecklist->audit->property_id);
     }
 
-    public function saveVideo()
+    public function rules()
     {
-        $this->validate([
+        return [
             'video' => 'required|file|mimes:mp4,mov,ogg,qt,webm|max:10240', // 10MB Max
             'remarks' => 'nullable|string',
-        ]);
+            'condition' => 'required|boolean',
+        ];
+    }
+
+    public function saveVideo()
+    {
+        $this->validate();
 
         $uid = uniqid();
         $video_name = $this->property != null ? $this->property->code . '_' . $uid . '.' . $this->video->extension() : $uid . '.' . $this->video->extension();
@@ -40,6 +47,7 @@ class UploadVideoModal extends ModalComponent
             'file_type' => 'video',
             'file_path' => $file_path,
             'remarks' => $this->remarks,
+            'condition' => $this->condition,
         ]);
 
         $this->emit('refreshAuditUploads');

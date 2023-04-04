@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Property;
 use Livewire\Component;
 use App\Models\Property;
 use App\Models\Furniture;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyFurnitures extends Component
 {
@@ -37,6 +38,9 @@ class PropertyFurnitures extends Component
     
     public function edit()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->editing = true;
         $this->updated = false;
     }
@@ -48,6 +52,9 @@ class PropertyFurnitures extends Component
 
     public function update()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         // Remove all the Furnitures from the property
         $this->property->Furnitures()->detach();
 

@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Property;
 
-use App\Models\Document;
-use App\Models\DocumentType;
 use App\Models\Tenant;
+use App\Models\Document;
 use App\Models\Property;
+use App\Models\DocumentType;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 use LivewireUI\Modal\ModalComponent;
 
 class UploadTenantDocumentModal extends ModalComponent
@@ -35,6 +36,9 @@ class UploadTenantDocumentModal extends ModalComponent
 
     public function saveDocument()
     {
+        if (Auth::user()->cannot('update', $this->tenant)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->validate([
             'file' => 'max:4096', // 4MB Max
             'document_type_id' => 'required|exists:document_types,id',

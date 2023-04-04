@@ -163,7 +163,7 @@ class CreateAudit extends Component
             'description' => $this->description,
         ]);
 
-        if($this->property_id){
+        if($this->property_id && $this->audit_type_id != $this->operational_audit_type_id) {
             $property = Property::find($this->property_id);
 
             $property_rooms = $property->rooms;

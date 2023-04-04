@@ -16,6 +16,7 @@ class UploadImageModal extends ModalComponent
     public $property;
     public $image;
     public $remarks;
+    public $condition;
 
     public function mount($checklist_id)
     {
@@ -24,12 +25,18 @@ class UploadImageModal extends ModalComponent
         $this->property = Property::find($this->auditChecklist->audit->property_id);
     }
 
+    public function rules()
+    {
+        return [
+            'image' => 'required|image|max:2048', // 2MB Max
+            'remarks' => 'nullable|string',
+            'condition' => 'required|boolean',
+        ];
+    }
+
     public function saveImage()
     {
-        $this->validate([
-            'image' => 'image|max:2048', // 2MB Max
-            'remarks' => 'nullable|string',
-        ]);
+        $this->validate();
 
         $uid = uniqid();
         $image_name = $this->property != null ? $this->property->code . '_' . $uid . '.' . $this->image->extension() : $uid . '.' . $this->image->extension();
@@ -40,6 +47,7 @@ class UploadImageModal extends ModalComponent
             'file_type' => 'image',
             'file_path' => $file_path,
             'remarks' => $this->remarks,
+            'condition' => $this->condition,
         ]);
 
         $this->emit('refreshAuditUploads');

@@ -68,9 +68,7 @@ Route::middleware([
         });
 
         // Property Routes
-        Route::resource('property', PropertyController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update'
-        ]);
+        Route::resource('property', PropertyController::class)->only(['index', 'show']);
 
         // Onboarding Routes
         Route::resource('onboarding', OnboardingController::class)->only([

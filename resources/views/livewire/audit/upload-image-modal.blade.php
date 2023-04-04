@@ -20,7 +20,7 @@
             @endif
             <h3 class="my-2 font-normal text-right text-gray-700 dark:text-gray-900"> {{ $audit->audit_date }} </h3>
         </div>
-        <div wire:ignore class="mt-4">
+        <div class="mt-4">
             <form wire:submit.prevent="saveImage">
                 {{-- File pond  --}}
                 <x-filepond wire:model="image" allowImagePreview allowFileTypeValidation imagePreviewMaxHeight="200"
@@ -30,8 +30,19 @@
                     <p class="text-red-500 text-xs">{{ $message }}</p>
                 @enderror
                 <div class="my-4">
+                    <x-jet-label for="condition" value="{{ __('Condition') }}" />
+                    <x-input-select id="condition" class="block mt-1 w-full" wire:model="condition">
+                        <option value="">Select Condition</option>
+                        <option value="1">Good</option>
+                        <option value="0">Bad</option>
+                    </x-input-select>
+                    @error('condition')
+                        <p class="text-red-500 text-xs">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="my-4">
                     <x-jet-label for="remarks" value="{{ __('Remarks') }}" />
-                    <x-jet-input id="remarks" class="block mt-1 w-full" type="text" wire:model="remarks" />
+                    <x-textarea id="remarks" class="block mt-1 w-full" type="text" wire:model="remarks"></x-textarea>
                     @error('remarks')
                         <p class="text-red-500 text-xs">{{ $message }}</p>
                     @enderror

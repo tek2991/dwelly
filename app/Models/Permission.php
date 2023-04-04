@@ -8,20 +8,40 @@ class Permission extends \Spatie\Permission\Models\Permission
     public static function defaultPermissions()
     {
         return [
-            'view_users',
-            'add_users',
-            'edit_users',
-            'delete_users',
+            'view users',
+            'add users',
+            'edit users',
+            'delete users',
 
-            'view_roles',
-            'add_roles',
-            'edit_roles',
-            'delete_roles',
+            'view roles',
+            'add roles',
+            'edit roles',
+            'delete roles',
 
-            'view_properties',
-            'add_properties',
-            'edit_properties',
-            'delete_properties',
+            'view properties',
+            'add properties',
+            'edit properties',
+            'delete properties',
+
+            'view tenants',
+            'add tenants',
+            'edit tenants',
+            'delete tenants',
+
+            'view owners',
+            'add owners',
+            'edit owners',
+            'delete owners',
+
+            'view onboarding',
+            'add onboarding',
+            'edit onboarding',
+            'delete onboarding',
+
+            'view furnitures',
+            'add furnitures',
+            'edit furnitures',
+            'delete furnitures',
         ];
     }
 }

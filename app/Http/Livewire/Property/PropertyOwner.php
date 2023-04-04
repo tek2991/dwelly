@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Owner;
 use Livewire\Component;
 use App\Models\Property;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyOwner extends Component
 {
@@ -56,6 +57,9 @@ class PropertyOwner extends Component
 
     public function edit()
     {
+        if (Auth::user()->cannot('update', $this->owner)) {
+            abort(403, 'You are not authorized to edit owners data.');
+        }
         $this->editing = true;
         $this->updated = false;
     }
@@ -86,6 +90,9 @@ class PropertyOwner extends Component
 
     public function update()
     {
+        if (Auth::user()->cannot('update', $this->owner)) {
+            abort(403, 'You are not authorized to edit owners data.');
+        }
         $this->validate();
 
         $this->user->update([

@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Property;
 
+use App\Models\Property;
+use Illuminate\Support\Carbon;
 use App\Models\EstablishmentType;
 use App\Models\NearbyEstablishment;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
-use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
+use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
 final class PropertyNearbyEstablishmentTable extends PowerGridComponent
@@ -188,12 +190,15 @@ final class PropertyNearbyEstablishmentTable extends PowerGridComponent
     public function actionRules(): array
     {
        return [
-
-           //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($nearby-establishment) => $nearby-establishment->id === 1)
+                ->when(fn($nearby) => Auth::user()->cannot('update', $nearby->property))
+                ->hide(),
+
+            Rule::button('destroy')
+                ->when(fn($nearby) => Auth::user()->cannot('delete', $nearby->property))
                 ->hide(),
         ];
     }
     */
+    
 }

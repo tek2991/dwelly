@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire\Property;
 
-use LivewireUI\Modal\ModalComponent;
+use App\Models\Property;
 use App\Models\EstablishmentType;
 use App\Models\NearbyEstablishment;
-use App\Models\Property;
+use Illuminate\Support\Facades\Auth;
+use LivewireUI\Modal\ModalComponent;
 
 
 class AttachNearbyEstablishmentModal extends ModalComponent
@@ -37,6 +38,9 @@ class AttachNearbyEstablishmentModal extends ModalComponent
 
     public function save()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->validate();
         
         NearbyEstablishment::create([

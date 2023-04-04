@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Property;
 use App\Models\Property;
 use App\Models\EstablishmentType;
 use App\Models\NearbyEstablishment;
+use Illuminate\Support\Facades\Auth;
 use LivewireUI\Modal\ModalComponent;
 
 class EditNearbyEstablishmentModal extends ModalComponent
@@ -41,6 +42,9 @@ class EditNearbyEstablishmentModal extends ModalComponent
 
     public function update()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->validate();
         
         $this->nearby_establishment->update([

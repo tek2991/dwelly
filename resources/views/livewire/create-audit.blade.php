@@ -67,7 +67,7 @@
                         @error('description')
                             <label for="description" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="description" class="block mt-1 w-full" type="text" wire:model="description" />
+                        <x-textarea id="description" class="block mt-1 w-full" type="text" wire:model="description" ></x-textarea>
                     </div>
                     {{-- Error Message --}}
                     @if ($err)

@@ -15,6 +15,7 @@ class FurnitureController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Furniture::class);
         return view('app.attributes.furniture.index');
     }
 
@@ -25,6 +26,7 @@ class FurnitureController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Furniture::class);
         $primaryFurnitures = Furniture::where('is_primary', true)->get();
         return view('app.attributes.furniture.create', compact('primaryFurnitures'));
     }
@@ -37,6 +39,7 @@ class FurnitureController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Furniture::class);
         $validated = $request->validate([
             'name' => 'required|unique:furnitures,name',
             'icon_path' => 'nullable|image',
@@ -87,6 +90,7 @@ class FurnitureController extends Controller
      */
     public function edit(Furniture $furniture)
     {
+        $this->authorize('update', $furniture);
         $primaryFurnitures = Furniture::where('is_primary', true)->get();
         return view('app.attributes.furniture.edit', compact('furniture', 'primaryFurnitures'));
     }
@@ -100,6 +104,7 @@ class FurnitureController extends Controller
      */
     public function update(Request $request, Furniture $furniture)
     {
+        $this->authorize('update', $furniture);
         $validated = $request->validate([
             'name' => 'required|unique:furnitures,name,' . $furniture->id,
             'show' => 'required|boolean',

@@ -12,6 +12,11 @@ class Upload extends Model
         'uploadable_id',
         'uploadable_type',
         'remarks',
+        'condition',
+    ];
+
+    protected $casts = [
+        'condition' => 'boolean',
     ];
 
     public function uploadable()

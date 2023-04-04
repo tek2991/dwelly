@@ -17,6 +17,7 @@ class OwnerController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Owner::class);
         return view('app.owner.index');
     }
 
@@ -27,6 +28,7 @@ class OwnerController extends Controller
      */
     public function create(Property $property)
     {
+        $this->authorize('create', Owner::class);
         // Check if property has an owner
         if ($property->owner()) {
             return redirect()->route('property.show', $property)->dangerBanner('This property already has an owner.');
@@ -41,6 +43,7 @@ class OwnerController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', Owner::class);
         $validated = $request->validate([
             'property_id' => 'required|exists:properties,id',
             'name' => 'required|string|max:255',
@@ -100,6 +103,7 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
+        $this->authorize('view', $owner);
         return view('app.owner.show', compact('owner'));
     }
 

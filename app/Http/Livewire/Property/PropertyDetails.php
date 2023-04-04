@@ -8,6 +8,7 @@ use App\Models\Furnishing;
 use App\Models\Locality;
 use App\Models\Property;
 use App\Models\PropertyType;
+use Auth;
 use Livewire\Component;
 
 class PropertyDetails extends Component
@@ -79,7 +80,8 @@ class PropertyDetails extends Component
         $this->available_from = $property->available_from->format('Y-m-d');
     }
 
-    protected function rules(){
+    protected function rules()
+    {
         return [
             // Code is unique except for the current property
             'code' => 'required|string|max:255|unique:properties,code, ' . $this->property->id,
@@ -108,14 +110,19 @@ class PropertyDetails extends Component
 
     public function edit()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->editing = true;
         $this->updated = false;
     }
 
     public function update()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->validate();
-
         $this->property->update([
             'code' => $this->code,
             'is_available' => $this->is_available,
@@ -143,7 +150,7 @@ class PropertyDetails extends Component
         $this->editing = false;
         $this->updated = true;
     }
-    
+
     public function cancel()
     {
         $this->editing = false;

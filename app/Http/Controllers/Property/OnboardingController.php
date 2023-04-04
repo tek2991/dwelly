@@ -21,34 +21,41 @@ class OnboardingController extends Controller
 
     public function propertyCreate()
     {
+        $this->authorize('create', Property::class);
         return view('app.onboarding.property-create');
     }
     public function propertyUpdate(Property $property)
     {
+        $this->authorize('update', $property);
         return view('app.onboarding.property-update', compact('property'));
     }
 
     public function ownerCreate(Property $property)
     {
+        $this->authorize('update', $property);
         return view('app.onboarding.owner-create', compact('property'));
     }
     public function ownerUpdate(Property $property)
     {
+        $this->authorize('update', $property);
         return view('app.onboarding.owner-update', compact('property'));
     }
 
     public function amenitiesUpdate(Property $property)
     {
+        $this->authorize('update', $property);
         return view('app.onboarding.amenities-update', compact('property'));
     }
 
     public function roomsUpdate(Property $property)
     {
+        $this->authorize('update', $property);
         return view('app.onboarding.rooms-update', compact('property'));
     }
 
     public function furnituresUpdate(Property $property)
     {
+        $this->authorize('update', $property);
         return view('app.onboarding.furnitures-update', compact('property'));
     }
 
@@ -81,6 +88,7 @@ class OnboardingController extends Controller
      */
     public function show(Onboarding $onboarding)
     {
+        $this->authorize('view', Property::class);
         return view('app.onboarding.show', compact('onboarding'));
     }
 

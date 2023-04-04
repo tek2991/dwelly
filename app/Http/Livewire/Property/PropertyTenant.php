@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Tenant;
 use Livewire\Component;
 use App\Models\Property;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyTenant extends Component
 {
@@ -68,6 +69,9 @@ class PropertyTenant extends Component
 
     public function edit()
     {
+        if (Auth::user()->cannot('update', $this->tenant)) {
+            abort(403, 'You are not authorized to edit tenant.');
+        }
         $this->editing = true;
         $this->updated = false;
     }
@@ -99,6 +103,9 @@ class PropertyTenant extends Component
 
     public function update()
     {
+        if (Auth::user()->cannot('update', $this->tenant)) {
+            abort(403, 'You are not authorized to edit tenant.');
+        }
         $this->validate();
 
         $this->user->update([

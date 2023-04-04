@@ -7,6 +7,7 @@
                 clip-rule="evenodd"></path>
         </svg>
     </button>
+    @if (auth()->user()->can('update', $property))
     <div class="p-6 text-center">
         <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400"> Upload Property Image </h3>
         <div class="flex justify-between">
@@ -33,4 +34,11 @@
             </form>
         </div>
     </div>
+    @else
+    <div class="p-6 text-center">
+        <h3 class="my-2 text-lg font-normal text-gray-500 dark:text-gray-400">
+            You are not authorized to edit property data.
+        </h3>
+    </div>
+    @endif
 </div>

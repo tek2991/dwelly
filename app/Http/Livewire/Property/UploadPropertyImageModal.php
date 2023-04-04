@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Property;
 use App\Models\Property;
 use App\Models\PropertyImage;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Auth;
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,6 +25,9 @@ class UploadPropertyImageModal extends ModalComponent
 
     public function saveImages()
     {
+        if (Auth::user()->cannot('update', $this->property)) {
+            abort(403, 'You are not authorized to edit property.');
+        }
         $this->validate([
             'uploads.*' => 'image|max:2048', // 2MB Max
         ]);
