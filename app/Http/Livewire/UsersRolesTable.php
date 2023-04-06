@@ -125,7 +125,8 @@ final class UsersRolesTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
             Column::make('Permissions', 'permissions')
-                ->searchable(),
+                ->searchable()
+                ->bodyAttribute('text-justify', 'white-space: normal !important;'),
         ];
     }
 

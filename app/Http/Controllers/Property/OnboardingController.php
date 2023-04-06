@@ -21,41 +21,47 @@ class OnboardingController extends Controller
 
     public function propertyCreate()
     {
-        $this->authorize('create', Property::class);
+        $this->authorize('create', Onboarding::class);
         return view('app.onboarding.property-create');
     }
     public function propertyUpdate(Property $property)
     {
-        $this->authorize('update', $property);
+        $onboarding = Onboarding::where('property_id', $property->id)->first();
+        $this->authorize('update', $onboarding);
         return view('app.onboarding.property-update', compact('property'));
     }
 
     public function ownerCreate(Property $property)
     {
-        $this->authorize('update', $property);
+        $onboarding = Onboarding::where('property_id', $property->id)->first();
+        $this->authorize('update', $onboarding);
         return view('app.onboarding.owner-create', compact('property'));
     }
     public function ownerUpdate(Property $property)
     {
-        $this->authorize('update', $property);
+        $onboarding = Onboarding::where('property_id', $property->id)->first();
+        $this->authorize('update', $onboarding);
         return view('app.onboarding.owner-update', compact('property'));
     }
 
     public function amenitiesUpdate(Property $property)
     {
-        $this->authorize('update', $property);
+        $onboarding = Onboarding::where('property_id', $property->id)->first();
+        $this->authorize('update', $onboarding);
         return view('app.onboarding.amenities-update', compact('property'));
     }
 
     public function roomsUpdate(Property $property)
     {
-        $this->authorize('update', $property);
+        $onboarding = Onboarding::where('property_id', $property->id)->first();
+        $this->authorize('update', $onboarding);
         return view('app.onboarding.rooms-update', compact('property'));
     }
 
     public function furnituresUpdate(Property $property)
     {
-        $this->authorize('update', $property);
+        $onboarding = Onboarding::where('property_id', $property->id)->first();
+        $this->authorize('update', $onboarding);
         return view('app.onboarding.furnitures-update', compact('property'));
     }
 
@@ -88,7 +94,7 @@ class OnboardingController extends Controller
      */
     public function show(Onboarding $onboarding)
     {
-        $this->authorize('view', Property::class);
+        $this->authorize('view', $onboarding);
         return view('app.onboarding.show', compact('onboarding'));
     }
 

@@ -115,7 +115,7 @@ Route::middleware([
 
         // Audit Routes
         Route::resource('audit', AuditController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update'
+            'index', 'show', 'create'
         ]);
 
         // Audit Checklists Routes
