@@ -15,6 +15,9 @@
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('task.index') }}" :active="request()->routeIs('task')">
+                        {{ __('Task') }}
+                    </x-jet-nav-link>
                     @hasrole('admin')
                         {{-- User Management --}}
                         <x-nav-dropdown-button data-dropdown-toggle="user_management_dropdownNavbar">

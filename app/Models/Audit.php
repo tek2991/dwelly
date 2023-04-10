@@ -45,7 +45,7 @@ class Audit extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
-    
+
 
     public function auditChecklists()
     {
@@ -55,5 +55,10 @@ class Audit extends Model
     public function auditMedias()
     {
         return $this->hasMany(AuditMedia::class);
+    }
+
+    public function task()
+    {
+        return $this->morphOne(Task::class, 'taskable');
     }
 }

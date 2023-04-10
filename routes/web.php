@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\OwnerController;
@@ -120,7 +121,12 @@ Route::middleware([
 
         // Audit Checklists Routes
         Route::resource('auditChecklist', AuditChecklistController::class)->only([
-            'index', 'show', 'create', 'store', 'edit', 'update'
+            'show', 'create'
+        ]);
+
+        // Task Routes
+        Route::resource('task', TaskController::class)->only([
+            'index', 'show', 'create'
         ]);
     });
 });

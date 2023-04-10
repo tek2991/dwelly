@@ -42,6 +42,11 @@ class Permission extends \Spatie\Permission\Models\Permission
             'add furnitures',
             'edit furnitures',
             'delete furnitures',
+
+            'view tasks',
+            'add tasks',
+            'edit tasks',
+            'delete tasks',
         ];
     }
 }

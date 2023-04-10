@@ -53,4 +53,9 @@ class Onboarding extends Model
     {
         return $this->canStartAudit() && $this->auditCompleted();
     }
+
+    public function task()
+    {
+        return $this->morphOne(Task::class, 'taskable');
+    }
 }
