@@ -10,15 +10,10 @@ class Task extends Model
         'description',
         'task_state_id',
         'priority_id',
-        'due_date',
         'assigned_to',
         'created_by',
         'taskable_id',
         'taskable_type',
-    ];
-
-    protected $casts = [
-        'due_date' => 'date',
     ];
 
     public function taskState()

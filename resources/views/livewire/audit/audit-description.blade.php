@@ -60,9 +60,8 @@
                     <x-jet-label for="description" :value="__('Description')" />
                     @if ($editing)
                         <x-textarea id="description" class="block mt-1 w-full" wire:model="description" />
-                    @else
-                        <x-textarea id="description" class="block mt-1 w-full" type="text" disabled
-                            value="{{ $audit->description }}" ></x-textarea>
+                        @else
+                        <x-textarea id="description" class="block mt-1 w-full" wire:model="description" disabled />
                     @endif
                 </div>
             </div>

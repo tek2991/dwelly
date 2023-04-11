@@ -5,8 +5,32 @@
             <form method="POST" wire:submit.prevent="store">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="">
+                        <x-jet-label for="assigned_to" :value="__('Assign Audit To')" />
+                        @error('assigned_to')
+                            <label for="assigned_to" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input-select id="assigned_to" wire:model="assigned_to">
+                            <option value="">Select User</option>
+                            @foreach ($usersWithPerms as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </x-input-select>
+                    </div>
+                    <div class="">
+                        <x-jet-label for="priority_id" :value="__('Task Priority')" />
+                        @error('priority_id')
+                            <label for="priority_id" class="text-xs text-red-700 block">{{ $message }}</label>
+                        @enderror
+                        <x-input-select id="priority_id" wire:model="priority_id">
+                            <option value="">Select Priority</option>
+                            @foreach ($priorities as $priority)
+                                <option value="{{ $priority->id }}">{{ $priority->name }}</option>
+                            @endforeach
+                        </x-input-select>
+                    </div>
                     {{-- Audit type --}}
-                    <div>
+                    <div class="col-start-1">
                         <x-jet-label for="audit_type_id" :value="__('Audit type')" />
                         @error('audit_type')
                             <label for="audit_type_id" class="text-xs text-red-700 block">{{ $message }}</label>

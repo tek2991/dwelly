@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('description');
             $table->foreignId('task_state_id')->constrained();
             $table->foreignId('priority_id')->constrained();
-            $table->date('due_date');
             $table->foreignId('assigned_to')->constrained('users');
             $table->foreignId('created_by')->constrained('users');
             $table->morphs('taskable');

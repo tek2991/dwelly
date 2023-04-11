@@ -47,6 +47,11 @@ class Permission extends \Spatie\Permission\Models\Permission
             'add tasks',
             'edit tasks',
             'delete tasks',
+
+            'view audits',
+            'add audits',
+            'edit audits',
+            'delete audits',
         ];
     }
 }

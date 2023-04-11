@@ -14,6 +14,7 @@ class AuditController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Audit::class);
         return view('app.audit.index');
     }
 
@@ -24,6 +25,7 @@ class AuditController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Audit::class);
         return view('app.audit.create');
     }
 
@@ -46,6 +48,7 @@ class AuditController extends Controller
      */
     public function show(Request $request, Audit $audit)
     {
+        $this->authorize('view', $audit);
         return view('app.audit.show', compact('audit'));
     }
 

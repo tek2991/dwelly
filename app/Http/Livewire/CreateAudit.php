@@ -2,13 +2,16 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Task;
+use App\Models\User;
 use App\Models\Audit;
-use App\Models\AuditChecklist;
 use App\Models\Tenant;
 use Livewire\Component;
+use App\Models\Priority;
 use App\Models\Property;
 use App\Models\AuditType;
 use App\Models\Furniture;
+use App\Models\AuditChecklist;
 use Illuminate\Validation\Rule;
 
 class CreateAudit extends Component
@@ -16,11 +19,15 @@ class CreateAudit extends Component
     public $properties;
     public $auditTypes;
     public $tenants;
+    public $priorities;
+    public $usersWithPerms = [];
 
     public $audit_type_id;
     public $audit_date;
     public $property_id;
     public $tenant_id;
+    public $assigned_to;
+    public $priority_id;
 
     public $onboarding_audit_type_id;
     public $deboarding_audit_type_id;
@@ -48,6 +55,9 @@ class CreateAudit extends Component
         $this->move_in_audit_type_id = $audit_types['Move In'];
         $this->move_out_audit_type_id = $audit_types['Move Out'];
         $this->operational_audit_type_id = $audit_types['Operational'];
+
+        $this->usersWithPerms = User::permission('add audits')->get();
+        $this->priorities = Priority::all();
     }
 
     public function rules()
@@ -71,6 +81,8 @@ class CreateAudit extends Component
                 }),
                 'exists:tenants,id',
             ],
+            'assigned_to' => 'required|exists:users,id',
+            'priority_id' => 'required|exists:priorities,id',
             'description' => [
                 'nullable',
                 'string',
@@ -78,7 +90,8 @@ class CreateAudit extends Component
                 Rule::requiredIf(function () {
                     return $this->audit_type_id == $this->operational_audit_type_id;
                 }),
-            ]
+            ],
+
         ];
     }
 
@@ -108,7 +121,7 @@ class CreateAudit extends Component
             $this->disable_submit = false;
             $this->err = null;
 
-            if($this->description == null) {
+            if ($this->description == null) {
                 $this->description = $this->auditTypes->where('id', $this->audit_type_id)->first()->name . ' Audit. Created on ' . now()->format('d/m/Y');
             }
         }
@@ -153,6 +166,7 @@ class CreateAudit extends Component
 
         $this->validate();
 
+
         $audit = Audit::create([
             'audit_type_id' => $this->audit_type_id,
             'audit_date' => $this->audit_date,
@@ -163,7 +177,18 @@ class CreateAudit extends Component
             'description' => $this->description,
         ]);
 
-        if($this->property_id && $this->audit_type_id != $this->operational_audit_type_id) {
+        // Create task
+        Task::create([
+            'description' => $this->description,
+            'task_state_id' => 1,
+            'priority_id' => $this->priority_id,
+            'assigned_to' => $this->assigned_to,
+            'created_by' => auth()->user()->id,
+            'taskable_id' => $audit->id,
+            'taskable_type' => 'App\Models\Audit',
+        ]);
+
+        if ($this->property_id && $this->audit_type_id != $this->operational_audit_type_id) {
             $property = Property::find($this->property_id);
 
             $property_rooms = $property->rooms;

@@ -126,7 +126,7 @@ Route::middleware([
 
         // Task Routes
         Route::resource('task', TaskController::class)->only([
-            'index', 'show', 'create'
+            'index', 'show'
         ]);
     });
 });

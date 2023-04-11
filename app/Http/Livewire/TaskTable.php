@@ -95,7 +95,6 @@ final class TaskTable extends PowerGridComponent
 
             ->addColumn('task_state_id')
             ->addColumn('priority_id')
-            ->addColumn('due_date_formatted', fn (Task $model) => Carbon::parse($model->due_date)->format('d/m/Y'))
             ->addColumn('assigned_to')
             ->addColumn('created_by')
             ->addColumn('taskable_id')
@@ -134,11 +133,6 @@ final class TaskTable extends PowerGridComponent
 
             Column::make('PRIORITY ID', 'priority_id')
                 ->makeInputRange(),
-
-            Column::make('DUE DATE', 'due_date_formatted', 'due_date')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
 
             Column::make('ASSIGNED TO', 'assigned_to')
                 ->makeInputRange(),
