@@ -3,17 +3,20 @@
 namespace App\Http\Livewire\Audit;
 
 use Livewire\Component;
+use App\Actions\Helpers\UpdateTaskState;
 
 class CompleteAudit extends Component
 {
     public $editable = false;
     public $audit;
+    public $task;
     public $confirm;
     public $err;
 
     public function mount($audit)
     {
         $this->audit = $audit;
+        $this->task = $audit->task;
         $this->confirm = $audit->completed;
         $this->editable = $this->audit->completed == false;
     }
@@ -50,11 +53,22 @@ class CompleteAudit extends Component
             'completed' => true,
         ]);
 
+        // update task state
+        $this->updateTaskState();
+
         // emit
         $this->emit('refreshAuditCompletion');
 
         $this->editable = false;
     }
+
+    public function updateTaskState()
+    {
+        $task = $this->task;
+        // Update the task state
+        UpdateTaskState::update($task, 3);
+    }
+
 
     public function render()
     {

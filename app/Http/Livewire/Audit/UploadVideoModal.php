@@ -6,6 +6,7 @@ use App\Models\Property;
 use Livewire\WithFileUploads;
 use App\Models\AuditChecklist;
 use LivewireUI\Modal\ModalComponent;
+use App\Actions\Helpers\UpdateTaskState;
 
 class UploadVideoModal extends ModalComponent
 {
@@ -50,8 +51,17 @@ class UploadVideoModal extends ModalComponent
             'condition' => $this->condition,
         ]);
 
+        $this->updateTaskState();
+
         $this->emit('refreshAuditUploads');
         $this->closeModal();
+    }
+    
+    public function updateTaskState()
+    {
+        $task = $this->audit->task;
+        // Update the task state
+        UpdateTaskState::update($task, 2);
     }
 
     public function render()

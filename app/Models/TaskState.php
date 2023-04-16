@@ -13,10 +13,10 @@ class TaskState extends Model
     public function defaultStates()
     {
         return [
-            'New',
+            'Created',
             'In Progress',
+            'Submitted',
             'Completed',
-            'Cancelled',
         ];
     }
 

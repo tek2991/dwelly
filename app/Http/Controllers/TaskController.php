@@ -25,8 +25,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Task::class);
-        return view('app.task.create');
+        //
     }
 
     /**
@@ -48,7 +47,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        $this->authorize('view', $task);
+        return view('app.task.show', compact('task'));
     }
 
     /**

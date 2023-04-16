@@ -13,6 +13,8 @@ final class TaskTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public string $primaryKey = 'tasks.id';
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -50,7 +52,18 @@ final class TaskTable extends PowerGridComponent
     */
     public function datasource(): Builder
     {
-        return Task::query();
+        return Task::query()
+            ->join('task_states', 'tasks.task_state_id', '=', 'task_states.id')
+            ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
+            ->join('users as assigned_to', 'tasks.assigned_to', '=', 'assigned_to.id')
+            ->join('users as created_by', 'tasks.created_by', '=', 'created_by.id')
+            ->select(
+                'tasks.*',
+                'task_states.name as task_state_name',
+                'priorities.name as priority_name',
+                'assigned_to.name as assigned_to_name',
+                'created_by.name as created_by_name',
+            );
     }
 
     /*
@@ -94,11 +107,16 @@ final class TaskTable extends PowerGridComponent
             })
 
             ->addColumn('task_state_id')
+            ->addColumn('task_state_name')
             ->addColumn('priority_id')
+            ->addColumn('priority_name')
             ->addColumn('assigned_to')
+            ->addColumn('assigned_to_name')
             ->addColumn('created_by')
+            ->addColumn('created_by_name')
             ->addColumn('taskable_id')
             ->addColumn('taskable_type')
+            ->addColumn('taskable_type_name', fn (Task $model) => $model->taskable_type === 'App\Models\Audit' ? 'Audit' : 'Onboarding')
             ->addColumn('created_at_formatted', fn (Task $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('updated_at_formatted', fn (Task $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
@@ -120,38 +138,63 @@ final class TaskTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
+            // Column::make('ID', 'id')
+            //     ->makeInputRange(),
 
             Column::make('DESCRIPTION', 'description')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
-            Column::make('TASK STATE ID', 'task_state_id')
-                ->makeInputRange(),
+            // Column::make('TASK STATE ID', 'task_state_id')
+            //     ->makeInputRange(),
 
-            Column::make('PRIORITY ID', 'priority_id')
-                ->makeInputRange(),
-
-            Column::make('ASSIGNED TO', 'assigned_to')
-                ->makeInputRange(),
-
-            Column::make('CREATED BY', 'created_by')
-                ->makeInputRange(),
-
-            Column::make('TASKABLE ID', 'taskable_id')
-                ->makeInputRange(),
-
-            Column::make('TASKABLE TYPE', 'taskable_type')
+            Column::make('TASK STATE', 'task_state_name')
                 ->sortable()
                 ->searchable()
                 ->makeInputText(),
 
-            Column::make('CREATED AT', 'created_at_formatted', 'created_at')
-                ->searchable()
+            // Column::make('PRIORITY ID', 'priority_id')
+            //     ->makeInputRange(),
+
+            Column::make('PRIORITY', 'priority_name')
                 ->sortable()
-                ->makeInputDatePicker(),
+                ->searchable()
+                ->makeInputText(),
+
+            // Column::make('ASSIGNED TO', 'assigned_to')
+            //     ->makeInputRange(),
+
+            Column::make('ASSIGNED TO', 'assigned_to_name')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
+
+            // Column::make('CREATED BY', 'created_by')
+            //     ->makeInputRange(),
+
+            Column::make('CREATED BY', 'created_by_name')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
+
+            // Column::make('TASKABLE ID', 'taskable_id')
+            //     ->makeInputRange(),
+
+            // Column::make('TASKABLE TYPE', 'taskable_type')
+            //     ->sortable()
+            //     ->searchable()
+            //     ->makeInputText(),
+
+            Column::make('TASKABLE TYPE', 'taskable_type_name')
+                ->sortable()
+                ->searchable()
+                ->makeInputText(),
+
+            // Column::make('CREATED AT', 'created_at_formatted', 'created_at')
+            //     ->searchable()
+            //     ->sortable()
+            //     ->makeInputDatePicker(),
 
             Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
                 ->searchable()
@@ -176,21 +219,22 @@ final class TaskTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('task.edit', ['task' => 'id']),
-
+        return [
+            Button::make('show', 'Show')
+            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+            ->route('task.show', ['task' => 'id'])
+            ->target(''),
+            
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('task.destroy', ['task' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------

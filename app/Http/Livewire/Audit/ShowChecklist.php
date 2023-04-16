@@ -2,11 +2,12 @@
 
 namespace App\Http\Livewire\Audit;
 
-use App\Models\AuditChecklist;
 use App\Models\Room;
 use Livewire\Component;
 use App\Models\Furniture;
+use App\Models\AuditChecklist;
 use Illuminate\Validation\Rule;
+use App\Actions\Helpers\UpdateTaskState;
 
 class ShowChecklist extends Component
 {
@@ -121,6 +122,15 @@ class ShowChecklist extends Component
 
         $this->editing = false;
         $this->saved = true;
+
+        $this->updateTaskState();
+    }
+
+    public function updateTaskState()
+    {
+        $task = $this->checklist->audit->task;
+        // Update the task state
+        UpdateTaskState::update($task, 2);
     }
 
     // listeners

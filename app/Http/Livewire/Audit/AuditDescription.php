@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Audit;
 
+use App\Actions\Helpers\UpdateTaskState;
 use App\Models\Audit;
 use Livewire\Component;
 use App\Models\AuditType;
@@ -59,6 +60,14 @@ class AuditDescription extends Component
 
         $this->editing = false;
         $this->updated = true;
+        $this->updateTaskState();
+    }
+
+    public function updateTaskState()
+    {
+        $task = $this->audit->task;
+        // Update the task state
+        UpdateTaskState::update($task, 2);
     }
 
     public function cancel()

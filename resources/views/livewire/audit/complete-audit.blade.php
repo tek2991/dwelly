@@ -18,6 +18,11 @@
                         <span class="ml-2">Confirm Audit Completion</span>
                     </label>
                 </div>
+                <div class="my-3">
+                    <label class="inline-flex items-center">
+                        <span class="">Task status: <b>{{ $task->taskState->name }}</b></span>
+                    </label>
+                </div>
                 <div class="flex justify-end mt-4">
                     <x-jet-button wire:click="complete" class="ml-4">
                         {{ __('Save') }}
@@ -28,6 +33,11 @@
                     <label class="inline-flex items-center">
                         <x-jet-checkbox wire:model="confirm" disabled />
                         <span class="ml-2">Confirm Audit Completion</span>
+                    </label>
+                </div>
+                <div class="my-3">
+                    <label class="inline-flex items-center">
+                        <span class="">Task status: <b>{{ $task->taskState->name }}</b></span>
                     </label>
                 </div>
                 <div class="flex justify-end mt-4">

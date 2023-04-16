@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Furniture;
 use App\Models\AuditChecklist;
 use Illuminate\Validation\Rule;
+use App\Actions\Helpers\UpdateTaskState;
 
 class CreateChecklist extends Component
 {
@@ -125,8 +126,18 @@ class CreateChecklist extends Component
             'remarks' => $this->remarks,
         ]);
 
+        // Update the task state
+        $this->updateTaskState();
+
         // redirect to checklist show
         return redirect()->route('auditChecklist.show', [$checklist->id]);
+    }
+
+    public function updateTaskState()
+    {
+        $task = Audit::find($this->audit_id)->task;
+        // Update the task state
+        UpdateTaskState::update($task, 2);
     }
 
     public function render()

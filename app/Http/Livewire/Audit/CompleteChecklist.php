@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Audit;
 
 use Livewire\Component;
+use App\Actions\Helpers\UpdateTaskState;
 
 class CompleteChecklist extends Component
 {
@@ -37,8 +38,18 @@ class CompleteChecklist extends Component
         $this->emit('refreshAuditChecklistCompletion');
         $this->editable = false;
 
+        // update task state
+        $this->updateTaskState();
+
         // redirect to audit show
         return redirect()->route('audit.show', $this->auditChecklist->audit->id);
+    }
+
+    public function updateTaskState()
+    {
+        $task = $this->auditChecklist->audit->task;
+        // Update the task state
+        UpdateTaskState::update($task, 2);
     }
 
     public function render()
