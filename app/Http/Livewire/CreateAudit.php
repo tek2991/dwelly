@@ -56,7 +56,7 @@ class CreateAudit extends Component
         $this->move_out_audit_type_id = $audit_types['Move Out'];
         $this->operational_audit_type_id = $audit_types['Operational'];
 
-        $this->usersWithPerms = User::permission('add audits')->get();
+        $this->usersWithPerms = User::permission('edit audit')->get();
         $this->priorities = Priority::all();
     }
 

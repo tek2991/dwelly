@@ -12,6 +12,7 @@ class ConfirmDetatchModal extends ModalComponent
     public $detatching_model_id;
     public $detatching_model_name;
     public $action;
+    public $message;
 
     public function mount($route, $model_id, $model_name, $action, $detatching_model_id, $detatching_model_name)
     {

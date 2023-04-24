@@ -17,6 +17,7 @@ class AuditDescription extends Component
     public $editable = false;
     public $editing = false;
     public $updated = false;
+    public $readonly = false;
 
     public $onboarding_audit_type_id;
     public $deboarding_audit_type_id;
@@ -25,7 +26,7 @@ class AuditDescription extends Component
     public $operational_audit_type_id;
     public $err = null;
 
-    public function mount(Audit $audit)
+    public function mount(Audit $audit, $readonly = false)
     {
         $this->audit = $audit;
         $this->auditTypes = AuditType::all();
@@ -40,7 +41,8 @@ class AuditDescription extends Component
         $this->move_out_audit_type_id = $audit_types['Move Out'];
         $this->operational_audit_type_id = $audit_types['Operational'];
 
-        $this->editable = $this->audit->completed === false && $this->audit->audit_type_id !== $this->operational_audit_type_id;
+        $this->readonly = $readonly;
+        $this->editable = $this->audit->completed === false && $this->audit->audit_type_id !== $this->operational_audit_type_id && $readonly != true;
     }
 
     protected function rules()

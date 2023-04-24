@@ -18,7 +18,7 @@ class PropertyPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view properties');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view property');
     }
 
     /**
@@ -30,7 +30,7 @@ class PropertyPolicy
      */
     public function view(User $user, Property $property)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view properties');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view property');
     }
 
     /**
@@ -41,7 +41,7 @@ class PropertyPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('add properties');
+        return $user->hasRole('admin') || $user->hasPermissionTo('add property');
     }
 
     /**
@@ -53,7 +53,7 @@ class PropertyPolicy
      */
     public function update(User $user, Property $property)
     {
-        // return $user->hasRole('admin') || $user->hasPermissionTo('edit properties');
+        // return $user->hasRole('admin') || $user->hasPermissionTo('edit property');
         return false;
     }
 
@@ -66,7 +66,7 @@ class PropertyPolicy
      */
     public function delete(User $user, Property $property)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('delete properties');
+        return $user->hasRole('admin') || $user->hasPermissionTo('delete property');
     }
 
     /**

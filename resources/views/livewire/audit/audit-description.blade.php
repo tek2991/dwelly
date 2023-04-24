@@ -5,11 +5,20 @@
                 <h2 class="text-xl font-regular pt-2 pb-4">
                     Audit Details
                 </h2>
-
+                
                 @if ($audit->completed)
                     <span class="ml-2 text-xs text-green-500">Completed</span>
                 @endif
+
             </div>
+            @if($readonly)
+                {{-- Link to audit --}}
+                <div class="my-3">
+                    <a href="{{ route('audit.show', $audit->id) }}" class="text-blue-500 hover:text-blue-700 hover:underline">
+                        View Audit
+                    </a>
+                </div>
+            @endif
             {{-- Error Message --}}
             @if ($err)
                 <div class="my-3">
@@ -60,38 +69,40 @@
                     <x-jet-label for="description" :value="__('Description')" />
                     @if ($editing)
                         <x-textarea id="description" class="block mt-1 w-full" wire:model="description" />
-                        @else
+                    @else
                         <x-textarea id="description" class="block mt-1 w-full" wire:model="description" disabled />
                     @endif
                 </div>
             </div>
-            @if ($editing === true)
-                <div class="flex justify-end mt-4">
-                    <x-jet-button wire:click="update" class="ml-4">
-                        {{ __('Update') }}
-                    </x-jet-button>
+            @if (!$readonly)
+                @if ($editing === true)
+                    <div class="flex justify-end mt-4">
+                        <x-jet-button wire:click="update" class="ml-4">
+                            {{ __('Update') }}
+                        </x-jet-button>
 
-                    <x-jet-button wire:click="cancel" class="ml-8 bg-red-500 hover:bg-red-600">
-                        {{ __('Cancel') }}
-                    </x-jet-button>
-                </div>
-            @else
-                <div class="flex justify-end mt-4">
-                    @if ($this->updated === true)
-                        <div class="text-sm text-gray-600 mt-3">
-                            {{ __('Saved.') }}
-                        </div>
-                    @endif
-                    @if ($editable)
-                        <x-jet-button wire:click="edit" class="ml-4">
-                            {{ __('Edit') }}
+                        <x-jet-button wire:click="cancel" class="ml-8 bg-red-500 hover:bg-red-600">
+                            {{ __('Cancel') }}
                         </x-jet-button>
-                    @else
-                        <x-jet-button class="ml-4" disabled>
-                            {{ __('Audit Completed') }}
-                        </x-jet-button>
-                    @endif
-                </div>
+                    </div>
+                @else
+                    <div class="flex justify-end mt-4">
+                        @if ($this->updated === true)
+                            <div class="text-sm text-gray-600 mt-3">
+                                {{ __('Saved.') }}
+                            </div>
+                        @endif
+                        @if ($editable)
+                            <x-jet-button wire:click="edit" class="ml-4">
+                                {{ __('Edit') }}
+                            </x-jet-button>
+                        @else
+                            <x-jet-button class="ml-4" disabled>
+                                {{ __('Audit Completed') }}
+                            </x-jet-button>
+                        @endif
+                    </div>
+                @endif
             @endif
         </div>
     </div>

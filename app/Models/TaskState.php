@@ -20,8 +20,14 @@ class TaskState extends Model
         ];
     }
 
+
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function completed()
+    {
+        return $this->name === 'Completed';
     }
 }

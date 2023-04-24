@@ -18,7 +18,7 @@ class TaskPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view tasks');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view task');
     }
 
     /**
@@ -30,7 +30,7 @@ class TaskPolicy
      */
     public function view(User $user, Task $task)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view tasks');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view task');
     }
 
     /**
@@ -41,7 +41,7 @@ class TaskPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('add tasks');
+        return $user->hasRole('admin') || $user->hasPermissionTo('add task');
     }
 
     /**
@@ -53,7 +53,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('edit tasks');
+        return $user->hasRole('admin') || $user->hasPermissionTo('edit task');
     }
 
     /**
@@ -65,7 +65,7 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('delete tasks');
+        return $user->hasRole('admin') || $user->hasPermissionTo('delete task');
     }
 
     /**

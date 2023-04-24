@@ -18,7 +18,7 @@ class OwnerPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view owners');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view owner');
     }
 
     /**
@@ -30,7 +30,7 @@ class OwnerPolicy
      */
     public function view(User $user, Owner $owner)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view owners');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view owner');
     }
 
     /**
@@ -41,7 +41,7 @@ class OwnerPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('add owners');
+        return $user->hasRole('admin') || $user->hasPermissionTo('add owner');
     }
 
     /**
@@ -53,7 +53,7 @@ class OwnerPolicy
      */
     public function update(User $user, Owner $owner)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('edit owners');
+        return $user->hasRole('admin') || $user->hasPermissionTo('edit owner');
     }
 
     /**
@@ -65,7 +65,7 @@ class OwnerPolicy
      */
     public function delete(User $user, Owner $owner)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('delete owners');
+        return $user->hasRole('admin') || $user->hasPermissionTo('delete owner');
     }
 
     /**

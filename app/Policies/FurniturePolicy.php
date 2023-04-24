@@ -18,7 +18,7 @@ class FurniturePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view furnitures');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view furniture');
     }
 
     /**
@@ -30,7 +30,7 @@ class FurniturePolicy
      */
     public function view(User $user, Furniture $furniture)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view furnitures');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view furniture');
     }
 
     /**
@@ -41,7 +41,7 @@ class FurniturePolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('add furnitures');
+        return $user->hasRole('admin') || $user->hasPermissionTo('add furniture');
     }
 
     /**
@@ -53,7 +53,7 @@ class FurniturePolicy
      */
     public function update(User $user, Furniture $furniture)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('edit furnitures');
+        return $user->hasRole('admin') || $user->hasPermissionTo('edit furniture');
     }
 
     /**
@@ -65,7 +65,7 @@ class FurniturePolicy
      */
     public function delete(User $user, Furniture $furniture)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('delete furnitures');
+        return $user->hasRole('admin') || $user->hasPermissionTo('delete furniture');
     }
 
     /**

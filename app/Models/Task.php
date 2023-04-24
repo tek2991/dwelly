@@ -40,4 +40,16 @@ class Task extends Model
     {
         return $this->morphTo();
     }
+
+    public function completed()
+    {
+        return $this->taskState->completed();
+    }
+
+    public function complete()
+    {
+        $completedStateId = TaskState::where('name', 'Completed')->first()->id;
+        $this->task_state_id = $completedStateId;
+        $this->save();
+    }
 }

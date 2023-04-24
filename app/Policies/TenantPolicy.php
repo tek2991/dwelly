@@ -18,7 +18,7 @@ class TenantPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view tenants');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view tenant');
     }
 
     /**
@@ -30,7 +30,7 @@ class TenantPolicy
      */
     public function view(User $user, Tenant $tenant)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view tenants');
+        return $user->hasRole('admin') || $user->hasPermissionTo('view tenant');
     }
 
     /**
@@ -41,7 +41,7 @@ class TenantPolicy
      */
     public function create(User $user)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('add tenants');
+        return $user->hasRole('admin') || $user->hasPermissionTo('add tenant');
     }
 
     /**
@@ -53,7 +53,7 @@ class TenantPolicy
      */
     public function update(User $user, Tenant $tenant)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('edit tenants');
+        return $user->hasRole('admin') || $user->hasPermissionTo('edit tenant');
     }
 
     /**
@@ -65,7 +65,7 @@ class TenantPolicy
      */
     public function delete(User $user, Tenant $tenant)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('delete tenants');
+        return $user->hasRole('admin') || $user->hasPermissionTo('delete tenant');
     }
 
     /**

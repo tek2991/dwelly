@@ -17,7 +17,7 @@ class AttachModal extends ModalComponent
         $this->route = $route;
         $this->model_id = $model_id;
         $this->model_name = $model_name;
-        $this->detatching_model_name = $attaching_model_name;
+        $this->attaching_model_name = $attaching_model_name;
 
         // Get all the attaching models
         $this->attaching_models = $this->getAttachingModel();
