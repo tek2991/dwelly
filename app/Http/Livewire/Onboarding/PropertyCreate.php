@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Onboarding;
 
 use App\Models\Bhk;
+use App\Models\Task;
+use App\Models\User;
 use App\Models\Audit;
 use Livewire\Component;
 use App\Models\Flooring;
 use App\Models\Locality;
+use App\Models\Priority;
 use App\Models\Property;
 use App\Models\Furnishing;
 use App\Models\Onboarding;
@@ -24,6 +27,12 @@ class PropertyCreate extends Component
     public $floorings;
     public $furnishings;
     public $localities;
+
+    public $priorities;
+    public $usersWithPerms = [];
+
+    public $assigned_to;
+    public $priority_id;
 
     public $code;
     public $is_available;
@@ -56,6 +65,9 @@ class PropertyCreate extends Component
         $this->floorings = Flooring::all();
         $this->furnishings = Furnishing::all();
         $this->localities = Locality::all();
+
+        $this->usersWithPerms = User::permission('edit onboarding')->get();
+        $this->priorities = Priority::all();
 
         // Set default values
         $this->available_from = now()->format('Y-m-d');
@@ -132,6 +144,17 @@ class PropertyCreate extends Component
             'property_id' => $property->id,
             'onboarding_step_id' => 1,
             'property_data' => true,
+        ]);
+
+        // Create task
+        Task::create([
+            'description' => 'Property onboarding for ' . $property->code,
+            'task_state_id' => 1,
+            'priority_id' => $this->priority_id,
+            'assigned_to' => $this->assigned_to,
+            'created_by' => auth()->user()->id,
+            'taskable_id' => $onboarding->id,
+            'taskable_type' => 'App\Models\Onboarding',
         ]);
 
         $this->onboarding_id = $onboarding->id;

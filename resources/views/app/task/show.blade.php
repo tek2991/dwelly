@@ -9,9 +9,14 @@
 
     @if ($task->taskable instanceof App\Models\Audit)
         <livewire:audit.audit-description :audit="$task->taskable" :readonly="true" />
-
         <livewire:task.reopen-audit :task="$task"/>
     @endif
+
+    @if($task->taskable instanceof App\Models\Onboarding)
+        <livewire:task.onboarding-summary :onboarding="$task->taskable" />
+        {{-- <livewire:task.reopen-onboarding :task="$task"/> --}}
+    @endif
+
     <livewire:task.task-complete :task="$task" />
 
 </x-app-layout>

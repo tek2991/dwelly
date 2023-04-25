@@ -13,7 +13,7 @@
             </div>
             @if($readonly)
                 {{-- Link to audit --}}
-                <div class="my-3">
+                <div class="mb-3">
                     <a href="{{ route('audit.show', $audit->id) }}" class="text-blue-500 hover:text-blue-700 hover:underline">
                         View Audit
                     </a>
