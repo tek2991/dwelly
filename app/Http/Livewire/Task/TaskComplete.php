@@ -8,6 +8,7 @@ class TaskComplete extends Component
 {
     public $task;
     public $audit = null;
+    public $onboarding = null;
 
     public $confirm = false;
 
@@ -23,8 +24,12 @@ class TaskComplete extends Component
 
         if ($this->task->taskable instanceof \App\Models\Audit) {
             $this->audit = $this->task->taskable;
-
         }
+
+        if ($this->task->taskable instanceof \App\Models\Onboarding) {
+            $this->onboarding = $this->task->taskable;
+        }
+
         if ($this->task->completed()) {
             $this->confirm = true;
         }
@@ -59,6 +64,13 @@ class TaskComplete extends Component
         if ($this->task->taskable instanceof \App\Models\Audit) {
             if($this->audit->completed !== true) {
                 $this->err = 'Audit must be completed before completing this task.';
+                return;
+            }
+        }
+
+        if ($this->task->taskable instanceof \App\Models\Onboarding) {
+            if($this->onboarding->completed !== true) {
+                $this->err = 'Onboarding must be completed before completing this task.';
                 return;
             }
         }

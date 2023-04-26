@@ -14,7 +14,7 @@ class PublicPageController extends Controller
     public function index()
     {
         // Get the latest 6 properties
-        $properties = Property::where('is_available', true)->latest()->take(6)->get();
+        $properties = Property::whereHas('coverImage')->where('is_available', true)->latest()->take(6)->get();
         return view('public.index', compact('properties'));
     }
 

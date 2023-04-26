@@ -16,6 +16,7 @@ use App\Http\Controllers\Property\PropertyController;
 use App\Http\Controllers\NearbyEstablishmentController;
 use App\Http\Controllers\Property\OnboardingController;
 use App\Http\Controllers\Attributes\FurnitureController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,9 +44,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('app.dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Admin Routes
     Route::middleware(['role:admin|user'])->group(function () {

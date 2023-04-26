@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Task;
 
 use App\Models\Task;
 use Illuminate\Support\Carbon;
@@ -9,11 +9,9 @@ use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class TaskTable extends PowerGridComponent
+final class AssignedPendingTask extends PowerGridComponent
 {
     use ActionButton;
-
-    public string $primaryKey = 'tasks.id';
 
     /*
     |--------------------------------------------------------------------------
@@ -46,13 +44,16 @@ final class TaskTable extends PowerGridComponent
     */
 
     /**
-    * PowerGrid datasource.
-    *
-    * @return Builder<\App\Models\Task>
-    */
+     * PowerGrid datasource.
+     *
+     * @return Builder<\App\Models\Task>
+     */
     public function datasource(): Builder
     {
+        $this_user = auth()->user();
         return Task::query()
+            ->where('assigned_to', $this_user->id)
+            ->whereNot('task_state_id', 4)
             ->join('task_states', 'tasks.task_state_id', '=', 'task_states.id')
             ->join('priorities', 'tasks.priority_id', '=', 'priorities.id')
             ->join('users as assigned_to', 'tasks.assigned_to', '=', 'assigned_to.id')
@@ -101,7 +102,7 @@ final class TaskTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('description')
 
-           /** Example of custom column using a closure **/
+            /** Example of custom column using a closure **/
             ->addColumn('description_lower', function (Task $model) {
                 return strtolower(e($model->description));
             })
@@ -130,7 +131,7 @@ final class TaskTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -170,9 +171,9 @@ final class TaskTable extends PowerGridComponent
             // Column::make('CREATED BY', 'created_by')
             //     ->makeInputRange(),
 
-            Column::make('CREATED BY', 'created_by_name')
-                ->sortable()
-                ->searchable(),
+            // Column::make('CREATED BY', 'created_by_name')
+            //     ->sortable()
+            //     ->searchable(),
 
             // Column::make('TASKABLE ID', 'taskable_id')
             //     ->makeInputRange(),
@@ -194,9 +195,7 @@ final class TaskTable extends PowerGridComponent
             Column::make('UPDATED AT', 'updated_at_formatted', 'updated_at')
                 ->searchable()
                 ->sortable(),
-
-        ]
-;
+        ];
     }
 
     /*
@@ -207,28 +206,23 @@ final class TaskTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Task Action Buttons.
      *
      * @return array<int, Button>
      */
 
+
     public function actions(): array
     {
         return [
             Button::make('show', 'Show')
-            ->class('bg-indigo-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
-            ->route('task.show', ['task' => 'id'])
-            ->target(''),
-            
-            /*
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('task.destroy', ['task' => 'id'])
-               ->method('delete')
-               */
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
+                ->route('task.show', ['task' => 'id'])
+                ->target(''),
         ];
     }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -238,7 +232,7 @@ final class TaskTable extends PowerGridComponent
     |
     */
 
-     /**
+    /**
      * PowerGrid Task Action Rules.
      *
      * @return array<int, RuleActions>
