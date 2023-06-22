@@ -11,7 +11,7 @@
                 @foreach ($amenities as $id => $amenity)
                     <div>
                         <x-jet-label for="amenity_{{ $amenity['id'] }}" :value="__($amenity['name'])" />
-                        <select id="amenity_{{ $amenity['id'] }}" wire:model="amenities.{{ $loop->index }}.has" disabled="{{ $disabled }}"
+                        <select id="amenity_{{ $amenity['id'] }}" wire:model="amenities.{{ $loop->index }}.has" :disabled="$disabled"
                             class="w-full mt-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100" />
                         <option value="0">
                             No</option>
@@ -22,7 +22,7 @@
                 @endforeach
             </div>
             <div class="flex justify-end mt-4">
-                <x-jet-button wire:click="save" class="ml-4" disabled="{{ $disabled }}">
+                <x-jet-button wire:click="save" class="ml-4" :disabled="$disabled">
                     {{ __('Update') }}
                 </x-jet-button>
             </div>

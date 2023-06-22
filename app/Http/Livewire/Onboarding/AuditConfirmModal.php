@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Onboarding;
 
+use App\Models\Task;
 use App\Models\Audit;
 use App\Models\Property;
 use App\Models\AuditType;
@@ -38,6 +39,17 @@ class AuditConfirmModal extends ModalComponent
             'created_by' => auth()->user()->id,
             'completed' => false,
             'description' => 'Property Onboarding Audit. Created on ' . now()->format('d/m/Y'),
+        ]);
+
+        // Create task
+        Task::create([
+            'description' => "Property Onboarding Audit for " . Property::find($this->property_id)->name . ". Created on " . now()->format('d/m/Y'),
+            'task_state_id' => 1,
+            'priority_id' => $this->onboarding->task->priority_id,
+            'assigned_to' => $this->onboarding->task->assigned_to,
+            'created_by' => auth()->user()->id,
+            'taskable_id' => $audit->id,
+            'taskable_type' => 'App\Models\Audit',
         ]);
 
         $this->onboarding->audit_id = $audit->id;

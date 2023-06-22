@@ -11,14 +11,14 @@
                 @foreach ($rooms as $id => $room)
                     <div>
                         <x-jet-label for="room_{{ $room['id'] }}" :value="__($room['name'])" />
-                        <input id="room_{{ $room['id'] }}" type="number" name="room_{{ $room['id'] }}" disabled="{{ $disabled }}"
+                        <input id="room_{{ $room['id'] }}" type="number" name="room_{{ $room['id'] }}" :disabled="$disabled"
                             wire:model="rooms.{{ $id }}.quantity"
                             class="w-full mt-1 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100" />
                     </div>
                 @endforeach
             </div>
             <div class="flex justify-end mt-4">
-                <x-jet-button wire:click="save" disabled="{{ $disabled }}" class="ml-4">
+                <x-jet-button wire:click="save" :disabled="$disabled" class="ml-4">
                     {{ __('Update') }}
                 </x-jet-button>
             </div>
