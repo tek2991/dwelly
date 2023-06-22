@@ -39,4 +39,9 @@ class Furniture extends Model
     {
         return $this->hasMany(Furniture::class, 'primary_furniture_id');
     }
+
+    public function hasSecondaryItems()
+    {
+        return $this->secondaryFurnitures()->count() > 0;
+    }
 }

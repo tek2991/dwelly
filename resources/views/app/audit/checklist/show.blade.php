@@ -19,7 +19,7 @@
 
     @livewire('audit.uploads', ['checklist_id' => $auditChecklist->id])
 
-    @if ($auditChecklist->is_primary && $auditChecklist->checklistable_type == 'App\Models\Furniture')
+    @if ($auditChecklist->checklistable->hasSecondaryItems())
         <livewire:audit.checklist-checklist :primary_audit_checklist_id="$auditChecklist->id" />
     @endif
 

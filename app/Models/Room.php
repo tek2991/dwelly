@@ -39,4 +39,9 @@ class Room extends Model
     {
         return $this->morphToMany(AuditChecklist::class, 'checklistable');
     }
+
+    public function hasSecondaryItems()
+    {
+        return false;
+    }
 }
