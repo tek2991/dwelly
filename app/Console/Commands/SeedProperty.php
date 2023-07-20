@@ -491,11 +491,19 @@ class SeedProperty extends Command
             // Loop through the property images and save them to the property
             foreach ($property_image as $image) {
                 // download the image and save it as the property code with the image order in storage/app/public/uploads/properties
-                $uid = uniqid();
-                $image_name = $property->code . '_' . $uid . '.jpeg';
-                $image_path = Storage::disk('public')->putFileAs('uploads/properties/' . $property->code . '/images', $image['image_url'], $image_name);
+                $image_name = $property->code . '_' . $image['id'] . '.jpeg';
 
-                // $image_path = 'uploads/properties/' . $property->code . '/' . $image_name;
+                // Check if image already exists
+                $image_exists = Storage::disk('public')->exists('uploads/properties/' . $property->code . '/images/' . $image_name);
+
+                // If the image does not exist download the image
+                $image_path = '';
+                
+                if (!$image_exists) {
+                    $image_path = Storage::disk('public')->putFileAs('uploads/properties/' . $property->code . '/images', $image['image_url'], $image_name);
+                } else {
+                    $image_path = 'uploads/properties/' . $property->code . '/images/' . $image_name;
+                }
 
                 // Create a new property image with the property id, image path, cover and image order
                 $property_image = \App\Models\PropertyImage::create([

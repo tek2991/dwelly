@@ -53,8 +53,7 @@ class PropertyPolicy
      */
     public function update(User $user, Property $property)
     {
-        // return $user->hasRole('admin') || $user->hasPermissionTo('edit property');
-        return false;
+        return $user->hasRole('admin') || $user->hasPermissionTo('edit property');
     }
 
     /**
