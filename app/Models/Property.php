@@ -264,7 +264,7 @@ class Property extends Model
      */
     public function shouldBeSearchable()
     {
-        return $this->isAvailable();
+        return $this->isAvailable() && $this->is_promoted;
     }
 
 

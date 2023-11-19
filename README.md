@@ -10,4 +10,3 @@ post_max_size = 130M
 ### Flush and import Scout(meilisearch) index
 php artisan scout:flush "App\Models\Property"
 php artisan scout:import "App\Models\Property"
-
