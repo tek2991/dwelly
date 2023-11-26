@@ -18,11 +18,6 @@ final class AuditChecklistTable extends PowerGridComponent
 
     // hide filters
     public $hideFilters = true;
-    
-    public string $tick = 
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-1 mt-1 text-green-800">
-        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-        </svg>';
 
     /*
     |--------------------------------------------------------------------------
@@ -112,17 +107,20 @@ final class AuditChecklistTable extends PowerGridComponent
                 // Letters after the last backslash
                 $type = substr(strrchr($model->checklistable_type, '\\'), 1);
                 $name = $model->checklistable->name;
-                
-                $result = $type . ' - ' . $name;
 
-                $result = $model->is_primary ? $result . ' (P)' : $result . ' (S)';
-                $result = $model->completed ? $result . $this->tick : $result;
+                $text = $type . ' - ' . $name;
+
+                $text = $model->is_primary ? $text . ' (P)' : $text . ' (S)';
+                // $text = $model->completed ? $text . $this->tick : $text;
 
                 $link = route('auditChecklist.show', $model->id);
 
-                return '<a href="' . $link .'" class="hover:underline text-blue-700 font-semibold"><span class="flex">' . $result . '</span></a>';
+                return '<a href="' . $link . '" class="hover:underline text-blue-700 font-semibold"><span class="flex">' . $text . '</span></a>';
             })
 
+            ->addColumn('cecklist_completed', fn (AuditChecklist $model) => $model->completed ? '<span class="font-bold text-green-800">Yes</span>' : '<span class="font-bold text-red-800">No</span>')
+
+            ->addColumn('checklist_verified', fn (AuditChecklist $model) => $model->verified ? '<span class="font-bold text-green-800">Yes</span>' : '<span class="font-bold text-red-800">No</span>')
             ->addColumn('checklistable_type_name', fn (AuditChecklist $model) => e($model->checklistable->name))
 
             ->addColumn('checklistable_type_lower', function (AuditChecklist $model) {
@@ -163,17 +161,20 @@ final class AuditChecklistTable extends PowerGridComponent
             Column::make('TYPE', 'checklistable_type_formatted', 'checklistable_type')
                 ->sortable(),
 
-            Column::make('NAME', 'name', 'checklistable_type'),
+            Column::make('ITEM', 'name', 'checklistable_type'),
 
-            Column::make('PRIMARY', 'primary', 'is_primary')
-                ->sortable()
-                ->makeBooleanFilter()
-                ->hidden(),
+            // Column::make('PRIMARY', 'primary', 'is_primary')
+            //     ->sortable()
+            //     ->makeBooleanFilter()
+            //     ->hidden(),
 
-            Column::make('Completed', 'completed')
+            Column::make('Completed', 'cecklist_completed', 'completed')
                 ->sortable()
-                ->makeBooleanFilter()
-                ->hidden(),
+                ->makeBooleanFilter(),
+
+            Column::make('Verified', 'checklist_verified', 'verified')
+                ->sortable()
+                ->makeBooleanFilter(),
 
             Column::make('REMARKS', 'remarks')
                 ->hidden(),
