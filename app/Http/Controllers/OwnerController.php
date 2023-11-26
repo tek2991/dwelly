@@ -31,7 +31,7 @@ class OwnerController extends Controller
         $this->authorize('create', Owner::class);
         // Check if property has an owner
         if ($property->owner()) {
-            return redirect()->route('property.show', $property)->dangerBanner('This property already has an owner.');
+            return redirect()->route('property.edit', $property)->dangerBanner('This property already has an owner.');
         }
         return view('app.owner.create', compact('property'));
     }
@@ -65,7 +65,7 @@ class OwnerController extends Controller
         // Check if property has an owner
         $property = Property::find($validated['property_id']);
         if ($property->owner()) {
-            return redirect()->route('property.show', $property)->dangerBanner('This property already has an owner.');
+            return redirect()->route('property.edit', $property)->dangerBanner('This property already has an owner.');
         }
 
         $user = User::create([
@@ -92,7 +92,7 @@ class OwnerController extends Controller
             'electricity_consumer_id_new' => $validated['electricity_consumer_id_new'],
         ]);
 
-        return redirect()->route('owner.show', $owner)->banner('Owner created successfully');
+        return redirect()->route('owner.edit', $owner)->banner('Owner created successfully');
     }
 
     /**
@@ -103,8 +103,7 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        $this->authorize('view', $owner);
-        return view('app.owner.show', compact('owner'));
+        // 
     }
 
     /**
@@ -115,7 +114,8 @@ class OwnerController extends Controller
      */
     public function edit(Owner $owner)
     {
-        //
+        $this->authorize('update', $owner);
+        return view('app.owner.edit', compact('owner'));
     }
 
     /**

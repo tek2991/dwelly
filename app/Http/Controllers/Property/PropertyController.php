@@ -49,7 +49,18 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        $this->authorize('view', $property);
+        // 
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Property  $property
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Property $property)
+    {
+        $this->authorize('update', $property);
 
         $propertyTypes = \App\Models\PropertyType::all();
         $bhks = \App\Models\Bhk::all();
@@ -70,7 +81,7 @@ class PropertyController extends Controller
 
         $propertyImages = $property->propertyImages()->orderBy('is_cover', 'desc')->orderBy('order', 'desc')->get();
 
-        return view('app.property.show', compact(
+        return view('app.property.edit', compact(
             'property',
             'propertyTypes',
             'bhks',
@@ -85,17 +96,6 @@ class PropertyController extends Controller
 
             'propertyImages'
         ));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Property  $property
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Property $property)
-    {
-        //
     }
 
     /**

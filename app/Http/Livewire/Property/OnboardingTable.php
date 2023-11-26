@@ -88,7 +88,7 @@ final class OnboardingTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('property_id')
             ->addColumn('property_code', function (Onboarding $model) {
-                $link = route('property.show', $model->property_id);
+                $link = route('property.edit', $model->property_id);
                 return "<a href='{$link}' class='text-blue-600 hover:underline' >{$model->property->code}</a>";
             })
             ->addColumn('property_data')
@@ -193,7 +193,7 @@ final class OnboardingTable extends PowerGridComponent
             Button::make('show', 'View')
             ->class('bg-indigo-500 cursor-pointer text-white px-3 py-1 m-1 rounded text-sm')
             ->target('')
-            ->route('onboarding.show', ['onboarding' => 'id']),
+            ->route('onboarding.edit', ['onboarding' => 'id']),
             
             /*
            Button::make('destroy', 'Delete')

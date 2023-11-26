@@ -9,7 +9,7 @@
                 @endif
             </div>
             <div class="flex justify-between my-2">
-                <a href="{{ route('onboarding.show', $onboarding) }}" target="_blank" class="text-blue-500 hover:underline">View
+                <a href="{{ route('onboarding.edit', $onboarding) }}" target="_blank" class="text-blue-500 hover:underline">View
                     onboarding</a>
             </div>
 

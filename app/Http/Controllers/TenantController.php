@@ -17,6 +17,7 @@ class TenantController extends Controller
      */
     public function index()
     {
+        $this->authorize(Tenant::class);
         return view('app.tenant.index');
     }
 
@@ -27,6 +28,7 @@ class TenantController extends Controller
      */
     public function create(Property $property)
     {
+        $this->authorize('create', Tenant::class);
         return view('app.tenant.create', compact('property'));
     }
 
@@ -38,6 +40,7 @@ class TenantController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize(create, Tenant::class);
         $validated = $request->validate([
             'property_id' => 'required|exists:properties,id',
             'name' => 'required|string|max:255',
@@ -75,6 +78,7 @@ class TenantController extends Controller
      */
     public function show(Tenant $tenant)
     {
+        $this->authorize('view', $tenant);
         $property = $tenant->property;
         return view('app.tenant.show', compact('tenant', 'property'));
     }

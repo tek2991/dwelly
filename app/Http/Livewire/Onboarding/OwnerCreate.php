@@ -18,8 +18,8 @@ class OwnerCreate extends Component
     public $phone_1;
     public $phone_2;
     public $onboarded_at;
-    public $password;
-    public $password_confirmation;
+    // public $password;
+    // public $password_confirmation;
 
     public $beneficiary_name;
     public $bank_name;
@@ -55,15 +55,33 @@ class OwnerCreate extends Component
         ];
     }
 
+    public function generateRandomPassword($length = 12)
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $special_characters = '!@#$%^&*()_-=+;:,.?';
+        $password = '';
+        $characterLength = strlen($characters);
+        $special_characterLength = strlen($special_characters);
+
+        for ($i = 0; $i < $length; $i++) {
+            $password .= $characters[rand(0, $characterLength - 1)];
+            $password .= $special_characters[rand(0, $special_characterLength - 1)];
+        }
+
+        return $password;
+    }
+
     public function create()
     {
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone_1' => $this->phone_1,
-            'phone_2' => $this->phone_2,
-            'password' => bcrypt($this->password),
-        ]);
+        $random_password = $this->generateRandomPassword();
+
+            $user = User::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'phone_1' => $this->phone_1,
+                'phone_2' => $this->phone_2,
+                'password' => bcrypt($random_password),
+            ]);
 
         Owner::create([
             'user_id' => $user->id,
@@ -90,7 +108,7 @@ class OwnerCreate extends Component
             'owner_data' => true,
         ]);
 
-        return redirect()->route('onboarding.show', $this->onboarding_id);
+        return redirect()->route('onboarding.edit', $this->onboarding_id);
     }
 
     public function render()

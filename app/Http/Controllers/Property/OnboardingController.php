@@ -94,8 +94,7 @@ class OnboardingController extends Controller
      */
     public function show(Onboarding $onboarding)
     {
-        $this->authorize('view', $onboarding);
-        return view('app.onboarding.show', compact('onboarding'));
+        // 
     }
 
     /**
@@ -106,7 +105,8 @@ class OnboardingController extends Controller
      */
     public function edit(Onboarding $onboarding)
     {
-        //
+        $this->authorize('update', $onboarding);
+        return view('app.onboarding.edit', compact('onboarding'));
     }
 
     /**

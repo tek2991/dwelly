@@ -54,34 +54,36 @@
                 </div>
 
             </div>
-            @if ($editing === true)
-                <div class="flex justify-end mt-4">
-                    <x-jet-button wire:click="update" class="ml-4">
-                        {{ __('Update') }}
-                    </x-jet-button>
+            @can('update', $task)
+                @if ($editing === true)
+                    <div class="flex justify-end mt-4">
+                        <x-jet-button wire:click="update" class="ml-4">
+                            {{ __('Update') }}
+                        </x-jet-button>
 
-                    <x-jet-button wire:click="cancel" class="ml-8 bg-red-500 hover:bg-red-600">
-                        {{ __('Cancel') }}
-                    </x-jet-button>
-                </div>
-            @else
-                <div class="flex justify-end mt-4">
-                    @if ($this->updated === true)
-                        <div class="text-sm text-gray-600 mt-3">
-                            {{ __('Saved.') }}
-                        </div>
-                    @endif
-                    @if ($editable)
-                        <x-jet-button wire:click="edit" class="ml-4">
-                            {{ __('Edit') }}
+                        <x-jet-button wire:click="cancel" class="ml-8 bg-red-500 hover:bg-red-600">
+                            {{ __('Cancel') }}
                         </x-jet-button>
-                    @else
-                        <x-jet-button class="ml-4" disabled>
-                            {{ __('Task Completed') }}
-                        </x-jet-button>
-                    @endif
-                </div>
-            @endif
+                    </div>
+                @else
+                    <div class="flex justify-end mt-4">
+                        @if ($this->updated === true)
+                            <div class="text-sm text-gray-600 mt-3">
+                                {{ __('Saved.') }}
+                            </div>
+                        @endif
+                        @if ($editable)
+                            <x-jet-button wire:click="edit" class="ml-4">
+                                {{ __('Edit') }}
+                            </x-jet-button>
+                        @else
+                            <x-jet-button class="ml-4" disabled>
+                                {{ __('Task Completed') }}
+                            </x-jet-button>
+                        @endif
+                    </div>
+                @endif
+            @endcan
         </div>
     </div>
 </div>

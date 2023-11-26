@@ -99,7 +99,7 @@
                             <label for="tenant_id" class="text-sm font-semibold text-red-700 block">
                                 {{ $err }}
                                 <span>
-                                    <a href="{{ route('audit.show', $existing_audit) }}" class="text-blue-700">Show</a>
+                                    <a href="{{ route('audit.edit', $existing_audit) }}" class="text-blue-700">Show</a>
                                 </span>
                             </label>
                         </div>

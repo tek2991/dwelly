@@ -129,7 +129,7 @@ final class TenantTable extends PowerGridComponent
             ->addColumn('phone_2')
             ->addColumn('property_code')
             ->addColumn('property_code_link', function (Tenant $model) {
-                $link = route('property.show', $model->property_id);
+                $link = route('property.edit', $model->property_id);
                 return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->property_code}</a>";
             })
             ->addColumn('is_primary')

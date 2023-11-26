@@ -167,7 +167,7 @@ class PropertyCreate extends Component
         $this->create();
 
         // Redirect to onboarding
-        return redirect()->route('onboarding.show', $this->onboarding_id);
+        return redirect()->route('onboarding.edit', $this->onboarding_id);
     }
 
     public function render()

@@ -59,7 +59,7 @@ class FurnituresUpdate extends Component
             'furnitures_data' => true,
         ]);
 
-        return redirect()->route('onboarding.show', $this->onboarding_id);
+        return redirect()->route('onboarding.edit', $this->onboarding_id);
     }
 
     public function render()

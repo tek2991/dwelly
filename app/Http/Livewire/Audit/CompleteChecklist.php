@@ -30,6 +30,12 @@ class CompleteChecklist extends Component
     {
         $this->validate();
 
+        // CHeck if auditChecklist has atleast one uploaded file
+        if($this->auditChecklist->uploads->count() == 0) {
+            $this->err = 'Please upload atleast one file before completing the checklist.';
+            return;
+        }
+
         $this->auditChecklist->update([
             'completed' => true,
         ]);
@@ -42,7 +48,7 @@ class CompleteChecklist extends Component
         $this->updateTaskState();
 
         // redirect to audit show
-        return redirect()->route('audit.show', $this->auditChecklist->audit->id);
+        return redirect()->route('audit.edit', $this->auditChecklist->audit->id);
     }
 
     public function updateTaskState()

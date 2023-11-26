@@ -212,12 +212,12 @@
                     </div>
                     <div class="flex justify-end pt-6">
                         @if ($onboarding->auditCompleted())
-                        <a href="{{ route('audit.show', $onboarding->audit_id) }}" class="text-blue-500 hover:underline"> 
+                        <a href="{{ route('audit.edit', $onboarding->audit_id) }}" class="text-blue-500 hover:underline"> 
                             View
                         </a>
                         @else
                             @if ($onboarding->audit()->exists())
-                                <x-button-link href="{{ route('audit.show', $onboarding->audit_id) }}">
+                                <x-button-link href="{{ route('audit.edit', $onboarding->audit_id) }}">
                                     {{ __('Continue') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor"
                                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

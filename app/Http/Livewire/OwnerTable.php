@@ -105,7 +105,7 @@ final class OwnerTable extends PowerGridComponent
             ->addColumn('phone_2')
             ->addColumn('property_code')
             ->addColumn('property_code_link', function (Owner $model) {
-                $link = route('property.show', $model->property_id);
+                $link = route('property.edit', $model->property_id);
                 return "<a href='{$link}' class='text-blue-700 hover:underline'>{$model->property_code}</a>";
             });
     }
@@ -176,7 +176,7 @@ final class OwnerTable extends PowerGridComponent
         return [
             Button::make('show', 'Show')
                 ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                ->route('owner.show', ['owner' => 'id']),
+                ->route('owner.edit', ['owner' => 'id']),
 
             /*
            Button::make('destroy', 'Delete')

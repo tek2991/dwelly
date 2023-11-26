@@ -229,7 +229,7 @@ class CreateAudit extends Component
             }
         }
 
-        return redirect()->route('audit.show', $audit);
+        return redirect()->route('audit.edit', $audit);
     }
 
 

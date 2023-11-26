@@ -14,7 +14,7 @@
             @if($readonly)
                 {{-- Link to audit --}}
                 <div class="mb-3">
-                    <a href="{{ route('audit.show', $audit->id) }}" class="text-blue-500 hover:text-blue-700 hover:underline">
+                    <a href="{{ route('audit.edit', $audit->id) }}" class="text-blue-500 hover:text-blue-700 hover:underline">
                         View Audit
                     </a>
                 </div>

@@ -109,7 +109,7 @@ final class AuditTable extends PowerGridComponent
                 if (!$audit->property) {
                     return 'NA';
                 }
-                $link = route('property.show', $audit->property_id);
+                $link = route('property.edit', $audit->property_id);
                 return "<a href='{$link}' class='text-blue-700 hover:underline'>{$audit->property->code}</a>";
             })
             ->addColumn('created_by')
@@ -192,7 +192,7 @@ final class AuditTable extends PowerGridComponent
         return [
             Button::make('show', 'Show')
                 ->class('bg-indigo-500 cursor-pointer text-white px-2 py-1.5 m-1 rounded text-sm')
-                ->route('audit.show', ['audit' => 'id'])
+                ->route('audit.edit', ['audit' => 'id'])
                 ->target(''),
 
             /*

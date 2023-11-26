@@ -95,7 +95,7 @@ class AuditConfirmModal extends ModalComponent
         }
 
 
-        return redirect()->route('audit.show', $audit);
+        return redirect()->route('audit.edit', $audit);
     }
 
     public function render()

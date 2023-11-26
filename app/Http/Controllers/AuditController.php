@@ -48,8 +48,7 @@ class AuditController extends Controller
      */
     public function show(Request $request, Audit $audit)
     {
-        $this->authorize('view', $audit);
-        return view('app.audit.show', compact('audit'));
+        //
     }
 
     /**
@@ -60,7 +59,8 @@ class AuditController extends Controller
      */
     public function edit(Audit $audit)
     {
-        //
+        $this->authorize('update', $audit);
+        return view('app.audit.edit', compact('audit'));
     }
 
     /**

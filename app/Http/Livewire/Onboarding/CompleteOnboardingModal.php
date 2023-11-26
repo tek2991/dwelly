@@ -25,7 +25,7 @@ class CompleteOnboardingModal extends ModalComponent
         $this->onboarding->completed = true;
         $this->onboarding->save();
 
-        return redirect()->route('onboarding.show', $this->onboarding);
+        return redirect()->route('onboarding.edit', $this->onboarding);
     }
 
     public function render()

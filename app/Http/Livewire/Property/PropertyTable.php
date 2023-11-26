@@ -88,7 +88,7 @@ final class PropertyTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('code')
             ->addColumn('code_link', function (Property $model) {
-                return '<a href="' . route('property.show', $model->id) . '" class="text-indigo-600 hover:text-indigo-900 hover:underline">' . $model->code . '</a>';
+                return '<a href="' . route('property.edit', $model->id) . '" class="text-indigo-600 hover:text-indigo-900 hover:underline">' . $model->code . '</a>';
             })
 
            /** Example of custom column using a closure **/

@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                 <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">
                     {{ $property->bhk->name . ' ' . $property->getNoOfRooms('Bathroom') . 'Bath ' . $property->propertyType->name }}
-                    <a href="{{ route('property.show', $property) }}"
+                    <a href="{{ route('property.edit', $property) }}"
                         class="ml-3 text-lg text-blue-700 font-bold hover:underline">
                         {{ $property->code }}
                     </a>

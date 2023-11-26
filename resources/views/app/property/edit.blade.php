@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="flex justify-end">
-                                <x-button-link href="{{ route('owner.show', $owner) }}">
+                                <x-button-link href="{{ route('owner.edit', $owner) }}">
                                     {{ __('Details') }}
                                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                         xmlns="http://www.w3.org/2000/svg">

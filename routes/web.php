@@ -30,6 +30,7 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::group(['middleware' => ['web']], function () {
+    // Public Routes
     Route::get('/', [PublicPageController::class, 'index'])->name('home');
     Route::get('/all-properties', [PublicPageController::class, 'allProperties'])->name('allProperties');
     Route::get('/viewProperty/{property}', [PublicPageController::class, 'viewProperty'])->name('viewProperty');
@@ -49,7 +50,7 @@ Route::middleware([
     // Admin Routes
     Route::middleware(['role:admin|user'])->group(function () {
         Route::middleware(['role:admin'])->group(function () {
-            // User Routes
+            // ONly Admin Routes
             Route::resource('user', UserController::class)->only([
                 'index', 'show', 'create', 'store', 'edit', 'update'
             ]);
@@ -68,11 +69,11 @@ Route::middleware([
         });
 
         // Property Routes
-        Route::resource('property', PropertyController::class)->only(['index', 'show']);
+        Route::resource('property', PropertyController::class)->only(['index', 'edit']);
 
         // Onboarding Routes
         Route::resource('onboarding', OnboardingController::class)->only([
-            'index', 'show'
+            'index', 'edit'
         ]);
 
         // Onboarding Property Routes
@@ -100,7 +101,7 @@ Route::middleware([
 
         // Owner Routes
         Route::resource('owner', OwnerController::class)->only([
-            'index', 'show', 'store'
+            'index', 'edit', 'store'
         ]);
         Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
 
@@ -115,7 +116,7 @@ Route::middleware([
 
         // Audit Routes
         Route::resource('audit', AuditController::class)->only([
-            'index', 'show', 'create'
+            'index', 'edit', 'create'
         ]);
 
         // Audit Checklists Routes

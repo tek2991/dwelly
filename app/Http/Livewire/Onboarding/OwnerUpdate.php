@@ -102,7 +102,7 @@ class OwnerUpdate extends Component
 
         $this->update();
 
-        return redirect()->route('onboarding.show', $this->onboarding_id);
+        return redirect()->route('onboarding.edit', $this->onboarding_id);
     }
 
     public function render()
