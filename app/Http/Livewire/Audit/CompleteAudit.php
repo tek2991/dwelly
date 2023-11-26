@@ -18,7 +18,7 @@ class CompleteAudit extends Component
         $this->audit = $audit;
         $this->task = $audit->task;
         $this->confirm = $audit->completed;
-        $this->editable = $this->audit->completed == false;
+        $this->editable = $this->audit->completed == false && $this->task->task_state_id < 3 ? true : false;
     }
 
     public function rules()
@@ -37,6 +37,11 @@ class CompleteAudit extends Component
             return;
         }
 
+        if($this->task->task_state_id != 2) {
+            $this->err = 'Task is not in progress.';
+            return;
+        }
+
         $auditChecklists_completed = $this->audit->auditChecklists->pluck('completed')->all();
 
         if (in_array(false, $auditChecklists_completed)) {
@@ -49,9 +54,9 @@ class CompleteAudit extends Component
             return;
         }
 
-        $this->audit->update([
-            'completed' => true,
-        ]);
+        // $this->audit->update([
+        //     'completed' => true,
+        // ]);
 
         // update task state
         $this->updateTaskState();

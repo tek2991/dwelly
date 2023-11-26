@@ -46,87 +46,82 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Admin Routes
-    Route::middleware(['role:admin|user'])->group(function () {
-        Route::middleware(['role:admin'])->group(function () {
-            // ONly Admin Routes
-            Route::resource('user', UserController::class)->only([
-                'index', 'show', 'create', 'store', 'edit', 'update'
-            ]);
-            Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
-            Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
-            // Role Routes
-            Route::resource('role', RoleController::class)->only([
-                'index', 'show', 'create', 'store', 'edit', 'update'
-            ]);
-            Route::delete('role/{role}/detatch-permission/{permission}', [RoleController::class, 'detatchPermission'])->name('role.detatchPermission');
-            Route::put('role/{role}/attach-permission', [RoleController::class, 'attachPermission'])->name('role.attachPermission');
-
-            Route::resource('furniture', FurnitureController::class)->only([
-                'index', 'show', 'create', 'store', 'edit', 'update'
-            ]);
-        });
-
-        // Property Routes
-        Route::resource('property', PropertyController::class)->only(['index', 'edit']);
-
-        // Onboarding Routes
-        Route::resource('onboarding', OnboardingController::class)->only([
-            'index', 'edit'
+    Route::middleware(['role:admin'])->group(function () {
+        // Only Admin Routes
+        Route::resource('user', UserController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
-
-        // Onboarding Property Routes
-        Route::get('onboarding/property/create', [OnboardingController::class, 'propertyCreate'])->name('onboarding.property.create');
-        Route::get('onboarding/property/{property}/update', [OnboardingController::class, 'propertyUpdate'])->name('onboarding.property.update');
-        // Onboarding Property Routes
-        Route::get('onboarding/owner/{property}/create', [OnboardingController::class, 'ownerCreate'])->name('onboarding.owner.create');
-        Route::get('onboarding/owner/{property}/update', [OnboardingController::class, 'ownerUpdate'])->name('onboarding.owner.update');
-        // Onboarding Amenities Routes
-        Route::get('onboarding/amenities/{property}/update', [OnboardingController::class, 'amenitiesUpdate'])->name('onboarding.amenities.update');
-        // Onboarding Rooms Routes
-        Route::get('onboarding/rooms/{property}/update', [OnboardingController::class, 'roomsUpdate'])->name('onboarding.rooms.update');
-        // Onboarding Furnitures Routes
-        Route::get('onboarding/furnitures/{property}/update', [OnboardingController::class, 'furnituresUpdate'])->name('onboarding.furnitures.update');
-
-        // Contact Routes
-        Route::resource('contactForm', ContactController::class)->only([
-            'index', 'show'
+        Route::delete('user/{user}/detatch-role/{role}', [UserController::class, 'detatchRole'])->name('user.detatchRole');
+        Route::put('user/{user}/attach-role', [UserController::class, 'attachRole'])->name('user.attachRole');
+        // Role Routes
+        Route::resource('role', RoleController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
-
-        // Rent Out Routes
-        Route::resource('rentOut', RentOutController::class)->only([
-            'index', 'show'
-        ]);
-
-        // Owner Routes
-        Route::resource('owner', OwnerController::class)->only([
-            'index', 'edit', 'store'
-        ]);
-        Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
-
-        // Download document route
-        Route::get('document/download/{document}', [DocumentController::class, 'downloadDocument'])->name('document.download');
-
-        //  Tenant Routes
-        Route::resource('tenant', TenantController::class)->only([
-            'index', 'show', 'store'
-        ]);
-        Route::get('tenant/create/{property}', [TenantController::class, 'create'])->name('tenant.create');
-
-        // Audit Routes
-        Route::resource('audit', AuditController::class)->only([
-            'index', 'edit', 'create'
-        ]);
-
-        // Audit Checklists Routes
-        Route::resource('auditChecklist', AuditChecklistController::class)->only([
-            'show', 'create'
-        ]);
-
-        // Task Routes
-        Route::resource('task', TaskController::class)->only([
-            'index', 'show'
+        Route::delete('role/{role}/detatch-permission/{permission}', [RoleController::class, 'detatchPermission'])->name('role.detatchPermission');
+        Route::put('role/{role}/attach-permission', [RoleController::class, 'attachPermission'])->name('role.attachPermission');
+        Route::resource('furniture', FurnitureController::class)->only([
+            'index', 'show', 'create', 'store', 'edit', 'update'
         ]);
     });
+
+    // Property Routes
+    Route::resource('property', PropertyController::class)->only(['index', 'edit']);
+
+    // Onboarding Routes
+    Route::resource('onboarding', OnboardingController::class)->only([
+        'index', 'edit'
+    ]);
+
+    // Onboarding Property Routes
+    Route::get('onboarding/property/create', [OnboardingController::class, 'propertyCreate'])->name('onboarding.property.create');
+    Route::get('onboarding/property/{property}/update', [OnboardingController::class, 'propertyUpdate'])->name('onboarding.property.update');
+    // Onboarding Property Routes
+    Route::get('onboarding/owner/{property}/create', [OnboardingController::class, 'ownerCreate'])->name('onboarding.owner.create');
+    Route::get('onboarding/owner/{property}/update', [OnboardingController::class, 'ownerUpdate'])->name('onboarding.owner.update');
+    // Onboarding Amenities Routes
+    Route::get('onboarding/amenities/{property}/update', [OnboardingController::class, 'amenitiesUpdate'])->name('onboarding.amenities.update');
+    // Onboarding Rooms Routes
+    Route::get('onboarding/rooms/{property}/update', [OnboardingController::class, 'roomsUpdate'])->name('onboarding.rooms.update');
+    // Onboarding Furnitures Routes
+    Route::get('onboarding/furnitures/{property}/update', [OnboardingController::class, 'furnituresUpdate'])->name('onboarding.furnitures.update');
+
+    // Contact Routes
+    Route::resource('contactForm', ContactController::class)->only([
+        'index', 'show'
+    ]);
+
+    // Rent Out Routes
+    Route::resource('rentOut', RentOutController::class)->only([
+        'index', 'show'
+    ]);
+
+    // Owner Routes
+    Route::resource('owner', OwnerController::class)->only([
+        'index', 'edit', 'store'
+    ]);
+    Route::get('owner/create/{property}', [OwnerController::class, 'create'])->name('owner.create');
+
+    // Download document route
+    Route::get('document/download/{document}', [DocumentController::class, 'downloadDocument'])->name('document.download');
+
+    //  Tenant Routes
+    Route::resource('tenant', TenantController::class)->only([
+        'index', 'show', 'store'
+    ]);
+    Route::get('tenant/create/{property}', [TenantController::class, 'create'])->name('tenant.create');
+
+    // Audit Routes
+    Route::resource('audit', AuditController::class)->only([
+        'index', 'edit', 'create'
+    ]);
+
+    // Audit Checklists Routes
+    Route::resource('auditChecklist', AuditChecklistController::class)->only([
+        'show', 'create'
+    ]);
+
+    // Task Routes
+    Route::resource('task', TaskController::class)->only([
+        'index', 'show'
+    ]);
 });

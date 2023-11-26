@@ -13,7 +13,7 @@ class AuditChecklist extends Component
     public function mount($audit = null)
     {
         $this->audit = $audit;
-        $this->editable = $this->audit->completed == false;
+        $this->editable = $this->audit->completed == false && $this->audit->task->task_state_id < 3 ? true : false;
     }
 
     // listeners
