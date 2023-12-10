@@ -27,7 +27,13 @@
             @else
                 <div class="my-3">
                     <label class="inline-flex items-center">
-                        <span class="ml-2">Checklist Completed</span>
+                        <span class="ml-2">Checklist Completed 
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 ml-2" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5 13l4 4L19 7" />
+                        </svg>
                     </label>
                 </div>
                 <div class="flex justify-end mt-4">
