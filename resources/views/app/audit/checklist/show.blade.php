@@ -23,6 +23,10 @@
         <livewire:audit.checklist-checklist :primary_audit_checklist_id="$auditChecklist->id" />
     @endif
 
-
     @livewire('audit.complete-checklist', ['auditChecklist' => $auditChecklist])
+
+    @if (auth()->user()->hasRole('admin'))
+        @livewire('audit.verify-checklist', ['auditChecklist' => $auditChecklist])
+    @endif
+
 </x-app-layout>
