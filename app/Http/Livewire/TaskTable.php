@@ -149,9 +149,10 @@ final class TaskTable extends PowerGridComponent
             // Column::make('TASK STATE ID', 'task_state_id')
             //     ->makeInputRange(),
 
-            Column::make('TASK STATE', 'task_state_name')
+            Column::make('TASK STATE', 'task_state_name', 'task_state_id')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->makeInputSelect(\App\Models\TaskState::all(), 'name', 'task_state_id', ['live-search' => 'true']),
 
             // Column::make('PRIORITY ID', 'priority_id')
             //     ->makeInputRange(),
