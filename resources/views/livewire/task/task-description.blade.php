@@ -1,7 +1,12 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-            <h2 class="text-xl font-regular pt-2 pb-4">Task</h2>
+            <div class="flex items-baseline">
+                <h2 class="text-xl font-regular pt-2 pb-4">Task</h2>
+                @if (!$editable)
+                    <span class="ml-2 text-xs text-green-500">Completed</span>
+                @endif
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-3">
                     <x-jet-label for="description" :value="__('Description')" />

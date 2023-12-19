@@ -36,11 +36,6 @@
                         </span>
                     </label>
                 </div>
-                <div class="flex justify-end mt-4">
-                    <x-jet-button wire:click="complete" class="ml-4" disabled>
-                        {{ __('Saved') }}
-                    </x-jet-button>
-                </div>
             @endif
         </div>
     </div>

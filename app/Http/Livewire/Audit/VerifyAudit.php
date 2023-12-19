@@ -18,7 +18,7 @@ class VerifyAudit extends Component
         $this->audit = $audit;
         $this->task = $audit->task;
         $this->confirm = $audit->completed;
-        $this->editable = $this->audit->completed == false && $this->task->task_state_id < 3 ? true : false;
+        $this->editable = $this->audit->completed == false && $this->task->task_state_id < 4 ? true : false;
     }
 
     public function rules()
@@ -37,8 +37,8 @@ class VerifyAudit extends Component
             return;
         }
 
-        if($this->task->task_state_id != 2) {
-            $this->err = 'Task is not in progress.';
+        if($this->task->task_state_id != 3) {
+            $this->err = 'Task is not in the correct state to be completed.';
             return;
         }
 
@@ -49,14 +49,21 @@ class VerifyAudit extends Component
             return;
         }
 
+        $auditChecklists_verified = $this->audit->auditChecklists->pluck('verified')->all();
+
+        if (in_array(false, $auditChecklists_verified)) {
+            $this->err = 'Please verify all checklist items before completing the audit.';
+            return;
+        }
+
         if(!$this->audit->property_id) {
             $this->err = 'Please assign a property to the audit before completing it.';
             return;
         }
 
-        // $this->audit->update([
-        //     'completed' => true,
-        // ]);
+        $this->audit->update([
+            'completed' => true,
+        ]);
 
         // update task state
         $this->updateTaskState();
@@ -71,12 +78,12 @@ class VerifyAudit extends Component
     {
         $task = $this->task;
         // Update the task state
-        UpdateTaskState::update($task, 3);
+        UpdateTaskState::update($task, 4);
     }
 
 
     public function render()
     {
-        return view('livewire.audit.complete-audit');
+        return view('livewire.audit.verify-audit');
     }
 }

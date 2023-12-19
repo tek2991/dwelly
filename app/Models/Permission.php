@@ -37,6 +37,7 @@ class Permission extends \Spatie\Permission\Models\Permission
             'add onboarding',
             'edit onboarding',
             'delete onboarding',
+            'verify onboarding',
 
             'view furniture',
             'add furniture',
@@ -52,6 +53,7 @@ class Permission extends \Spatie\Permission\Models\Permission
             'add audit',
             'edit audit',
             'delete audit',
+            'verify audit',
         ];
     }
 }

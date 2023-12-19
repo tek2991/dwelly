@@ -5,16 +5,17 @@
                 <h2 class="text-xl font-regular pt-2 pb-4">
                     Audit Details
                 </h2>
-                
+
                 @if ($audit->completed)
                     <span class="ml-2 text-xs text-green-500">Completed</span>
                 @endif
 
             </div>
-            @if($readonly)
+            @if ($readonly)
                 {{-- Link to audit --}}
                 <div class="mb-3">
-                    <a href="{{ route('audit.edit', $audit->id) }}" class="text-blue-500 hover:text-blue-700 hover:underline">
+                    <a href="{{ route('audit.edit', $audit->id) }}"
+                        class="text-blue-500 hover:text-blue-700 hover:underline">
                         View Audit
                     </a>
                 </div>
@@ -95,10 +96,6 @@
                         @if ($editable)
                             <x-jet-button wire:click="edit" class="ml-4">
                                 {{ __('Edit') }}
-                            </x-jet-button>
-                        @else
-                            <x-jet-button class="ml-4" disabled>
-                                {{ __('Audit Completed') }}
                             </x-jet-button>
                         @endif
                     </div>
