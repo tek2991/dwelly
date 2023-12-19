@@ -14,7 +14,7 @@
             @if ($editable)
                 <div class="my-3">
                     <label class="inline-flex items-center">
-                        <x-jet-checkbox wire:model="confirm" />
+                        <x-jet-checkbox wire:model="verify" />
                         <span class="ml-2">Confirm Audit Completion review.</span>
                     </label>
                 </div>

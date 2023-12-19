@@ -28,7 +28,7 @@ class VerifyAudit extends Component
         ];
     }
 
-    public function complete()
+    public function verify()
     {
         $this->validate();
 

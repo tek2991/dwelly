@@ -9,14 +9,16 @@ class VerifyChecklist extends Component
 {
     public $editable;
     public $auditChecklist;
-    public $confirm;
+    public $confirm = false;
     public $err;
+    public $next_checklist_item_exists = false;
 
     public function mount($auditChecklist)
     {
         $this->auditChecklist = $auditChecklist;
-        $this->confirm = $auditChecklist->completed;
         $this->editable = $this->auditChecklist->audit->task->completed() == false && $this->auditChecklist->completed == true && $this->auditChecklist->verified == false;
+
+        $this->next_checklist_item_exists = $this->auditChecklist->audit->auditChecklists->where('completed', true)->where('verified', false)->whereNotIn('id', [$this->auditChecklist->id])->first();
     }
 
     public function rules()
@@ -38,7 +40,16 @@ class VerifyChecklist extends Component
         $this->emit('refreshAuditChecklistCompletion');
         $this->editable = false;
 
-        // redirect to audit show
+        $this->routeTo();
+    }
+
+    public function routeTo()
+    {
+
+        if($this->next_checklist_item_exists) {
+            return redirect()->route('auditChecklist.show', $this->next_checklist_item_exists->id);
+        }
+
         return redirect()->route('audit.edit', $this->auditChecklist->audit->id);
     }
 

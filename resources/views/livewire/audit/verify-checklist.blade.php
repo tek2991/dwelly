@@ -21,7 +21,7 @@
                 </div>
                 <div class="flex justify-end mt-4">
                     <x-jet-button wire:click="verify" class="ml-4">
-                        {{ __('Save') }}
+                        {{ __('Save & Next') }}
                     </x-jet-button>
                 </div>
             @else
