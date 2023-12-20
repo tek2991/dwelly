@@ -1,7 +1,7 @@
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-            <div class="flex items-baseline">
+            <div class="flex items-baseline justify-between">
                 <h2 class="text-xl font-regular pt-2 pb-4">Task</h2>
                 @if (!$editable)
                     <span class="ml-2 text-xs text-green-500">Completed</span>
@@ -80,10 +80,6 @@
                         @if ($editable)
                             <x-jet-button wire:click="edit" class="ml-4">
                                 {{ __('Edit') }}
-                            </x-jet-button>
-                        @else
-                            <x-jet-button class="ml-4" disabled>
-                                {{ __('Task Completed') }}
                             </x-jet-button>
                         @endif
                     </div>
