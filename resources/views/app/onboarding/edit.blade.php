@@ -242,7 +242,7 @@
                 </div>
 
                 {{-- Complete Onboarding --}}
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
+                {{-- <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
                     <div class="flex justify-between items-center">
                         <h3 class="font-semibold">Complete Onboarding</h3>
                         <p class="text-sm {{ $onboarding->completed ? 'text-green-500' : 'text-orange-700' }}">
@@ -262,7 +262,7 @@
                             </button>
                         @endif
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

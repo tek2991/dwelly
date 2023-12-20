@@ -32,12 +32,12 @@ class VerifyAudit extends Component
     {
         $this->validate();
 
-        if($this->audit->completed) {
+        if ($this->audit->completed) {
             $this->err = 'Audit already completed.';
             return;
         }
 
-        if($this->task->task_state_id != 3) {
+        if ($this->task->task_state_id != 3) {
             $this->err = 'Task is not in the correct state to be completed.';
             return;
         }
@@ -56,7 +56,7 @@ class VerifyAudit extends Component
             return;
         }
 
-        if(!$this->audit->property_id) {
+        if (!$this->audit->property_id) {
             $this->err = 'Please assign a property to the audit before completing it.';
             return;
         }
@@ -67,6 +67,9 @@ class VerifyAudit extends Component
 
         // update task state
         $this->updateTaskState();
+
+        // Update if onboarding audit
+        $this->updateIfOnboarding();
 
         // emit
         $this->emit('refreshAuditCompletion');
@@ -79,6 +82,24 @@ class VerifyAudit extends Component
         $task = $this->task;
         // Update the task state
         UpdateTaskState::update($task, 4);
+    }
+
+    public function updateIfOnboarding()
+    {
+        if ($this->audit->auditType->name == 'Property Onboarding') {
+            $onboarding = $this->audit->onboarding;
+
+            if (!$onboarding) {
+                $this->err = 'Onboarding not found.';
+                return;
+            }
+
+            $onboarding->update([
+                'completed' => true,
+            ]);
+            
+            $onboarding->task->complete();
+        }
     }
 
 

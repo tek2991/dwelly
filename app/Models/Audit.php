@@ -61,4 +61,9 @@ class Audit extends Model
     {
         return $this->morphOne(Task::class, 'taskable');
     }
+
+    public function onboarding()
+    {
+        return $this->hasOne(Onboarding::class);
+    }
 }
