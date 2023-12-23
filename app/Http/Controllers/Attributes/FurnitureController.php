@@ -41,10 +41,10 @@ class FurnitureController extends Controller
     {
         $this->authorize('create', Furniture::class);
         $validated = $request->validate([
-            'name' => 'required|unique:furnitures,name',
+            'name' => 'required|unique:furniture,name',
             'icon_path' => 'nullable|image',
             'show' => 'required|boolean',
-            'primary_furniture_id' => 'nullable|exists:furnitures,id',
+            'primary_furniture_id' => 'nullable|exists:furniture,id',
         ]);
 
         $file = $request->file('icon_path');
@@ -106,9 +106,9 @@ class FurnitureController extends Controller
     {
         $this->authorize('update', $furniture);
         $validated = $request->validate([
-            'name' => 'required|unique:furnitures,name,' . $furniture->id,
+            'name' => 'required|unique:furniture,name,' . $furniture->id,
             'show' => 'required|boolean',
-            'primary_furniture_id' => 'nullable|exists:furnitures,id',
+            'primary_furniture_id' => 'nullable|exists:furniture,id',
             'icon_path' => 'nullable|image|max:2048',
         ]);
 
@@ -116,10 +116,10 @@ class FurnitureController extends Controller
 
         if ($file) {
             $file_name = $validated['name'] . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/furniture', $file_name);
+            $path = $file->storeAs('furniture', $file_name);
             $validated['icon_path'] = $path;
         } else {
-            $validated['show'] = false;
+            $furniture->show = false ? false : true;
         }
 
         if ($validated['primary_furniture_id'] == '') {

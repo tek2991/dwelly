@@ -112,7 +112,7 @@
             <div class="grid grid-cols-3 gap-y-4 md:w-2/3 font-Graphik text-base">
                 @foreach ($furnitures as $furniture)
                     <div>
-                        <p> <img src="{{ url('storage/' . $furniture->icon_path) }}" alt="{{ $furniture->name }}"
+                        <p> <img src="{{ url('storage/' . $furniture->icon_path) }}" alt="{{ $furniture->name }}_icon"
                                 class="inline w-5"> {{ $furniture->name }}: <span
                                 class="font-GraphikSemibold">{{ $furniture->pivot->quantity }}</span>
                         </p>

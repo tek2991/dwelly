@@ -27,7 +27,7 @@
                                 <div class="text-red-500 text-sm">{{ $message }}</div>
                             @enderror
                             <div class="flex space-x-3 items-center">
-                                <x-jet-input id="icon_path" class="block mt-1 w-full" type="file"
+                                <x-jet-input id="icon_path" class="block mt-1 w-full" type="file" name="icon_path"
                                     value="{{ old('icon_path') }}" />
                                 <img src="{{ url('storage/' . $furniture->icon_path) }}" alt="icon" class="w-8 h-8">
                             </div>
