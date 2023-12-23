@@ -116,7 +116,7 @@ class FurnitureController extends Controller
 
         if ($file) {
             $file_name = $validated['name'] . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('furniture', $file_name);
+            $path = $file->storeAs('uploads/icons/furniture', $file_name, 'public');
             $validated['icon_path'] = $path;
         } else {
             $furniture->show = false ? false : true;
