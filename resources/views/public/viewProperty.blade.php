@@ -105,7 +105,7 @@
         </div>
         <div class="md:flex justify-between text-darker-3 font-GraphikMedium border-b-2 py-4">
             <div class="mb-3 md:mb-0 md:w-1/3">
-                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold"> 
+                <h3 class="text-lg xl:text-xl xl:font-GraphikSemibold">
                     Furnishing Amenities
                 </h3>
             </div>
@@ -189,7 +189,8 @@
                                         // Get the words before the first comma from description of the establishment
                                         $description = explode(',', $establishment->description)[0];
                                     @endphp
-                                    <li class="mb-1">{{ $description }}, {{ $establishment->distance_in_kms }}Km
+                                    <li class="mb-1">
+                                        {{ $description }}: <b>{{ $establishment->distance_in_kms < 1 ? "Nearby" : $establishment->distance_in_kms . "Km" }}</b>
                                     </li>
                                 @endforeach
                             </ul>
@@ -227,12 +228,9 @@
                     $address = $property->address;
                     $api_key = config('services.google_maps.key');
                 @endphp
-                <iframe 
-                    width="100%" height="450px" frameborder="0" style="border:0"
+                <iframe width="100%" height="450px" frameborder="0" style="border:0"
                     src="https://www.google.com/maps/embed/v1/place?key={{ $api_key }}&q={{ $lat }},+{{ $lng }}"
-                    allowfullscreen
-                    loading="lazy"
-                ></iframe>
+                    allowfullscreen loading="lazy"></iframe>
             </div>
         </div>
     </div>
