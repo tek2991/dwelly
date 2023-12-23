@@ -18,7 +18,7 @@ class DashboardController extends Controller
             'Properties available' => Property::where('is_available', true)->count(),
             'Pending tasks' => Task::whereNot('task_state_id', 4)->count(),
             'Total Users' => User::count(),
-            'Cntact requests' => Contact::count(),
+            'Contact requests' => Contact::count(),
             'Rentout Submissions' => RentOut::count(),
         ];
 
