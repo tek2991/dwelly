@@ -1,4 +1,10 @@
 *
-!public/
 !.gitignore
+!public/
 !default_icons
+!default_icons/Furniture
+!default_icons/Furniture/*
+!default_icons/Amenity
+!default_icons/Amenity/*
+!default_icons/EstablishmentType
+!default_icons/EstablishmentType/*
