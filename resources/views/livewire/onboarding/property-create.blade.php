@@ -202,7 +202,7 @@
                         @error('latitude')
                             <label for="latitude" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="latitude" class="block mt-1 w-full" type="number"
+                        <x-jet-input id="latitude" class="block mt-1 w-full" type="number" step="any" min="-90" max="90"
                             wire:model="latitude" />
                     </div>
 
@@ -213,7 +213,7 @@
                         @error('longitude')
                             <label for="longitude" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-jet-input id="longitude" class="block mt-1 w-full" type="number"
+                        <x-jet-input id="longitude" class="block mt-1 w-full" type="number" step="any" min="-90" max="90"
                             wire:model="longitude" />
                     </div>
 

@@ -249,10 +249,10 @@
                         <label for="latitude" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text" step="any" min="-90" max="90"
                             wire:model="latitude" />
                     @else
-                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="latitude" class="block mt-1 w-full" type="text" step="any" min="-90" max="90"
                             wire:model="latitude" disabled />
                     @endif
                 </div>
@@ -265,10 +265,10 @@
                         <label for="longitude" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
                     @if ($editing === true)
-                        <x-jet-input id="longitude" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="longitude" class="block mt-1 w-full" type="text" step="any" min="-90" max="90"
                             wire:model="longitude" />
                     @else
-                        <x-jet-input id="longitude" class="block mt-1 w-full" type="text"
+                        <x-jet-input id="longitude" class="block mt-1 w-full" type="text" step="any" min="-90" max="90"
                             wire:model="longitude" disabled />
                     @endif
                 </div>
