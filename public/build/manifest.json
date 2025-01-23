@@ -15,17 +15,13 @@
     "file": "assets/GraphikMedium.ebd6d324.otf",
     "src": "public/resources/fonts/GraphikMedium.otf"
   },
-  "public/resources/fonts/GraphikSemibold.otf": {
-    "file": "assets/GraphikSemibold.4d663da5.otf",
-    "src": "public/resources/fonts/GraphikSemibold.otf"
-  },
-  "public/resources/fonts/GraphikBold.otf": {
-    "file": "assets/GraphikBold.75c911d1.otf",
-    "src": "public/resources/fonts/GraphikBold.otf"
-  },
   "public/resources/fonts/ADELIA.otf": {
     "file": "assets/ADELIA.912949fb.otf",
     "src": "public/resources/fonts/ADELIA.otf"
+  },
+  "public/resources/fonts/GraphikSemibold.otf": {
+    "file": "assets/GraphikSemibold.4d663da5.otf",
+    "src": "public/resources/fonts/GraphikSemibold.otf"
   },
   "public/resources/fonts/SecularOneRegular.ttf": {
     "file": "assets/SecularOneRegular.489bea3a.ttf",
@@ -34,6 +30,10 @@
   "public/resources/fonts/GloriaHallelujahRegular.ttf": {
     "file": "assets/GloriaHallelujahRegular.4206cbda.ttf",
     "src": "public/resources/fonts/GloriaHallelujahRegular.ttf"
+  },
+  "public/resources/fonts/GraphikBold.otf": {
+    "file": "assets/GraphikBold.75c911d1.otf",
+    "src": "public/resources/fonts/GraphikBold.otf"
   },
   "resources/js/app.js": {
     "file": "assets/app.de534434.js",
@@ -46,7 +46,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app.006a5488.css",
+    "file": "assets/app.f0c68b3f.css",
     "src": "resources/css/app.css",
     "isEntry": true
   }

@@ -19,7 +19,7 @@
                         </div>
                         <div>
                             <x-jet-label for="permission_ids" :value="__('Permissions')" />
-                            <x-input-select id="permission_ids" name="permission_ids[]" multiple>
+                            <x-input-select id="permission_ids" name="permission_ids[]" multiple size="12">
                                 @foreach ($permissions as $permission)
                                     <option value="{{ $permission->id }}">{{ $permission->name }}</option>
                                 @endforeach

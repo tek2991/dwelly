@@ -18,20 +18,18 @@
                     <x-jet-nav-link href="{{ route('task.index') }}" :active="request()->routeIs('task')">
                         {{ __('Task') }}
                     </x-jet-nav-link>
-                    @hasrole('admin')
-                        {{-- User Management --}}
-                        <x-nav-dropdown-button data-dropdown-toggle="user_management_dropdownNavbar">
-                            {{ __('User Management') }}
-                        </x-nav-dropdown-button>
-                        <x-nav-dropdown-wrapper id="user_management_dropdownNavbar">
-                            <x-nav-dropdown-item :href="route('user.index')" :active="request()->routeIs('user.*')">
-                                {{ __('Users') }}
-                            </x-nav-dropdown-item>
-                            <x-nav-dropdown-item :href="route('role.index')" :active="request()->routeIs('role.*')">
-                                {{ __('Roles') }}
-                            </x-nav-dropdown-item>
-                        </x-nav-dropdown-wrapper>
-                    @endhasrole
+                    {{-- Activities --}}
+                    <x-nav-dropdown-button data-dropdown-toggle="audit_management_dropdownNavbar">
+                        {{ __('Activities') }}
+                    </x-nav-dropdown-button>
+                    <x-nav-dropdown-wrapper id="audit_management_dropdownNavbar">
+                        <x-nav-dropdown-item :href="route('audit.index')" :active="request()->routeIs('audit.*')">
+                            {{ __('Audits') }}
+                        </x-nav-dropdown-item>
+                        <x-nav-dropdown-item :href="route('onboarding.index')" :active="request()->routeIs('onboarding.*')">
+                            {{ __('Onboarding') }}
+                        </x-nav-dropdown-item>
+                    </x-nav-dropdown-wrapper>
                     {{-- Property Management --}}
                     <x-nav-dropdown-button data-dropdown-toggle="property_management_dropdownNavbar">
                         {{ __('Property Management') }}
@@ -49,18 +47,6 @@
                         <x-nav-dropdown-item :href="route('furniture.index')" :active="request()->routeIs('furniture.*')">
                             {{ __('Furnitures') }}
                         </x-nav-dropdown-item>
-                        <x-nav-dropdown-item :href="route('onboarding.index')" :active="request()->routeIs('onboarding.*')">
-                            {{ __('Onboarding') }}
-                        </x-nav-dropdown-item>
-                    </x-nav-dropdown-wrapper>
-                    {{-- Audits --}}
-                    <x-nav-dropdown-button data-dropdown-toggle="audit_management_dropdownNavbar">
-                        {{ __('Property Audits') }}
-                    </x-nav-dropdown-button>
-                    <x-nav-dropdown-wrapper id="audit_management_dropdownNavbar">
-                        <x-nav-dropdown-item :href="route('audit.index')" :active="request()->routeIs('audit.*')">
-                            {{ __('All Audits') }}
-                        </x-nav-dropdown-item>
                     </x-nav-dropdown-wrapper>
                     {{-- Contact Management --}}
                     <x-nav-dropdown-button data-dropdown-toggle="contact_management_dropdownNavbar">
@@ -74,6 +60,20 @@
                             {{ __('Rentouts') }}
                         </x-nav-dropdown-item>
                     </x-nav-dropdown-wrapper>
+                    @hasrole('admin')
+                        {{-- User Management --}}
+                        <x-nav-dropdown-button data-dropdown-toggle="user_management_dropdownNavbar">
+                            {{ __('User Management') }}
+                        </x-nav-dropdown-button>
+                        <x-nav-dropdown-wrapper id="user_management_dropdownNavbar">
+                            <x-nav-dropdown-item :href="route('user.index')" :active="request()->routeIs('user.*')">
+                                {{ __('Users') }}
+                            </x-nav-dropdown-item>
+                            <x-nav-dropdown-item :href="route('role.index')" :active="request()->routeIs('role.*')">
+                                {{ __('Roles') }}
+                            </x-nav-dropdown-item>
+                        </x-nav-dropdown-wrapper>
+                    @endhasrole
                 </div>
             </div>
 
