@@ -11,14 +11,14 @@
         <livewire:audit.audit-description :audit="$task->taskable" :readonly="true" />
     @endif
 
-    @can('update', $task)
-        @if ($task->taskable instanceof App\Models\Audit)
-            {{-- <livewire:task.reopen-audit :task="$task" /> --}}
-        @endif
 
-        @if ($task->taskable instanceof App\Models\Onboarding)
-            <livewire:task.onboarding-summary :onboarding="$task->taskable" />
-        @endif
-        {{-- <livewire:task.task-complete :task="$task" /> --}}
-    @endcan
+    @if ($task->taskable instanceof App\Models\Audit)
+        {{-- <livewire:task.reopen-audit :task="$task" /> --}}
+    @endif
+
+    @if ($task->taskable instanceof App\Models\Onboarding)
+        <livewire:task.onboarding-summary :onboarding="$task->taskable" />
+    @endif
+    {{-- <livewire:task.task-complete :task="$task" /> --}}
+
 </x-app-layout>
