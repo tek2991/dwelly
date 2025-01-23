@@ -24,7 +24,6 @@
 
     <livewire:audit.complete-audit :audit="$audit" />
 
-
     @can('verify audit', $audit)
         <livewire:audit.verify-audit :audit="$audit" />
     @endcan

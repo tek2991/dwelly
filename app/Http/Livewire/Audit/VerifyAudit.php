@@ -18,7 +18,7 @@ class VerifyAudit extends Component
         $this->audit = $audit;
         $this->task = $audit->task;
         $this->confirm = $audit->completed;
-        $this->editable = $this->audit->completed == false && $this->task->task_state_id < 4 ? true : false;
+        $this->editable = $this->audit->completed == false && $this->task->task_state_id == 3 ? true : false;
     }
 
     public function rules()

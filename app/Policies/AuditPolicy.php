@@ -91,4 +91,26 @@ class AuditPolicy
     {
         //
     }
+
+
+    public function verifyAudit(User $user, Audit $audit)
+    {
+        // Ensure the audit is not completed
+        if ($audit->completed) {
+            return false;
+        }
+
+        // Ensure the related task has a `task_state_id` of 3
+        if ($audit->task->task_state_id !== 3) {
+            return false;
+        }
+
+        // Check if the user has the 'admin' role or the 'verify audit' permission
+        if ($user->hasRole('admin') || $user->hasPermissionTo('verify audit')) {
+            return true;
+        }
+
+        // Default to denying the action
+        return false;
+    }
 }
