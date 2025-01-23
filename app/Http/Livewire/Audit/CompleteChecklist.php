@@ -62,7 +62,7 @@ class CompleteChecklist extends Component
                 ->where('completed', false)
                 ->skip(1)  // Skip the first item, to get the next incomplete item
                 ->first();
-            return redirect()->route('auditChecklist.show', $next_item)
+            return redirect()->route('auditChecklist.show', $next_item);
         }
 
         return redirect()->route('audit.edit', $this->auditChecklist->audit->id);
