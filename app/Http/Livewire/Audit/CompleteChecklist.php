@@ -18,7 +18,7 @@ class CompleteChecklist extends Component
         $this->auditChecklist = $auditChecklist;
         $this->confirm = $auditChecklist->completed;
         $this->editable = $this->auditChecklist->audit->completed == false && $this->auditChecklist->completed == false;
-        $this->next_checklist_item_exists = $this->auditChecklist->audit->auditChecklists->where('completed', true)->where('verified', false)->whereNotIn('id', [$this->auditChecklist->id])->first();
+        $this->next_checklist_item_exists = $this->auditChecklist->audit->auditChecklists->where('completed', false)->first();
     }
 
     public function rules()
