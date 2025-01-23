@@ -30,7 +30,7 @@ class OnboardingPolicy
      */
     public function view(User $user, Onboarding $onboarding)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('view onboarding');
+        return $user->hasRole('admin') || ($user->hasPermissionTo('view onboarding') && $user->id == $onboarding->task->assigned_to);
     }
 
     /**
@@ -53,7 +53,7 @@ class OnboardingPolicy
      */
     public function update(User $user, Onboarding $onboarding)
     {
-        return $user->hasRole('admin') || $user->hasPermissionTo('edit onboarding');
+        return $user->hasRole('admin') || ($user->hasPermissionTo('edit onboarding') && $user->id == $onboarding->task->assigned_to);
     }
 
     /**
