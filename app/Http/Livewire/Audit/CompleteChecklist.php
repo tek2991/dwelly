@@ -18,7 +18,6 @@ class CompleteChecklist extends Component
         $this->auditChecklist = $auditChecklist;
         $this->confirm = $auditChecklist->completed;
         $this->editable = $this->auditChecklist->audit->completed == false && $this->auditChecklist->completed == false;
-        $this->next_checklist_item_exists = $this->auditChecklist->audit->auditChecklists->where('completed', false)->first() !== null;
     }
 
     public function rules()
@@ -54,8 +53,9 @@ class CompleteChecklist extends Component
 
     public function routeTo()
     {
+        $next_item_exists = $this->auditChecklist->audit->auditChecklists->where('completed', false)->first() !== null;
 
-        if ($this->next_checklist_item_exists) {
+        if ($next_item_exists) {
             $next_item = $this->auditChecklist
                 ->audit
                 ->auditChecklists
