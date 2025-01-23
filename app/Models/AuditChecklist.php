@@ -15,13 +15,13 @@ class AuditChecklist extends Model
         'remarks',
         'name',
         'completed',
-        // 'verified',
+        'verified',
     ];
 
     protected $casts = [
         'is_primary' => 'boolean',
         'completed' => 'boolean',
-        // 'verified' => 'boolean',
+        'verified' => 'boolean',
     ];
 
     public function audit()
