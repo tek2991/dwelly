@@ -47,14 +47,14 @@ class TenantController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'phone_1' => 'required|string|max:25',
             'phone_2' => 'nullable|string|max:25',
-            'password' => 'required|string|min:8|confirmed',
+            // 'password' => 'required|string|min:8|confirmed',
             'onboarded_at' => 'required|date',
         ]);
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
+            'password' => Hash::make('TenantPass123'),
             'phone_1' => $validated['phone_1'],
             'phone_2' => $validated['phone_2'],
         ]);

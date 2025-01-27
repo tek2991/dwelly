@@ -47,7 +47,7 @@ class CreateTenant extends Component
             'phone_2' => 'nullable|string|max:25',
             'moved_in_at' => 'nullable|date',
             'moved_out_at' => 'nullable|date',
-            'password' => 'required|string|min:8|confirmed',
+            // 'password' => 'required|string|min:8|confirmed',
             'is_primary' => 'required|boolean',
             'primary_tenant_id' => 'required_if:is_primary,0',
 
@@ -74,14 +74,14 @@ class CreateTenant extends Component
             'email' => $this->email,
             'phone_1' => $this->phone_1,
             'phone_2' => $this->phone_2,
-            'password' => Hash::make($this->password),
+            'password' => Hash::make('TenantPass123'),
         ]);
 
         $tenant = Tenant::create([
             'property_id' => $this->property->id,
             'user_id' => $user->id,
-            'moved_in_at' => $this->moved_in_at,
-            'moved_out_at' => $this->moved_out_at,
+            'moved_in_at' => $this->moved_in_at ?: null,
+            'moved_out_at' => $this->moved_out_at ?: null,
             'is_primary' => $this->is_primary,
             'primary_tenant_id' => $this->primary_tenant_id,
 

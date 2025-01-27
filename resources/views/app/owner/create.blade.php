@@ -93,22 +93,6 @@
                                     name="electricity_consumer_id_new" :value="old('electricity_consumer_id_new')" />
                             </div>
                         </div>
-
-
-                        <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {{-- Password --}}
-                            <div class="col-start-1 col-end-2">
-                                <x-jet-label for="password" :value="__('Password')" />
-                                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password"
-                                    required autocomplete="new-password" />
-                            </div>
-                            {{-- Password Confirmation --}}
-                            <div>
-                                <x-jet-label for="password" :value="__('Confirm Password')" />
-                                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                                    name="password_confirmation" required autocomplete="new-password" />
-                            </div>
-                        </div>
                     </div>
                     <div class="flex justify-end mt-4">
                         <x-jet-button class="ml-4" type="submit">

@@ -140,27 +140,6 @@
                                 wire:model="account_number" required />
                         </div>
                     </div>
-                    <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {{-- Password --}}
-                        <div class="col-start-1 col-end-2">
-                            <x-jet-label for="password" :value="__('Password')" />
-                            @error('password')
-                                <label for="password" class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
-                            <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password"
-                                wire:model="password" required />
-                        </div>
-                        {{-- Password Confirmation --}}
-                        <div>
-                            <x-jet-label for="password" :value="__('Confirm Password')" />
-                            @error('password_confirmation')
-                                <label for="password_confirmation"
-                                    class="text-xs text-red-700 block">{{ $message }}</label>
-                            @enderror
-                            <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                                name="password_confirmation" wire:model="password_confirmation" required />
-                        </div>
-                    </div>
                 </div>
                 <div class="flex justify-end mt-4">
                     <x-jet-button class="ml-4" type="submit">

@@ -29,7 +29,7 @@
                     @error('item_type_id')
                         <label for="item_type_id" class="text-xs text-red-700 block">{{ $message }}</label>
                     @enderror
-                    <x-input-select id="item_type_id" wire:model="item_type_id" :disabled="!$editing">
+                    <x-input-select id="item_type_id" wire:model="item_type_id" disabled>
                         <option value="">Select audit type</option>
                         @foreach ($item_types as $id => $item_type)
                             <option value="{{ $id }}">{{ $item_type }}</option>
@@ -44,7 +44,7 @@
                         @error('room_id')
                             <label for="room_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input-select id="room_id" wire:model="room_id" :disabled="!$editing">
+                        <x-input-select id="room_id" wire:model="room_id" disabled>
                             <option value="">Select room</option>
                             @foreach ($rooms as $room)
                                 <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -63,7 +63,7 @@
                         @error('room_id')
                             <label for="room_id" class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input-select id="primary_furniture_id" wire:model="primary_furniture_id" :disabled="!$editing">
+                        <x-input-select id="primary_furniture_id" wire:model="primary_furniture_id" disabled>
                             <option value="">Select primary furniture</option>
                             @foreach ($primary_furnitures as $primary_furniture)
                                 <option value="{{ $primary_furniture->id }}">{{ $primary_furniture->name }}</option>
@@ -80,7 +80,7 @@
                             <label for="secondary_furniture_id"
                                 class="text-xs text-red-700 block">{{ $message }}</label>
                         @enderror
-                        <x-input-select id="secondary_furniture_id" wire:model="secondary_furniture_id">
+                        <x-input-select id="secondary_furniture_id" wire:model="secondary_furniture_id" disabled>
                             <option value="">Select secondary furniture</option>
                             @foreach ($secondary_furnitures as $secondary_furniture)
                                 <option value="{{ $secondary_furniture->id }}">{{ $secondary_furniture->name }}
