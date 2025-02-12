@@ -40,4 +40,9 @@ class Owner extends Model
     {
         return $this->morphMany(Document::class, 'documentable')->with('documentType');
     }
+
+    public function bankDetails()
+    {
+        return $this->morphMany(BankDetail::class, 'bankable')->with('document');
+    }
 }

@@ -14,10 +14,14 @@
                 <div class="flex justify-between mb-6">
                     <h2 class="mb-4 font-semibold text-xl text-gray-800 leading-tight">All Tenants (Related)</h2>
                 </div>
-                <livewire:tenant-table property_id="{{ $property->id }}" primary_tenant_id="{{ $tenant->primary_tenant_id }}" />
+                <livewire:tenant-table property_id="{{ $property->id }}"
+                    primary_tenant_id="{{ $tenant->primary_tenant_id }}" />
             </div>
         </div>
     </div>
+
+    {{-- Bank Details --}}
+    @livewire('property.bank-details', ['owner_or_tenant' => $tenant])
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

@@ -46,10 +46,10 @@ class PropertyOwner extends Component
 
         $this->onboarded_at = $this->owner->onboarded_at->format('Y-m-d');
 
-        $this->beneficiary_name = $this->owner->beneficiary_name;
-        $this->bank_name = $this->owner->bank_name;
-        $this->ifsc = $this->owner->ifsc;
-        $this->account_number = $this->owner->account_number;
+        // $this->beneficiary_name = $this->owner->beneficiary_name;
+        // $this->bank_name = $this->owner->bank_name;
+        // $this->ifsc = $this->owner->ifsc;
+        // $this->account_number = $this->owner->account_number;
 
         $this->electricity_consumer_id_old = $this->owner->electricity_consumer_id_old;
         $this->electricity_consumer_id_new = $this->owner->electricity_consumer_id_new;
@@ -78,10 +78,10 @@ class PropertyOwner extends Component
             'phone_2' => 'nullable|string|max:25',
             'onboarded_at' => 'required|date',
 
-            'beneficiary_name' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'ifsc' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
+            // 'beneficiary_name' => 'required|string|max:255',
+            // 'bank_name' => 'required|string|max:255',
+            // 'ifsc' => 'required|string|max:255',
+            // 'account_number' => 'required|string|max:255',
 
             'electricity_consumer_id_old' => 'nullable|string|max:255',
             'electricity_consumer_id_new' => 'nullable|string|max:255',
@@ -105,10 +105,10 @@ class PropertyOwner extends Component
         $this->owner->update([
             'onboarded_at' => $this->onboarded_at,
             
-            'beneficiary_name' => $this->beneficiary_name,
-            'bank_name' => $this->bank_name,
-            'ifsc' => $this->ifsc,
-            'account_number' => $this->account_number,
+            // 'beneficiary_name' => $this->beneficiary_name,
+            // 'bank_name' => $this->bank_name,
+            // 'ifsc' => $this->ifsc,
+            // 'account_number' => $this->account_number,
 
             'electricity_consumer_id_old' => $this->electricity_consumer_id_old,
             'electricity_consumer_id_new' => $this->electricity_consumer_id_new,

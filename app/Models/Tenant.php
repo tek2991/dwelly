@@ -66,4 +66,9 @@ class Tenant extends Model
         $moveOutTypeId = AuditType::where('name', 'Move Out')->first()->id;
         return $this->audits()->where('audit_type_id', $moveOutTypeId)->exists();
     }
+
+    public function bankDetails()
+    {
+        return $this->morphMany(BankDetail::class, 'bankable');
+    }
 }
