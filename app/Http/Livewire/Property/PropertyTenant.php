@@ -94,10 +94,10 @@ class PropertyTenant extends Component
             'is_primary' => 'required|boolean',
             'primary_tenant_id' => 'required_if:is_primary,0',
 
-            'beneficiary_name' => 'nullable|string|max:255',
-            'bank_name' => 'nullable|string|max:255',
-            'ifsc' => 'nullable|string|max:255',
-            'account_number' => 'nullable|string|max:255',
+            // 'beneficiary_name' => 'nullable|string|max:255',
+            // 'bank_name' => 'nullable|string|max:255',
+            // 'ifsc' => 'nullable|string|max:255',
+            // 'account_number' => 'nullable|string|max:255',
         ];
     }
 
@@ -119,10 +119,10 @@ class PropertyTenant extends Component
             'moved_in_at' => $this->moved_in_at,
             'moved_out_at' => $this->moved_out_at,
             
-            'beneficiary_name' => $this->beneficiary_name,
-            'bank_name' => $this->bank_name,
-            'ifsc' => $this->ifsc,
-            'account_number' => $this->account_number,
+            // 'beneficiary_name' => $this->beneficiary_name,
+            // 'bank_name' => $this->bank_name,
+            // 'ifsc' => $this->ifsc,
+            // 'account_number' => $this->account_number,
         ]);
 
         if ($this->is_primary && !$this->tenant->is_primary) {

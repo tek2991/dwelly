@@ -145,7 +145,7 @@
 
                         <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
                             {{-- Beneficiary_name --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="beneficiary_name" :value="__('Beneficiary Name')" />
                                 @error('beneficiary_name')
                                     <label for="beneficiary_name"
@@ -159,9 +159,9 @@
                                     <x-jet-input id="beneficiary_name" class="block mt-1 w-full" type="text"
                                         wire:model="beneficiary_name" disabled />
                                 @endif
-                            </div>
+                            </div> --}}
                             {{-- Bank_name --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="bank_name" :value="__('Bank Name')" />
                                 @error('bank_name')
                                     <label for="bank_name" class="text-xs text-red-700 block">{{ $message }}</label>
@@ -174,9 +174,9 @@
                                     <x-jet-input id="bank_name" class="block mt-1 w-full" type="text"
                                         wire:model="bank_name" disabled />
                                 @endif
-                            </div>
+                            </div> --}}
                             {{-- ifsc --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="ifsc" :value="__('IFSC')" />
                                 @error('ifsc')
                                     <label for="ifsc" class="text-xs text-red-700 block">{{ $message }}</label>
@@ -188,9 +188,9 @@
                                     <x-jet-input id="ifsc" class="block mt-1 w-full" type="text" wire:model="ifsc"
                                         disabled />
                                 @endif
-                            </div>
+                            </div> --}}
                             {{-- account_number --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="account_number" :value="__('Account Number')" />
                                 @error('account_number')
                                     <label for="account_number"
@@ -204,7 +204,7 @@
                                     <x-jet-input id="account_number" class="block mt-1 w-full" type="text"
                                         wire:model="account_number" disabled />
                                 @endif
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     @if ($editing === true)

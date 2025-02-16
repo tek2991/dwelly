@@ -53,10 +53,10 @@ class OwnerController extends Controller
             // 'password' => 'required|string|min:8|confirmed',
             'onboarded_at' => 'required|date',
 
-            'beneficiary_name' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'ifsc' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
+            // 'beneficiary_name' => 'required|string|max:255',
+            // 'bank_name' => 'required|string|max:255',
+            // 'ifsc' => 'required|string|max:255',
+            // 'account_number' => 'required|string|max:255',
 
             'electricity_consumer_id_old' => 'nullable|string|max:255',
             'electricity_consumer_id_new' => 'nullable|string|max:255',
@@ -83,10 +83,10 @@ class OwnerController extends Controller
             'property_id' => $validated['property_id'],
             'onboarded_at' => $validated['onboarded_at'],
 
-            'beneficiary_name' => $validated['beneficiary_name'],
-            'bank_name' => $validated['bank_name'],
-            'ifsc' => $validated['ifsc'],
-            'account_number' => $validated['account_number'],
+            // 'beneficiary_name' => $validated['beneficiary_name'],
+            // 'bank_name' => $validated['bank_name'],
+            // 'ifsc' => $validated['ifsc'],
+            // 'account_number' => $validated['account_number'],
 
             'electricity_consumer_id_old' => $validated['electricity_consumer_id_old'],
             'electricity_consumer_id_new' => $validated['electricity_consumer_id_new'],

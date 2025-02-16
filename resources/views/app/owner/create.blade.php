@@ -52,29 +52,29 @@
                         </div>
                         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- Beneficiary name --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="beneficiary_name" :value="__('Beneficiary Name')" />
                                 <x-jet-input id="beneficiary_name" class="block mt-1 w-full" type="text"
                                     name="beneficiary_name" :value="old('beneficiary_name')" required />
-                            </div>
+                            </div> --}}
                             {{-- Bank name --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="bank_name" :value="__('Bank Name')" />
                                 <x-jet-input id="bank_name" class="block mt-1 w-full" type="text" name="bank_name"
                                     :value="old('bank_name')" required />
-                            </div>
+                            </div> --}}
                             {{-- Bank IFSC --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="ifsc" :value="__('Bank IFSC')" />
                                 <x-jet-input id="ifsc" class="block mt-1 w-full" type="text" name="ifsc"
                                     :value="old('ifsc')" required />
-                            </div>
+                            </div> --}}
                             {{-- Account number --}}
-                            <div>
+                            {{-- <div>
                                 <x-jet-label for="account_number" :value="__('Account Number')" />
                                 <x-jet-input id="account_number" class="block mt-1 w-full" type="text"
                                     name="account_number" :value="old('account_number')" required />
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -23,10 +23,10 @@ class CreateTenant extends Component
     public $is_primary;
     public $primary_tenant_id;
 
-    public $beneficiary_name;
-    public $bank_name;
-    public $ifsc;
-    public $account_number;
+    // public $beneficiary_name;
+    // public $bank_name;
+    // public $ifsc;
+    // public $account_number;
 
     public $primary_tenants;
 
@@ -51,10 +51,10 @@ class CreateTenant extends Component
             'is_primary' => 'required|boolean',
             'primary_tenant_id' => 'required_if:is_primary,0',
 
-            'beneficiary_name' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'ifsc' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
+            // 'beneficiary_name' => 'required|string|max:255',
+            // 'bank_name' => 'required|string|max:255',
+            // 'ifsc' => 'required|string|max:255',
+            // 'account_number' => 'required|string|max:255',
         ];
     }
 
@@ -85,10 +85,10 @@ class CreateTenant extends Component
             'is_primary' => $this->is_primary,
             'primary_tenant_id' => $this->primary_tenant_id,
 
-            'beneficiary_name' => $this->beneficiary_name,
-            'bank_name' => $this->bank_name,
-            'ifsc' => $this->ifsc,
-            'account_number' => $this->account_number,
+            // 'beneficiary_name' => $this->beneficiary_name,
+            // 'bank_name' => $this->bank_name,
+            // 'ifsc' => $this->ifsc,
+            // 'account_number' => $this->account_number,
         ]);
 
         if($this->is_primary) {
